@@ -1,0 +1,143 @@
+Cmp-Mod V01 Created by Cvpcb (2014-04-07 BZR 4791)-product   date = tis  8 apr 2014 22:39:03
+
+BeginCmp
+TimeStamp = /53444A30;
+Reference = C1;
+ValeurCmp = 4.7u;
+IdModule  = SMD_Packages:SM0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /53444CCF;
+Reference = C2;
+ValeurCmp = 0.1u;
+IdModule  = SMD_Packages:SM0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /53444C35;
+Reference = C3;
+ValeurCmp = 0.1u;
+IdModule  = SMD_Packages:SM0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /534452FC;
+Reference = C4;
+ValeurCmp = 4.7u;
+IdModule  = SMD_Packages:SM0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /5342B87B;
+Reference = P1;
+ValeurCmp = CONN_8X2;
+IdModule  = Pin_Headers:Pin_Header_Straight_2x08;
+EndCmp
+
+BeginCmp
+TimeStamp = /5342C287;
+Reference = P2;
+ValeurCmp = CONN_8X2;
+IdModule  = Pin_Headers:Pin_Header_Straight_2x08;
+EndCmp
+
+BeginCmp
+TimeStamp = /5342C2AB;
+Reference = P3;
+ValeurCmp = CONN_8X2;
+IdModule  = Pin_Headers:Pin_Header_Straight_2x08;
+EndCmp
+
+BeginCmp
+TimeStamp = /5342C2CF;
+Reference = P4;
+ValeurCmp = CONN_8X2;
+IdModule  = Pin_Headers:Pin_Header_Straight_2x08;
+EndCmp
+
+BeginCmp
+TimeStamp = /53431392;
+Reference = P5;
+ValeurCmp = CONN_12X2;
+IdModule  = Pin_Headers:Pin_Header_Straight_2x12;
+EndCmp
+
+BeginCmp
+TimeStamp = /53178FFF;
+Reference = P6;
+ValeurCmp = CONN_1;
+IdModule  = Saul_footprints:Mhole;
+EndCmp
+
+BeginCmp
+TimeStamp = /53179013;
+Reference = P7;
+ValeurCmp = CONN_1;
+IdModule  = Saul_footprints:Mhole;
+EndCmp
+
+BeginCmp
+TimeStamp = /5342B7E0;
+Reference = P8;
+ValeurCmp = CONN_5X2;
+IdModule  = Pin_Headers:Pin_Header_Straight_2x05;
+EndCmp
+
+BeginCmp
+TimeStamp = /5317903B;
+Reference = P9;
+ValeurCmp = CONN_1;
+IdModule  = Saul_footprints:Mhole;
+EndCmp
+
+BeginCmp
+TimeStamp = /53179041;
+Reference = P10;
+ValeurCmp = CONN_1;
+IdModule  = Saul_footprints:Mhole;
+EndCmp
+
+BeginCmp
+TimeStamp = /53179576;
+Reference = R1;
+ValeurCmp = 1k;
+IdModule  = SMD_Packages:SM0603_Resistor;
+EndCmp
+
+BeginCmp
+TimeStamp = /531794C7;
+Reference = R2;
+ValeurCmp = 1k;
+IdModule  = SMD_Packages:SM0603_Resistor;
+EndCmp
+
+BeginCmp
+TimeStamp = /528FC8A0;
+Reference = U1;
+ValeurCmp = RASPBERRY_RV2;
+IdModule  = fg_footprints:RASPBERRY_P1;
+EndCmp
+
+BeginCmp
+TimeStamp = /528E8185;
+Reference = U2;
+ValeurCmp = MCP23017;
+IdModule  = Sockets_DIP:DIP-28__300_ELL;
+EndCmp
+
+BeginCmp
+TimeStamp = /5314E962;
+Reference = U3;
+ValeurCmp = MCP23017;
+IdModule  = Sockets_DIP:DIP-28__300_ELL;
+EndCmp
+
+BeginCmp
+TimeStamp = /53445090;
+Reference = U4;
+ValeurCmp = MCP1702_SOT23;
+IdModule  = SMD_Packages:SOT23;
+EndCmp
+
+EndListe

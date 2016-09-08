@@ -1,0 +1,45 @@
+Cmp-Mod V01 Created by Cvpcb (2014-04-07 BZR 4791)-product   date = sön 13 apr 2014 19:02:38
+
+BeginCmp
+TimeStamp = /52F78187;
+Reference = 0.1u1;
+ValeurCmp = C;
+IdModule  = SMD_Packages:SM0603_Capa;
+EndCmp
+
+BeginCmp
+TimeStamp = /52F7807E;
+Reference = 1k1;
+ValeurCmp = R;
+IdModule  = SMD_Packages:SM0603_Resistor;
+EndCmp
+
+BeginCmp
+TimeStamp = /52F780F2;
+Reference = D1;
+ValeurCmp = LED;
+IdModule  = SMD_Packages:SM1206;
+EndCmp
+
+BeginCmp
+TimeStamp = /534ABE66;
+Reference = P1;
+ValeurCmp = CONN_2X2;
+IdModule  = Pin_Headers:Pin_Header_Straight_2x02;
+EndCmp
+
+BeginCmp
+TimeStamp = /534AC1F7;
+Reference = P2;
+ValeurCmp = CONN_1;
+IdModule  = Saul_footprints:Mhole;
+EndCmp
+
+BeginCmp
+TimeStamp = /52F3EC4D;
+Reference = S1;
+ValeurCmp = PBUTTON;
+IdModule  = Saul_footprints:PCB_PUSH_bottom;
+EndCmp
+
+EndListe

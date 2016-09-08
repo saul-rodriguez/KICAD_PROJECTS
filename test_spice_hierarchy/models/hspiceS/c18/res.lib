@@ -1,0 +1,16 @@
+.lib restm
+* Case No. 1
+.lib './LV_DEV/passive_corner.inc' rtt
+.endl 
+
+.lib reswp
+* Case No. 2
+.lib './LV_DEV/passive_corner.inc' rmin
+.endl 
+
+.lib resws
+* Case No. 3
+.lib './LV_DEV/passive_corner.inc' rmax
+.endl 
+
+* Owner: austriamicrosystems

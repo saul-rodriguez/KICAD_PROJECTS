@@ -1,0 +1,185 @@
+(pcb /home/saul/Dropbox/Work/projects/kicad/IMPLANT1/IMPLANT1.dsn
+  (parser
+    (string_quote ")
+    (space_in_quoted_tokens on)
+    (host_cad "KiCad's Pcbnew")
+    (host_version "(2013-mar-13)-testing")
+  )
+  (resolution um 10)
+  (unit um)
+  (structure
+    (layer F.Cu
+      (type signal)
+      (property
+        (index 0)
+      )
+    )
+    (layer B.Cu
+      (type signal)
+      (property
+        (index 1)
+      )
+    )
+    (boundary
+      (path pcb 0  140000 -86000  140000 -108000  154000 -108000  154000 -86000
+            140000 -86000)
+    )
+    (via "Via[0-1]_889:635_um" "Via[0-1]_889:0_um")
+    (rule
+      (width 300)
+      (clearance 254.1)
+      (clearance 254.1 (type default_smd))
+      (clearance 63.5 (type smd_smd))
+    )
+  )
+  (placement
+    (component SM0603_Capa
+      (place C1 147000 -94500 front 180 (PN C))
+      (place C2 143500 -94500 front 180 (PN C))
+      (place C3 147000 -92000 front 180 (PN C))
+      (place C5 144000 -102000 front 0 (PN C))
+    )
+    (component SM1206
+      (place D2 150500 -98500 front 180 (PN LED))
+      (place D3 144500 -98500 front 180 (PN LED))
+    )
+    (component pin_strip_2
+      (place L1 147000 -88000 front 180 (PN INDUCTOR))
+    )
+    (component "pin_strip_4-90"
+      (place P1 147000 -105500 front 0 (PN CONN_4))
+    )
+    (component sot23
+      (place U1 150500 -102000 front 270 (PN NFET_FDV301N))
+      (place U2 151500 -95000 front 270 (PN BAV99W))
+    )
+  )
+  (library
+    (image SM0603_Capa
+      (outline (path signal 119.38  500.38 -650.24  1198.88 -650.24))
+      (outline (path signal 119.38  -500.38 -650.24  -1198.88 -650.24))
+      (outline (path signal 119.38  500.38 650.24  1198.88 650.24))
+      (outline (path signal 119.38  -1198.88 650.24  -500.38 650.24))
+      (outline (path signal 119.38  1198.88 635  1198.88 -635))
+      (outline (path signal 119.38  -1198.88 -635  -1198.88 635))
+      (pin Rect[T]Pad_635x1143_um 1 -762 0)
+      (pin Rect[T]Pad_635x1143_um 2 762 0)
+    )
+    (image SM1206
+      (outline (path signal 127  -2540 1143  -2540 -1143))
+      (outline (path signal 127  -2540 -1143  -889 -1143))
+      (outline (path signal 127  889 1143  2540 1143))
+      (outline (path signal 127  2540 1143  2540 -1143))
+      (outline (path signal 127  2540 -1143  889 -1143))
+      (outline (path signal 127  -889 1143  -2540 1143))
+      (pin Rect[T]Pad_1524x2032_um 1 -1651 0)
+      (pin Rect[T]Pad_1524x2032_um 2 1651 0)
+    )
+    (image pin_strip_2
+      (outline (path signal 304.8  0 1270  0 -1270))
+      (outline (path signal 304.8  0 -1270  -2540 1270))
+      (outline (path signal 304.8  -2540 -1270  0 1270))
+      (outline (path signal 304.8  2540 -1270  -2540 -1270))
+      (outline (path signal 304.8  -2540 1270  2540 1270))
+      (outline (path signal 304.8  -2540 -1270  -2540 1270))
+      (outline (path signal 304.8  2540 1270  2540 -1270))
+      (pin Rect[A]Pad_1524x2199.64_um 1 -1270 0)
+      (pin Oval[A]Pad_1524x2199.64_um 2 1270 0)
+    )
+    (image "pin_strip_4-90"
+      (outline (path signal 304.8  -5080 -1270  -2540 -3810))
+      (outline (path signal 304.8  -2540 -1270  -5080 -3810))
+      (outline (path signal 304.8  -5080 -1270  5080 -1270))
+      (outline (path signal 304.8  5080 -1270  5080 -3810))
+      (outline (path signal 304.8  5080 -3810  -5080 -3810))
+      (outline (path signal 304.8  -2540 -1270  -2540 -3810))
+      (outline (path signal 304.8  -3810 0  -3810 -10160))
+      (outline (path signal 304.8  3810 0  3810 -10160))
+      (outline (path signal 304.8  1270 -10160  1270 0))
+      (outline (path signal 304.8  -1270 0  -1270 -10160))
+      (outline (path signal 304.8  -5080 -3810  -5080 -1270))
+      (pin Rect[A]Pad_1524x2199.64_um 1 -3810 0)
+      (pin Oval[A]Pad_1524x2199.64_um 2 -1270 0)
+      (pin Oval[A]Pad_1524x2199.64_um 3 1270 0)
+      (pin Oval[A]Pad_1524x2199.64_um 4 3810 0)
+    )
+    (image sot23
+      (outline (path signal 127  952.5 -698.5  952.5 -1358.9))
+      (outline (path signal 127  -952.5 -698.5  -952.5 -1358.9))
+      (outline (path signal 127  0 698.5  0 1358.9))
+      (outline (path signal 127  -1498.6 698.5  1498.6 698.5))
+      (outline (path signal 127  1498.6 698.5  1498.6 -698.5))
+      (outline (path signal 127  1498.6 -698.5  -1498.6 -698.5))
+      (outline (path signal 127  -1498.6 -698.5  -1498.6 698.5))
+      (pin Rect[T]Pad_599.44x1000.76_um 1 -952.5 -1056.64)
+      (pin Rect[T]Pad_599.44x1000.76_um 2 0 1056.64)
+      (pin Rect[T]Pad_599.44x1000.76_um 3 952.5 -1056.64)
+    )
+    (padstack Oval[A]Pad_1524x2199.64_um
+      (shape (path F.Cu 1524  0 -337.82  0 337.82))
+      (shape (path B.Cu 1524  0 -337.82  0 337.82))
+      (attach off)
+    )
+    (padstack Rect[T]Pad_599.44x1000.76_um
+      (shape (rect F.Cu -299.72 -500.38 299.72 500.38))
+      (attach off)
+    )
+    (padstack Rect[T]Pad_635x1143_um
+      (shape (rect F.Cu -317.5 -571.5 317.5 571.5))
+      (attach off)
+    )
+    (padstack Rect[T]Pad_1524x2032_um
+      (shape (rect F.Cu -762 -1016 762 1016))
+      (attach off)
+    )
+    (padstack Rect[A]Pad_1524x2199.64_um
+      (shape (rect F.Cu -762 -1099.82 762 1099.82))
+      (shape (rect B.Cu -762 -1099.82 762 1099.82))
+      (attach off)
+    )
+    (padstack "Via[0-1]_889:635_um"
+      (shape (circle F.Cu 889))
+      (shape (circle B.Cu 889))
+      (attach off)
+    )
+    (padstack "Via[0-1]_889:0_um"
+      (shape (circle F.Cu 889))
+      (shape (circle B.Cu 889))
+      (attach off)
+    )
+  )
+  (network
+    (net /RX
+      (pins C1-2 C2-1 P1-3)
+    )
+    (net /TX
+      (pins P1-4 U1-1)
+    )
+    (net /VREC
+      (pins C5-1 P1-1 U2-3)
+    )
+    (net GND
+      (pins C2-2 C3-2 C5-2 D3-2 L1-2 P1-2 U1-3)
+    )
+    (net "N-000001"
+      (pins D2-2 D3-1)
+    )
+    (net "N-000005"
+      (pins D2-1 U1-2 U2-2)
+    )
+    (net "N-000007"
+      (pins C1-1 C3-1 L1-1 U2-1)
+    )
+    (class kicad_default "" /RX /TX /VREC GND "N-000001" "N-000005" "N-000007"
+      (circuit
+        (use_via Via[0-1]_889:635_um)
+      )
+      (rule
+        (width 300)
+        (clearance 254.1)
+      )
+    )
+  )
+  (wiring
+  )
+)

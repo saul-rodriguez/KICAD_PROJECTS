@@ -1,0 +1,110 @@
+* Path, Component, Release: cmos7base/rel/HSPICE/models/skew_psp.file, tech7_models, mod_cmos7base
+* CMVC Revision: 2.0
+*
+***********************************************************************
+*
+*>  CMRF7SF/BiCMOS7WL  MOSFET PSP Model Process Parameters
+*
+*
+***********************************************************************
+.param
+*                                              NFET PSP Parameters
+*
++  dnvth0_psp = 'dnvth0 + cnr_nf18*(1-fixcnr) - cnr_nf18_psp'
++  dnu0_psp   = 'dnu0 - cnr_nf18*(1-fixcnr) + cnr_nf18_psp'
++  dncj_psp   = 'dncj + cnr_nf18 - cnr_nf18_psp'
++  dncjsw_psp = 'dncjsw + cnr_nf18 - cnr_nf18_psp'
++  dncjsg_psp = 'dncjsg + cnr_nf18 - cnr_nf18_psp'
++  dnrdsw_psp = 'dnrdsw + cnr_nf18*(1-fixcnr) - cnr_nf18_psp'
++  xnfol1     = agauss(cnr_nf18_psp,1,3)
++  dnfol1     = xnfol1
++  xnfol2     = agauss(cnr_nf18_psp,1,3)
++  dnfol2     = xnfol2
+*
++  tox_psp_n   = '3.5n + 0.3n*distox*(1-fixcnr) + dtoxo_nfet_fc' $ Gate oxide thickness (meter)
++  vfb_psp_n   = '-1.3433 + 0.03*dnvth0_psp + dvfbo_nfet_fc'     $ Base Threshold voltage (V)
++  vfbl_psp_n  = '-6.566e-3 + dvfbl_nfet_fc'
++  vfblw_psp_n = '-2.04e-3 + dvfblw_nfet_fc'
++  lint_psp_n  = '0.0175u + ltol_n + dlap_nfet_fc'               $ Delta L (one side)
++  lov_psp_n   = 'lint_psp_n + 1.89e-8 + dlov_nfet_fc'
++  wint_psp_n  = '0.01u + wtol_n + dwot_nfet_fc'                 $ Delta W (one side)
++  uo_psp_n    = 'exp(-2.8824 + 0.1*dnu0_psp) + duo_nfet_fc'     $ Base mobility (m**2/Vsec)
++  rsw_psp_n   = '44.18 + 6.6*dnrdsw_psp + drsw1_nfet_fc'        $ Base series resistance (ohm-um)
++  fol1_psp_n  = '52.32m + 13m*dnfol1 + dfol1_nfet_fc'           $ First order short channel roll-off and body effect 
++  fol2_psp_n  = '-1.236m + 2.5m*dnfol2'                         $ Second order short channel roll-off and body effect
++  cj_psp_n    = '0.85m + 0.20m*dncj_psp + dcjorbot_nfet_fc'     $ N+ Diode Cap (F/m)
++  cjsw_psp_n  = '145p + 36.2p*dncjsw_psp + dcjorsti_nfet_fc'    $ N+ STI Sidewall Cap (F/m)
++  cjsg_psp_n  = '435p + 109p*dncjsg_psp + dcjorgat_nfet_fc'     $ N+ Gate Sidewall Cap (F/m)
+*
+*                                              PFET PSP Parameters
+*
++  dpvth0_psp = 'dpvth0 - cnr_pf18*(1-fixcnr) + cnr_pf18_psp'
++  dpu0_psp   = 'dpu0 - cnr_pf18*(1-fixcnr) + cnr_pf18_psp'
++  dpcj_psp   = 'dpcj + cnr_pf18 - cnr_pf18_psp'
++  dpcjsw_psp = 'dpcjsw + cnr_pf18 - cnr_pf18_psp'
++  dpcjsg_psp = 'dpcjsg + cnr_pf18 - cnr_pf18_psp'
++  dprdsw_psp = 'dprdsw + cnr_pf18*(1-fixcnr) - cnr_pf18_psp'
++  xpfol1     = agauss(cnr_pf18_psp,1,3)
++  dpfol1     = xpfol1
++  xpfol2     = agauss(cnr_pf18_psp,1,3)
++  dpfol2     = xpfol2
+*
++  tox_psp_p   = '3.5n + 0.3n*distox*(1-fixcnr) + dtoxo_pfet_fc' $ Gate oxide thickness (meter)
++  vfb_psp_p   = '-1.3168 - 0.01*dpvth0_psp + dvfbo_pfet_fc'     $ Base Threshold voltage (V)
++  vfbl_psp_p  = '-21.503e-3 + dvfbl_pfet_fc'
++  vfblw_psp_p = '3.10e-3 + dvfblw_pfet_fc'
++  lint_psp_p  = '0.0175u + ltol_p + dlap_pfet_fc'               $ Delta L (one side)
++  lov_psp_p   = 'lint_psp_p + 2.15e-8 + dlov_pfet_fc'
++  wint_psp_p  = '-0.015u + wtol_p + dwot_pfet_fc'               $ Delta W (one side)
++  uo_psp_p    = '0.0248 + 0.001*dpu0_psp + duo_pfet_fc'         $ Base mobility (m**2/Vsec)
++  rsw_psp_p   = '165 + 30*dprdsw_psp + drsw1_pfet_fc'           $ Base series resistance (ohm-um)
++  fol1_psp_p  = '94.40m + 7m*dpfol1 + dfol1_pfet_fc'            $ First order short channel roll-off and body effect 
++  fol2_psp_p  = '-2.111m + 1.7m*dpfol2'                         $ Second order short channel roll-off and body effect
++  cj_psp_p    = '1.15m + 0.16m*dpcj_psp + dcjorbot_pfet_fc'     $ P+ Diode Cap (F/m)
++  cjsw_psp_p  = '100p + 25p*dpcjsw_psp + dcjorsti_pfet_fc'      $ P+ STI Sidewall Cap (F/m)
++  cjsg_psp_p  = '355.5p + 88.9p*dpcjsg_psp + dcjorgat_pfet_fc'  $ P+ Gate Sidewall Cap (F/m)
+*
+*                                              NFET33 PSP Parameters
+*
++  dn33vth0_psp = 'dn33vth0 + cnr_nf33*(1-fixcnr) - cnr_nf33_psp'
++  dn33u0_psp   = 'dn33u0 - cnr_nf33*(1-fixcnr) + cnr_nf33_psp'
++  dn33cj_psp   = 'dn33cj + cnr_nf33 - cnr_nf33_psp'
++  dn33cjsw_psp = 'dn33cjsw + cnr_nf33 - cnr_nf33_psp'
++  dn33cjsg_psp = 'dn33cjsg + cnr_nf33 - cnr_nf33_psp'
++  dn33rdsw_psp = 'dnrdsw + cnr_nf33*(1-fixcnr) - cnr_nf33_psp'
+*
++  tox_psp_n33   = '7.065n + 0.50n*distox*(1-fixcnr) + dtoxo_nf33_fc' $ Gate oxide thickness (meter)
++  vfb_psp_n33   = '-1.072 + 0.105*dn33vth0_psp + dvfbo_nf33_fc'      $ Base Threshold voltage (V)
++  vfbl_psp_n33  = '-0.079 + dvfbl_nf33_fc'
++  vfblw_psp_n33 = '0.006 + dvfblw_nf33_fc'
++  lint_psp_n33  = '0.055u + ltol_n33 + dlap_nf33_fc'                 $ Delta L (one side)
++  lov_psp_n33   = 'lint_psp_n33 + 3.02e-8 + dlov_nf33_fc'
++  wint_psp_n33  = '0.01u + wtol_n33 + dwot_nf33_fc'                  $ Delta W (one side)
++  uo_psp_n33    = '0.04298 + 0.0048*dn33u0_psp + duo_nf33_fc'        $ Base mobility (m**2/Vsec)
++  rsw_psp_n33   = '260.8 + 27.0*dn33rdsw_psp + drsw1_nf33_fc'        $ Base series resistance (ohm-um)
++  cj_psp_n33    = '0.90m + 0.16m*dn33cj_psp + dcjorbot_nf33_fc'      $ N+ Diode Cap (F/m)
++  cjsw_psp_n33  = '117.5p + 29.4p*dn33cjsw_psp + dcjorsti_nf33_fc'   $ N+ STI Sidewall Cap (F/m)
++  cjsg_psp_n33  = '344.25p + 86.1p*dn33cjsg_psp + dcjorgat_nf33_fc'  $ N+ Gate Sidewall Cap (F/m)
+*
+*                                              PFET33 PSP Parameters
+*
++  dp33vth0_psp = 'dp33vth0 - cnr_pf33*(1-fixcnr) + cnr_pf33_psp'
++  dp33u0_psp   = 'dp33u0 - cnr_pf33*(1-fixcnr) + cnr_pf33_psp'
++  dp33cj_psp   = 'dp33cj + cnr_pf33 - cnr_pf33_psp'
++  dp33cjsw_psp = 'dp33cjsw + cnr_pf33 - cnr_pf33_psp'
++  dp33cjsg_psp = 'dp33cjsg + cnr_pf33 - cnr_pf33_psp'
++  dp33rdsw_psp = 'dprdsw + cnr_pf33*(1-fixcnr) - cnr_pf33_psp'
+*
++  tox_psp_p33   = '7.1n + 0.50n*distox*(1-fixcnr) + dtoxo_pf33_fc'   $ Gate oxide thickness (meter)
++  vfb_psp_p33   = '-1.292 - 0.06*dp33vth0_psp + dvfbo_pf33_fc'       $ Base Threshold voltage (V)
++  vfbl_psp_p33  = '1.901e-11 + dvfbl_pf33_fc'
++  vfblw_psp_p33 = '0 + dvfblw_pf33_fc'
++  lint_psp_p33  = '0.055u + ltol_p33 + dlap_pf33_fc'                 $ Delta L (one side)
++  lov_psp_p33   = 'lint_psp_p33 + 2.08e-8 + dlov_pf33_fc'
++  wint_psp_p33  = '-0.015u + wtol_p33 + dwot_pf33_fc'                $ Delta W (one side)
++  uo_psp_p33    = '0.0157 + 0.0035*(abs(dp33u0_psp)+dp33u0)/2-0.0001*(abs(dp33u0)+dp33u0)/2 + duo_pf33_fc'   $ Base mobility (m**2/Vsec)
++  rsw_psp_p33   = '659.3 + 100*dp33rdsw_psp + drsw1_pf33_fc'         $ Base series resistance (ohm-um)
++  cj_psp_p33    = '1.19m + 0.16m*dp33cj_psp + dcjorbot_pf33_fc'      $ P+ Diode Cap (F/m)
++  cjsw_psp_p33  = '76.7p + 19.2p*dp33cjsw_psp + dcjorsti_pf33_fc'    $ P+ STI Sidewall Cap (F/m)
++  cjsg_psp_p33  = '288.7p + 72.2p*dp33cjsg_psp + dcjorgat_pf33_fc'   $ P+ Gate Sidewall Cap (F/m)
+*

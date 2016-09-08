@@ -1,0 +1,254 @@
+
+(session ACDC.ses
+  (base_design ACDC.dsn)
+  (placement
+    (resolution mil 10)
+    (component R4
+      (place R1 19291 -38583 front 90)
+    )
+    (component pin_strip_3
+      (place K1 21654 -24803 front 180)
+    )
+    (component Mhole
+      (place P4 10630 -40945 front 0)
+      (place P3 27559 -40945 front 0)
+      (place P6 27559 -24409 front 0)
+      (place P5 10630 -24409 front 0)
+    )
+    (component G2RL1H
+      (place U2 18504 -34252 front 90)
+    )
+    (component D4
+      (place D1 11417 -37008 front 270)
+    )
+    (component CP_8x13mm
+      (place C3 25197 -25984 front 180)
+    )
+    (component CP_13x21mm
+      (place C1 15354 -38189 front 0)
+    )
+    (component CMM5_2
+      (place P2 12992 -29134 front 180)
+    )
+    (component CAP_MKS_26x6
+      (place C2 26772 -38583 front 90)
+    )
+    (component BP5041A5
+      (place U1 20866 -34646 front 90)
+    )
+    (component CONN_2_AC
+      (place P1 11024 -32677 front 0)
+    )
+  )
+  (was_is
+  )
+  (routes 
+    (resolution mil 10)
+    (parser
+      (host_cad "KiCad's Pcbnew")
+      (host_version "(2011-nov-30)-testing")
+    )
+    (library_out 
+      (padstack "Via[0-1]_66.9:599.44_um"
+        (shape
+          (circle Front 670 0 0)
+        )
+        (shape
+          (circle Back 670 0 0)
+        )
+        (attach off)
+      )
+      (padstack "Via[0-1]_66.9:0_um"
+        (shape
+          (circle Front 670 0 0)
+        )
+        (shape
+          (circle Back 670 0 0)
+        )
+        (attach off)
+      )
+    )
+    (network_out 
+      (net /L_IN
+        (wire
+          (path Back 236
+            11024 -32677
+            11024 -31887
+          )
+        )
+        (wire
+          (path Back 236
+            10577 -28797
+            10577 -31440
+            11024 -31887
+          )
+        )
+        (wire
+          (path Back 236
+            11417 -35008
+            11024 -34615
+            11024 -32677
+          )
+        )
+      )
+      (net /N_VSS
+        (wire
+          (path Back 236
+            25197 -29725
+            25197 -26734
+          )
+        )
+        (wire
+          (path Back 236
+            22866 -32989
+            25197 -30658
+            25197 -29725
+          )
+        )
+        (wire
+          (path Back 236
+            26772 -29725
+            25197 -29725
+          )
+        )
+        (wire
+          (path Back 236
+            22866 -33646
+            22866 -32989
+          )
+        )
+        (wire
+          (path Back 236
+            15354 -36727
+            17635 -36727
+            20716 -33646
+            22866 -33646
+          )
+        )
+        (wire
+          (path Back 236
+            21654 -24803
+            21654 -24013
+          )
+        )
+        (wire
+          (path Back 236
+            21654 -24013
+            25583 -24013
+            25948 -24378
+            25948 -25983
+            25197 -26734
+          )
+        )
+        (wire
+          (path Back 236
+            13024 -32677
+            13024 -34397
+            15354 -36727
+          )
+        )
+        (wire
+          (path Back 236
+            15354 -36727
+            15354 -37189
+          )
+        )
+      )
+      (net /VCC
+        (wire
+          (path Back 236
+            22866 -29646
+            22866 -30303
+          )
+        )
+        (wire
+          (path Back 236
+            18504 -34252
+            22453 -30303
+            22866 -30303
+          )
+        )
+        (wire
+          (path Back 236
+            22866 -25234
+            22654 -25022
+            22654 -24803
+          )
+        )
+        (wire
+          (path Back 236
+            25197 -25234
+            22866 -25234
+          )
+        )
+        (wire
+          (path Back 236
+            22866 -28989
+            22866 -25234
+          )
+        )
+        (wire
+          (path Back 236
+            22866 -29646
+            22866 -28989
+          )
+        )
+      )
+      (net /VCTRL
+        (wire
+          (path Back 236
+            15551 -34252
+            16748 -33055
+            18762 -33055
+            20654 -31163
+            20654 -24803
+          )
+        )
+      )
+      (net "N-000009"
+        (wire
+          (path Back 236
+            22866 -38646
+            23656 -38646
+          )
+        )
+        (wire
+          (path Back 236
+            26772 -38583
+            23719 -38583
+            23656 -38646
+          )
+        )
+        (wire
+          (path Back 236
+            22866 -38646
+            21354 -38646
+            19291 -36583
+          )
+        )
+      )
+      (net "N-000014"
+        (wire
+          (path Back 236
+            15364 -39189
+            17897 -39189
+            19291 -40583
+          )
+        )
+        (wire
+          (path Back 236
+            12124 -39008
+            12305 -39189
+            15364 -39189
+          )
+        )
+        (wire
+          (path Back 236
+            11417 -39008
+            12124 -39008
+          )
+        )
+      )
+    )
+  )
+)

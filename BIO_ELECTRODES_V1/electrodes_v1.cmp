@@ -1,0 +1,59 @@
+Cmp-Mod V01 Created by CvPcb (2013-mar-13)-testing date = Mon 11 Nov 2013 03:46:00 PM CET
+
+BeginCmp
+TimeStamp = /5280A40B;
+Reference = P1;
+ValeurCmp = CONN_4;
+IdModule  = electrode_C2;
+EndCmp
+
+BeginCmp
+TimeStamp = /5280A3E5;
+Reference = P2;
+ValeurCmp = CONN_4;
+IdModule  = PIN_ARRAY_4x1;
+EndCmp
+
+BeginCmp
+TimeStamp = /5280DCA6;
+Reference = P3;
+ValeurCmp = CONN_4;
+IdModule  = electrode_C5;
+EndCmp
+
+BeginCmp
+TimeStamp = /5280DC9F;
+Reference = P4;
+ValeurCmp = CONN_4;
+IdModule  = PIN_ARRAY_4x1;
+EndCmp
+
+BeginCmp
+TimeStamp = /5280DC3B;
+Reference = P5;
+ValeurCmp = CONN_4;
+IdModule  = electrode_C7;
+EndCmp
+
+BeginCmp
+TimeStamp = /5280DCB8;
+Reference = P6;
+ValeurCmp = CONN_4;
+IdModule  = electrode_C8;
+EndCmp
+
+BeginCmp
+TimeStamp = /5280DC34;
+Reference = P7;
+ValeurCmp = CONN_4;
+IdModule  = electrode_SMD_CONN_4;
+EndCmp
+
+BeginCmp
+TimeStamp = /5280DCB1;
+Reference = P8;
+ValeurCmp = CONN_4;
+IdModule  = electrode_SMD_CONN_4;
+EndCmp
+
+EndListe

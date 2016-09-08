@@ -1,0 +1,47 @@
+(export (version D)
+  (design
+    (source /home/saul/Dropbox/Work/projects/kicad/ElectrodeGold/ElectrodeGold.sch)
+    (date "fre 22 aug 2014 15:19:11")
+    (tool "Eeschema (2014-jul-16 BZR unknown)-product"))
+  (components
+    (comp (ref P2)
+      (value CONN_01X04)
+      (libsource (lib conn) (part CONN_01X04))
+      (sheetpath (names /) (tstamps /))
+      (tstamp 53F74310))
+    (comp (ref P1)
+      (value CONN_01X04)
+      (libsource (lib conn) (part CONN_01X04))
+      (sheetpath (names /) (tstamps /))
+      (tstamp 53F74338)))
+  (libparts
+    (libpart (lib conn) (part CONN_01X04)
+      (footprints
+        (fp Pin_Header_Straight_1X04)
+        (fp Pin_Header_Angled_1X04)
+        (fp Socket_Strip_Straight_1X04)
+        (fp Socket_Strip_Angled_1X04))
+      (fields
+        (field (name Reference) P)
+        (field (name Value) CONN_01X04))
+      (pins
+        (pin (num 1) (name P1) (type passive))
+        (pin (num 2) (name P2) (type passive))
+        (pin (num 3) (name P3) (type passive))
+        (pin (num 4) (name P4) (type passive)))))
+  (libraries
+    (library (logical conn)
+      (uri /usr/share/kicad/library/conn.lib)))
+  (nets
+    (net (code 1) (name "Net-(P1-Pad1)")
+      (node (ref P2) (pin 1))
+      (node (ref P1) (pin 1)))
+    (net (code 2) (name "Net-(P1-Pad2)")
+      (node (ref P2) (pin 2))
+      (node (ref P1) (pin 2)))
+    (net (code 3) (name "Net-(P1-Pad3)")
+      (node (ref P2) (pin 3))
+      (node (ref P1) (pin 3)))
+    (net (code 4) (name "Net-(P1-Pad4)")
+      (node (ref P2) (pin 4))
+      (node (ref P1) (pin 4)))))

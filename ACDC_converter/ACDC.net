@@ -1,0 +1,123 @@
+# EESchema Netlist Version 1.1 created  Mon 13 Aug 2012 02:25:58 PM CEST
+(
+ ( /501C250A BP5041A5  U1 BP5041A5 {Lib=BP5041A5}
+  (    1 /VCC )
+  (    3 ? )
+  (    5 /N_VSS )
+  (    7 ? )
+  (   10 N-000009 )
+ )
+ ( /501C2592 CP_13x21mm  C1 10u {Lib=CP}
+  (    1 N-000014 )
+  (    2 /N_VSS )
+ )
+ ( /501C25C8 R4  R1 10 {Lib=R}
+  (    1 N-000014 )
+  (    2 N-000009 )
+ )
+ ( /501C25FC D4  D1 DIODE {Lib=DIODE}
+  (    1 /L_IN )
+  (    2 N-000014 )
+ )
+ ( /501C261E CAP_MKS_26x6  C2 0.1u {Lib=CP}
+  (    1 N-000009 )
+  (    2 /N_VSS )
+ )
+ ( /501C2624 CP_8x13mm  C3 100u {Lib=CP}
+  (    1 /VCC )
+  (    2 /N_VSS )
+ )
+ ( /501CCD41 pin_strip_2  P1 CONN_2 {Lib=CONN_2}
+  (    1 /L_IN )
+  (    2 /N_VSS )
+ )
+ ( /501D76B1 $noname  P4 CONN_1 {Lib=CONN_1}
+  (    1 ? )
+ )
+ ( /501E837F G2RL1H  U2 G2RL-1-H {Lib=G2RL-1-H}
+  (    1 /VCC )
+  (    2 /L_OUT )
+  (    3 ? )
+  (    4 /L_IN )
+  (    5 /VCTRL )
+ )
+ ( /501E84AA pin_strip_3  K1 CONN_3 {Lib=CONN_3}
+  (    1 /VCC )
+  (    2 /N_VSS )
+  (    3 /VCTRL )
+ )
+ ( /501E8900 CMM5_2  P2 CONN_2 {Lib=CONN_2}
+  (    1 /L_OUT )
+  (    2 /L_IN )
+ )
+ ( /501F7185 $noname  P3 CONN_1 {Lib=CONN_1}
+  (    1 ? )
+ )
+ ( /501F7295 $noname  P6 CONN_1 {Lib=CONN_1}
+  (    1 ? )
+ )
+ ( /501F729C $noname  P5 CONN_1 {Lib=CONN_1}
+  (    1 ? )
+ )
+)
+*
+{ Allowed footprints by component:
+$component C1
+ CP*
+ SM*
+$endlist
+$component R1
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component D1
+ D?
+ S*
+$endlist
+$component C2
+ CP*
+ SM*
+$endlist
+$component C3
+ CP*
+ SM*
+$endlist
+$endfootprintlist
+}
+{ Pin List by Nets
+Net 1 "/VCTRL" "VCTRL"
+ U2 5
+ K1 3
+Net 3 "/L_OUT" "L_OUT"
+ U2 2
+ P2 1
+Net 8 "/L_IN" "L_IN"
+ D1 1
+ P1 1
+ U2 4
+ P2 2
+Net 9 "" ""
+ R1 2
+ U1 10
+ C2 1
+Net 12 "/VCC" "VCC"
+ U1 1
+ C3 1
+ K1 1
+ U2 1
+Net 13 "/N_VSS" "N_VSS"
+ P1 2
+ U1 5
+ C1 2
+ C2 2
+ C3 2
+ K1 2
+Net 14 "" ""
+ C1 1
+ R1 1
+ D1 2
+}
+#End

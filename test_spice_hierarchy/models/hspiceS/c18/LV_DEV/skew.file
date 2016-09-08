@@ -1,0 +1,1620 @@
+* Path, Component, Release: cmrf7sf/rel/HSPICE/models/skew.file, rf7sf_models, mod_cmrf7sf
+* CMVC Revision: 2.0
+*
+***********************************************************************
+*
+*>  CMRF7SF  skew.file    Statistical Process / Device Parameters
+*
+*
+***********************************************************************
+
+.lib stats
+ 
+***********************************************************************
+* Global Functions / User Input Parameters
+***********************************************************************
+.param skewfix(nom,best,worst,xsig) = '(xsig>0)*(best-nom)*xsig + (xsig<=0)*(nom-worst)*xsig'
+*
+***********************************************************************
+* Wafer Specific Parameter Calculations
+***********************************************************************
+*
+.param
++   mc_d1    = agauss(0,1,3)
++   mc_d2    = agauss(0,1,3)
++   mc_d3    = agauss(0,1,3)
++   mc_sw    = '(mc_d1 != 0) || (mc_d2 != 0) || (mc_d3 != 0)'
+*
++   n_spec   = '1 - k_wafer'    $ Indicator to Use Nominal Spec Value
+*                                 Toggles "off" for wafer-specific overrides
+*
+***********************************************************************
+* Statistical and Corner Analysis Selections
+*     Note: Wafer specific, Corners and Monte Carlo mutually exclusive
+* Translate Corner Value to Distribution "Sigma" ( divide by 3 )
+***********************************************************************
+.param
++   cnr_rx    = 'n_spec * (1-mc_sw) * (cor_rx_fc + cor_rx*(1-fixcnr))/3'
++   cnr_pc    = 'n_spec * (1-mc_sw) * (cor_pc_fc + cor_pc*(1-fixcnr))/3'
++   cnr_tox   = 'n_spec * (1-mc_sw) * (cor_tox_fc + cor_tox*(1-fixcnr))/3'
++   cnr_toxdg = 'n_spec * (1-mc_sw) * (cor_toxdg_fc + cor_toxdg*(1-fixcnr))/3'
++   cnr_toxtg = 'n_spec * (1-mc_sw) * (cor_toxtg_fc + cor_toxtg*(1-fixcnr))/3'
++   cnr_cap   = 'n_spec * (1-mc_sw) * cor_cap/3'
++   cnr_ind   = 'n_spec * (1-mc_sw) * cor_ind/3'
++   cnr_noin  = 'n_spec * (1-mc_sw) * cor_noin/3'
++   cnr_noip  = 'n_spec * (1-mc_sw) * cor_noip/3'
++   cnr_res   = 'n_spec * (1-mc_sw) * cor_res/3'
++   cnr_jfet  = 'n_spec * (1-mc_sw) * cor_jfet/3'
+*
++   cnr_nfet = 'cor_nmos * (1-fixcnr)'
++   cnr_pfet = 'cor_pmos * (1-fixcnr)'
+*
++   cnr_nf18 = 'n_spec * (1-mc_sw) * (cor_nf18_fc + cnr_nfet)/3'
++   cnr_pf18 = 'n_spec * (1-mc_sw) * (cor_pf18_fc + cnr_pfet)/3'
++   cnr_nfhv = 'n_spec * (1-mc_sw) * (cor_nfhv_fc + cnr_nfet)/3'
++   cnr_pfhv = 'n_spec * (1-mc_sw) * (cor_pfhv_fc + cnr_pfet)/3'
++   cnr_nf33 = 'n_spec * (1-mc_sw) * (cor_nf33_fc + cnr_nfet)/3'
++   cnr_pf33 = 'n_spec * (1-mc_sw) * (cor_pf33_fc + cnr_pfet)/3'
++   cnr_zn   = 'n_spec * (1-mc_sw) * (cor_zn_fc + cnr_nfet)/3'
++   cnr_zn33 = 'n_spec * (1-mc_sw) * (cor_zn33_fc + cnr_nfet)/3'
+*
++   cnr_nf18_psp = 'n_spec * (1-mc_sw) * (cnr_nfet)/3'
++   cnr_pf18_psp = 'n_spec * (1-mc_sw) * (cnr_pfet)/3'
++   cnr_nf33_psp = 'n_spec * (1-mc_sw) * (cnr_nfet)/3'
++   cnr_pf33_psp = 'n_spec * (1-mc_sw) * (cnr_pfet)/3'
++   cnr_nf50     = 'n_spec * (1-mc_sw) * (cnr_nfet)/3'
++   cnr_pf50     = 'n_spec * (1-mc_sw) * (cnr_pfet)/3'
+*
++   npmsxt   = 'waferthk*1.0e-6'    $ Convert units for nominal value
+*
+***********************************************************************
+* Wafer-Specific Unit Conversions and Calculations
+***********************************************************************
+.param
+*
++   npnvt    = 0.02569
+*
++   tox_var1 = 3e-10                               $ Thin oxide Tox variable
++  lint_var1 = 0.0085u                             $ Thin oxide Lint variable
++   s_ntox   = '(k_ntoxinv-4.45)*1e-9*k_wafer'     $ Thin Oxide (meter)
++   s_nvtl   = '(abs(k_nfetvtlin)-0.355)*k_wafer'  $ NFET Base Vth
+*                                                  $ NFET Mobility
++   s_nu0    = '490.8*(abs(k_nfetidlin)/77.5*(1+0.033*s_ntox/tox_var1)-1)*k_wafer'
++   x_nids   = 'abs(k_nfetidsat)*(1+0.051*s_ntox/tox_var1)/(1+0.024*s_nu0/73.9)'
++   s_nids   = 'min(1,(max(0,(x_nids-600))))'      $ Switch: Idsat > Nom spec
+*                                                  $ Delta L Adder (one side)
++   s_ndel   = 'lint_var1*(x_nids-600)/((46*s_nids)+(36*(1-s_nids)))*k_wafer'
++   s_novc   = 'k_nfetcolap*1e-9*k_wafer'          $ NFET Covl (F/meter)
++   s_ncja   = 'k_narea*1e-3*k_wafer'              $ NFET S/D Cj (F/meter**2)
+*
++   s_pvtl   = '(abs(k_pfetvtlin)-0.420)*k_wafer'  $ PFET Base Vth
+*                                                  $ PFET Mobility
++   s_pu0    = '98.6*(abs(k_pfetidlin)/20.5*(1+0.045*s_ntox/tox_var1)-1)*k_wafer'
++   x_pids   = 'abs(k_pfetidsat)*(1+0.047*s_ntox/tox_var1)/(1+0.120*s_pu0/11.86)'
++   s_pids   = 'min(1,(max(0,(x_pids-260))))'      $ Switch: Idsat > Nom spec
+*                                                  $ Delta L Adder (one side)
++   s_pdel   = 'lint_var1*(x_pids-260)/((40.7*s_pids)+(29.9*(1-s_pids)))*k_wafer'
++   s_povc   = 'k_pfetcolap*1e-9*k_wafer'          $ PFET Covl (F/meter)
++   s_pcja   = 'k_parea*1e-3*k_wafer'              $ PFET S/D Cj (F/meter**2)
+*
++   s_nhvtl  = '(abs(k_highvtnfetvtlin)-0.525)*k_wafer'  $ NFETHV Base Vth
+*                                                        $ NFETHV Mobility
++   s_nhu0   = '574.7*(1.0*(1+0.033*s_ntox/tox_var1)-1)*k_wafer'
++   x_nhids  = 'abs(k_highvtnfetidsat)*(1+0.058*s_ntox/tox_var1)/(1+0.061*s_nhu0/157.07)'
++   s_nhids  = 'min(1,(max(0,(x_nhids-500))))'     $ Switch: Idsat > Nom spec
++   s_nhdel  = 'lint_var1*(x_nhids-500)/((26.0*s_nhids)+(24.5*(1-s_nhids)))*k_wafer'
+*
++   s_phvtl  = '(abs(k_highvtpfetvtlin)-0.520)*k_wafer'  $ PFETHV Base Vth
+*                                                        $ PFETHV Mobility
++   s_phu0   = '240*(1.0*(1+0.055*s_ntox/tox_var1)-1)*k_wafer'
++   x_phids  = 'abs(k_highvtpfetidsat)*(1+0.061*s_ntox/tox_var1)/(1+0.206*s_phu0/52)'
++   s_phids  = 'min(1,(max(0,(x_phids-210))))'     $ Switch: Idsat > Nom spec
+*                                                  $ Delta L Adder (one side)
++   s_phdel  = 'lint_var1*(x_phids-210)/((31.4*s_phids)+(24.0*(1-s_phids)))*k_wafer'
+*
++   s_znvtl  = '(abs(k_zvtthinvtlin)-0.040)*k_wafer'  $ ZVTNFET Base Vth
+*                                                     $ ZVTNFET Mobility
++   s_znu0   = '430*(1.0*(1+0.027*s_ntox/tox_var1)-1)*k_wafer'
++   x_znids  = '485*(1+0.037*s_ntox/tox_var1)/(1+0.137*s_nu0/100)'
++   s_znids  = 'min(1,(max(0,(x_znids-485))))'        $ Switch: Idsat > Nom spec
++   s_zndel  = 'lint_var1*(x_znids-485)/((5.3*s_znids)+(5.7*(1-s_znids)))*k_wafer'
+*
++   tox_var2 = 5e-10                                 $ Thick oxide Tox variable
++  lint_var2 = 0.011u                                $ Thick oxide Lint variable
++   s_n33tox = '(k_thickntoxinv-7.9)*1e-9*k_wafer'       $ Thick Oxide (meter)
++   s_n33vtl = '(abs(k_thicknfetvtlin)-0.660)*k_wafer'   $ NFET33 Base Vth
+*                                                        $ NFET33 Mobility
++   s_n33u0  = '500.4*(1.0*(1+0.031*s_n33tox/tox_var2)-1)*k_wafer'
++   x_n33ids = 'abs(k_thicknfetidsat)*(1+0.053*s_n33tox/tox_var2)/(1+0.114*s_n33u0/205.54)'
++   s_n33ids = 'min(1,(max(0,(x_n33ids-575))))'      $ Switch: Idsat > Nom spec
+*                                                    $ Delta L Adder (one side)
++   s_n33del = 'lint_var2*(x_n33ids-575)/((21.3*s_n33ids)+(19*(1-s_n33ids)))*k_wafer'
+*
++   s_p33vtl = '(abs(k_thickpfetvtlin)-0.730)*k_wafer'   $ PFET33 Base Vth
+*                                                        $ PFET33 Mobility
++   s_p33u0  = '123.7*(1.0*(1+0.036*s_n33tox/tox_var2)-1)*k_wafer'
++   x_p33ids = 'abs(k_thickpfetidsat)*(1+0.052*s_n33tox/tox_var2)/(1+0.137*s_p33u0/22.4)'
++   s_p33ids = 'min(1,(max(0,(x_p33ids-225))))'      $ Switch: Idsat > Nom spec
+*                                                    $ Delta L Adder (one side)
++   s_p33del = 'lint_var2*(x_p33ids-225)/((17.4*s_p33ids)+(14.9*(1-s_p33ids)))*k_wafer'
+*
++   s_z33vtl = '(abs(k_zvtthickvtlin)-0.005)*k_wafer'  $ ZVTNFET33 Base Vth
+*                                                      $ ZVTNFET33 Mobility
++   s_z33u0  = '412.5*(1.0*(1+0.0232*s_n33tox/tox_var2)-1)*k_wafer'
++   x_z33ids = '600*(1+0.043*s_n33tox/tox_var2)/(1+0.086*s_n33u0/107)'
++   s_z33ids = 'min(1,(max(0,(x_z33ids-600))))'      $ Switch: Idsat > Nom spec
++   s_z33del = 'lint_var2*(x_z33ids-600)/((10.1*s_z33ids)+(10.6*(1-s_z33ids)))*k_wafer'
+*
++   tox_var3 = 8e-10                                  $ 5V Tox variable
++  lint_van3 = 0.026u                                 $ 5V NFET Lint variable
++  lint_vap3 = 0.025u                                 $ 5V PFET Lint variable
++   s_p50tox = '(k_5vptoxinv-12.7)*1e-9*k_wafer'      $ 5V Thick Oxide (meter)
++   s_n50vtl = '(abs(k_5vnfetvtlin)-0.625)*k_wafer'   $ NFET50 Base Vth
+*                                                     $ NFET50 Mobility
++   s_n50u0  = '0.055*(1.0*(1+0.0252*s_p50tox/tox_var3)-1)*k_wafer'
++   x_n50ids = 'abs(k_5vnfetidsat)*(1+0.0705*s_p50tox/tox_var3)/(1+0.046*s_n50u0/0.0028)'
++   s_n50ids = 'min(1,(max(0,(x_n50ids-630))))'     $ Switch: Idsat > Nom spec
+*                                                     $ Delta L Adder (one side)
++   s_n50del = 'lint_van3*(x_n50ids-630)/((37.2*s_n50ids)+(30.9*(1-s_n50ids)))*k_wafer'
+*
++   s_p50vtl = '(abs(k_5vpfetvtlin)-0.650)*k_wafer'   $ PFET50 Base Vth
+*                                                     $ PFET50 Mobility
++   s_p50u0  = '0.01785*(1.0*(1+0.03165*s_p50tox/tox_var3)-1)*k_wafer'
++   x_p50ids = 'abs(k_5vpfetidsat)*(1+0.066*s_p50tox/tox_var3)/(1+0.123*s_p50u0/0.0025)'
++   s_p50ids = 'min(1,(max(0,(x_p50ids-315))))'       $ Switch: Idsat > Nom spec
+*                                                     $ Delta L Adder (one side)
++   s_p50del = 'lint_vap3*(x_p50ids-315)/((42.8*s_p50ids)+(31.7*(1-s_p50ids)))*k_wafer'
+*
++   s_opndrs = 'k_opndifrs*k_wafer'            $ N+ S/D Res Rs
++   s_oppdrs = 'k_oppdifrs*k_wafer'            $ P+ S/D Res Rs
++   s_oppcrs = 'k_ppcrs*k_wafer'               $ P+ Poly Res Rs
++   s_oprprs = 'k_rprs*k_wafer'                $ RP Poly Res Rs
++   s_oprrrs = 'k_rrrs*k_wafer'                $ RR Poly Res Rs
++   s_k1rs   = 'k_k1rs*k_wafer'                $ K1 BEOL Res Rs
++   s_nwrs   = 'k_nwellrs*k_wafer'             $ NWell Rs
+*
+*                                              $ nMOS Varactor Offset Factors
++   s_comv   = '((k_ntoxinv-4.45)/0.3)*k_wafer'
++   s_comv33 = '((k_thickntoxinv-7.9)/0.5)*k_wafer'
++   s_comv50 = '((k_5vptoxinv-12.7)/0.8)*k_wafer'
++   s_qsnw   = '((k_nwellrs-360)/110)*k_wafer'
+*
+*                                              $ HA Varactor Offset Factor
++   s_havar  = '(k_wafer*(-0.175 + sqrt(0.030625-0.0172*(2.45-k_havarcarea)))/0.0258)'
+*
++   sbdvt    = '1.0354*npnvt'
+*                                              $ SBD Ifwd Ratio
++   s_sbdif  = '(1.0*n_spec)+k_wafer*(exp(0.335/sbdvt)/exp(k_sbdvf/sbdvt))'
+*
++   s_cmimqa  = 'k_ncmimcarea * 1e-3*k_wafer'    $ Single Nitride MIM Cap (hd=0)
++   s_dncmimc = 'k_dncmimcarea* 1e-3*k_wafer'
++   s_cmimha  = 's_dncmimc - s_cmimqa'            $ Dual Nitride (Hx) MIM Cap
++   s_hkcmima = 'k_hikcmimcarea*1e-3*k_wafer'    $ HiK MIM Cap
+*
++   s_mtrs   = 'k_mtrs*k_wafer'                $ MT Rs
++   s_mzrs   = 'k_mzrs*k_wafer'                $ MZ Rs
++   s_mlrs   = 'k_mlrs*k_wafer'                $ ML Rs
++   s_ammars = 'k_am_mars*k_wafer'             $ AM (or MA) Rs
+*
+***********************************************************************
+* Process Parameters
+***********************************************************************
+.param
++   pi         = 3.14159
++   e0         = 8.8542p
++   ersi       = 11.9
++   mu0        = 1.2566e-6
++   eoxdepo    = 4.1
+*
+*                                            $ Process Image Distributions
++   xistrx     = agauss(cnr_rx,1,3)          $ RX bias
++   distrx     = xistrx
++   xistpc     = agauss('-cnr_pc',1,3)       $ PC bias
++   distpc     = xistpc
++   xistop     = agauss(0,1,3)               $ OP bias
++   distop     = xistop
++   xistns     = agauss(0,1,3)               $ NS bias
++   distns     = xistns
++   xistnw     = agauss(0,1,3)               $ NW bias
++   distnw     = xistnw
++   xistk1     = agauss(0,1,3)               $ K1 bias
++   distk1     = xistk1
++   xistv1     = agauss(0,1,3)               $ V1 bias
++   distv1     = xistv1
+*
+*                                            $ Process Profile Distributions
++   xistox     = agauss('-cnr_tox',1,3)      $ 1.8V Gate oxide
++   distox     = xistox
++   xistoxdg   = agauss('-cnr_toxdg',1,3)    $ 3.3V Gate oxide
++   distoxdg   = xistoxdg
++   xistoxtg   = agauss('-cnr_toxtg',1,3)    $ 5V Gate oxide
++   distoxtg   = xistoxtg
++   xpcthk     = agauss(cnr_ind,1,3)         $ Poly Line Thickness
++   dpcthk     = xpcthk
++   xpcsti     = agauss(cnr_ind,1,3)         $ STI Thickness
++   dpcsti     = xpcsti
+* 
++   tdelrx     = '0.049u * distrx'           $ RX bias tolerance
++   tdelpc     = '0.03u * distpc'            $ PC bias tolerance
++   opdld      = '0.105u * distop'           $ OP bias tolerance
+*
++   lwbpc      = '-0.03u + tdelpc'           $ Poly Line Width Bias (Thin ox)
++   lwbpc33    = '-0.11u + tdelpc'           $ Poly Line Width Bias (Thick ox)
++   oppcthk    = '0.20u + 0.02u*dpcthk'      $ Poly Line Thickness
++   oppcstin   = 0.33u                       $ Effective STI Thickness
++   oppcstif   = 'oppcstin + 0.04u*dpcsti'
+*
++   opendf     = 0.76u                       $ RX overlap past CA
++   oppcendf   = 0.72u                       $ PC overlap past CA
++   k1endf     = 0.78u                       $ K1 overlap past V1
+*
+*                                       PC area, peri cap (F/meter**2, F/meter)
++   oppcdown   = '3.453E-11 / oppcstif'
++   oppcfrng   = '3.453E-11 * (2.0 + (2/pi)*log(1 + oppcthk/oppcstif))'
+*
+*                                              N+ S/D Resistor
+*
++   xndrs      = agauss(cnr_res,1,3)         $ Distributions
++   dndrs      = xndrs
++   xndren     = agauss(cnr_res,1,3)
++   dndren     = xndren
++   xnoind     = agauss(cnr_res,1,3)
++   dnoind     = xnoind
+*
++   opndrsn    = '(72 - 4*p5vonly)*n_spec + s_opndrs'   $ Rs, ohm/sq
++   opndrsf    = 'opndrsn + 7.2*dndrs'
++   opndrenn   = 2.321                       $ Rend, ohm-meter exponent
++   opndrenf   = 'opndrenn + 1.531*dndren'
++   opnddln    =  0u                         $ delta lop
++   opnddlf    = 'opnddln + opdld'
++   opnddwn    = '-0.04u*p5vonly'            $ delta w
++   opnddwf    = 'opnddwn + tdelrx'
++   opndrstc   =  1900u                      $ Rs   Tcr = +1900 ppm
++   opndrntc   =   600u                      $ Rend Tcr = + 600 ppm
++   opndvcr    =   650u                      $ Vcr =  650 ppm/V
++   opndma     =  4.0                        $ Mis-match coefficients
++   opndml     =  7.0
++   opndmw     =  0.5
+*
+*                                              P+ S/D Resistor
+*
++   xpdrs      = agauss(cnr_res,1,3)         $ Distributions
++   dpdrs      = xpdrs
++   xpdren     = agauss(cnr_res,1,3)
++   dpdren     = xpdren
++   xnoipd     = agauss(cnr_res,1,3)
++   dnoipd     = xnoipd
+*
++   oppdrsn    = '105*n_spec + s_oppdrs'     $ Rs, ohm/sq
++   oppdrsf    = 'oppdrsn + 15*dpdrs'
++   oppdrenn   = 3.4012                      $ Rend, ohm-meter exponent
++   oppdrenf   = 'oppdrenn + 0.693*dpdren'
++   oppddln    =  0u                         $ delta lop
++   oppddlf    = 'oppddln + opdld'
++   oppddwn    = -0.07u                      $ delta w
++   oppddwf    = 'oppddwn + tdelrx'
++   oppdrstc   =  1340u                      $ Rs   Tcr = +1340 ppm
++   oppdrntc   = -160u                       $ Rend Tcr =  -160 ppm
++   oppdvcr    =  540u                       $ Vcr = 540 ppm/V
++   oppdma     =  8.0                        $ Mis-match coefficients
++   oppdml     =  9.0
++   oppdmw     =  1.0
+*
+*                                              P+ Poly Resistor
+*
++   xpcrs      = agauss(cnr_res,1,3)         $ Distributions
++   dpcrs      = xpcrs
++   xpcren     = agauss(cnr_res,1,3)
++   dpcren     = xpcren
+*
++   oppcrsn    = '260*n_spec + s_oppcrs'     $ Rs, ohm/sq
++   oppcrsf    = 'oppcrsn + 39*dpcrs'
++   oppcrenn   = 5.031                       $ Rend, ohm-meter exponent
++   oppcrenf   = 'oppcrenn + 0.3118*dpcren'
++   oppcdln    =  0u                         $ delta lop
++   oppcdlf    = 'oppcdln + opdld'
++   oppcdwn    = -0.03u                      $ delta w
++   oppcdwf    = 'oppcdwn + tdelpc'
++   oppcrstc   =  160u                       $ Rs   Tcr = + 160 ppm
++   oppcrntc   = -790u                       $ Rend Tcr = - 790 ppm
++   oppcma     =  5.0                        $ Mis-match coefficients
++   oppcml     =  2.0
++   oppcmw     =  0
+*
+*                                              RP Poly Resistor
+*
++   xrprs      = agauss(cnr_res,1,3)         $ Distributions
++   drprs      = xrprs
++   xrpren     = agauss(cnr_res,1,3)
++   drpren     = xrpren
+*
++   oprprsn    = '165*n_spec + s_oprprs'     $ Rs, ohm/sq
++   oprprsf    = 'oprprsn + 13.2*drprs'
++   oprprenn   =  2.6391                     $ Rend, ohm-meter exponent
++   oprprenf   = 'oprprenn + 1.253*drpren'
++   oprpdln    =  0u                         $ delta lop
++   oprpdlf    = 'oprpdln + opdld'
++   oprpdwn    = -0.03u                      $ delta w
++   oprpdwf    = 'oprpdwn + tdelpc'
++   oprprstc   =  210u                       $ Rs   Tcr = + 210 ppm
++   oprprntc   = -1960u                      $ Rend Tcr = -1960 ppm
++   oprpma     =  6.5                        $ Mis-match coefficients
++   oprpml     =  0
++   oprpmw     =  0.9
+*
+*                                              RR Poly Resistor
+*
++   xrrrs      = agauss(cnr_res,1,3)         $ Distributions
++   drrrs      = xrrrs
++   xdlbn      = agauss('-cnr_res',1,3)
++   ddlbn      = xdlbn
+*
++   oprrrsn    = '1600*n_spec + s_oprrrs'    $ Rs, ohm/sq
++   oprrrsf    = 'oprrrsn + 320*drrrs'
++   opdlbnn    =  0.490u                     $ BN overlap OP + outdiffusion
++   opdlbnf    = 'opdlbnn + 0.11u*ddlbn'
++   oprrdwn    = -0.03u                      $ delta w
++   oprrdwf    = 'oprrdwn + tdelpc'
++   oprrtc1    = -1360u                      $ Rs Tcr1 = -1360 ppm
++   oprrtc2    =  3.33u                      $ Rs Tcr2 = +3.33 ppm
++   oprrshk    =  131                        $ Self-heating parameters
++   oprrshm    =  0.2
++   oprrma     =  8.5                        $ Mis-match coefficients
++   oprrml     =  7.0
++   oprrmw     =  0
+*
+*                                              RR Poly Serpentine Resistor
+*
++   opserend   = 140u                        $ Dogbone Rend, ohm-meter
++   opserendf  = 'opserend + 126u*dpcren'    $ Distribution for Rend
++   oprseretc1 = -2000u                      $ Rend Tcr1 = -2000 ppm
++   oprseretc2 =  7.7u                       $ Rend Tcr2 = +7.7  ppm
++   opsershk   =  101                        $ Self-heating parameters
++   opsershm   =  0.7
++   oprrsma    =  6.9                        $ Mis-match coefficients
++   oprrsml    =  0
++   oprrsmw    =  0.12
+*
+*                                              K1 BEOL Resistor
+*
++   xk1rs      = agauss(cnr_res,1,3)         $ Distributions
++   dk1rs      = xk1rs
++   xk1ren     = agauss(cnr_res,1,3)
++   dk1ren     = xk1ren
+*
++   k1rsn      = '61*n_spec + s_k1rs'        $ Rs, ohm/sq
++   k1rsf      = 'k1rsn + 4.88*dk1rs'
++   k1renn     =  3.4012                     $ Rend exponent, ohm-meter
++   k1renf     = 'k1renn + 0.69*dk1ren'
++   k1dln      =  0u                         $ delta l
++   k1dlf      = 'k1dln - 0.07u*distv1'  
++   k1dwn      =  0.32u                      $ delta w
++   k1dwf      = 'k1dwn + 0.14u*distk1'
++   k1rstc1    = -387u                       $ Rs Tc1 = - 387 ppm
++   k1rstc2    =  0.41u                      $ Rs Tc2 = +0.41 ppm
++   k1rntc     =  600u                       $ Ren Tc = + 600 ppm
++   k1ma       =  0                          $ Mis-match coefficients
++   k1ml       =  0.60
++   k1mw       =  0.45
++   k1ms       =  0.09
+*
++   ndelrx     = -0.06u                      $ Shallow Trench Image
++   delrx      = 'ndelrx  + tdelrx'
++   xpcrsi     = agauss(0,1,3)               $ Silicided Poly Sheet Rho dist
++   dpcrsi     = xpcrsi
++   pcrsi      = '8.0 + 3.0*dpcrsi'          $ Silicided Poly Rs (ohm/sq)
+*
+*                                              NS to Substrate (w/ RN) Diode
+*
++   js_rns     = 1.4u                        $ Sat Current (A/meter**2)
++   jsw_rns    = 4.3p                        $ Sidewall Sat Current (A/meter)
++   n_rns      = 1.045                       $ Ideality
++   pb_rns     = 0.45                        $ Voltage dependence
++   mj_rns     = 0.35
++   pbsw_rns   = 0.64                        $ Voltage dependence
++   mjsw_rns   = 0.29
++   cta_rns    = 0                           $ Cap temperature dependence
++   pta_rns    = 0
++   ctp_rns    = 1.1m
++   ptp_rns    = 0
++   bv_rns     = 8
+*
+*                                              NS to Substrate (no TI) Diode
+*
++   js_ns      = 1.21u                       $ Sat Current (A/meter**2)
++   jsw_ns     = 4.62p                       $ Sidewall Sat Current (A/meter)
++   n_ns       = 1.035                       $ Ideality
++   cj_ns      = '0.180m + 0.036m*dncjsa'    $ Capacitance (F/meter**2)
++   pb_ns      = 1.0                         $ Voltage dependence
++   mj_ns      = 0.9
++   cjsw_ns    = '0.50n + 0.10n*dncjsp'      $ Sidewall Cap (F/meter)
++   pbsw_ns    = 0.35                        $ Voltage dependence
++   mjsw_ns    = 0.2
+*
+*                                              NFET
+*
++   xnvth0     = agauss('-cnr_nf18*(1-fixcnr)',1,3)     $ Distributions
++   dnvth0     = xnvth0
++   xnvsat     = agauss('cnr_nf18*(1-fixcnr)',1,3)
++   dnvsat     = xnvsat
++   xnu0       = agauss('cnr_nf18*(1-fixcnr)',1,3)
++   dnu0       = xnu0
++   xncgov     = agauss('-cnr_nf18',1,3)
++   dncgov     = xncgov
++   xncj       = agauss('-cnr_nf18',1,3)
++   dncj       = xncj
++   xncjsw     = agauss('-cnr_nf18',1,3)
++   dncjsw     = xncjsw
++   xncjsg     = agauss('-cnr_nf18',1,3)
++   dncjsg     = xncjsg
++   xnrdsw     = agauss('-cnr_nf18*(1-fixcnr)',1,3)
++   dnrdsw     = xnrdsw
++   xnoin      = agauss('-cnr_noin',1,3)
++   dnoin      = xnoin
+*
+*                                            $ Fixed Corner Adders
++   cvth_n     = 'fixcnr * skewfix(0.3423,0.2674,0.42704,cnr_nf18)'
++   cpvt_n     = 'fixcnr * skewfix(0,-0.0009309,0.0016811,cnr_nf18)'
++   cxl_n      = 'fixcnr * skewfix(1.75e-8,2.6e-8,0.9e-8,cnr_nf18)'
++   clpc_n     = 'fixcnr * skewfix(1.75e-8,2.6e-8,0.9e-8,cnr_pc)'
++   cxw_n      = 'fixcnr * skewfix(1e-8,-1e-8,3e-8,cnr_nf18)'
++   cwrx_n     = 'fixcnr * skewfix(1e-8,-1e-8,3e-8,cnr_rx)'
++   cu0_n      = 'fixcnr * skewfix(490.8,557.04,477.36,cnr_nf18)'
++   crds_n     = 'fixcnr * skewfix(221.6,152.27,243.8,cnr_nf18)'
+*
+*                                            $ Gate oxide thickness (meter)
++   tox_n      = '4.45n + 0.3n*distox + s_ntox'
+*                                            $ Base Threshold voltage (V)
++   vtol_n     = '0.045*dnvth0 + (tox_n-4.45n-s_ntox)*7.09E7*(1-fixcnr)'
++   vth0_n     = '0.3423 + vtol_n + cvth_n + s_nvtl'
++   pvth0_n    = '0 + cpvt_n'
++   vsat_n     = 'exp(11.81258+0.123*dnvsat)' $ Saturation velocity (meter/sec)
++   ltol_n     = '-8.5n*distpc*(1-fixcnr)'
++   lint_n     = '0.0175u + ltol_n + cxl_n + clpc_n + s_ndel' $ Delta L (one side)
++   wtol_n     = '-0.05u*distrx*(1-fixcnr)'
++   wint_n     = '0.01u + wtol_n + cxw_n + cwrx_n'         $ Delta W (one side)
++   u0_n       = 'exp(6.196 + 0.15*dnu0) + cu0_n + s_nu0'  $ Base mobility (cm**2/Vsec)
++   rdsw_n     = '221.6 + 22.2*dnrdsw + crds_n'    $ Base series res (ohm-um)
++   cgsl_n     = '330p*n_spec + s_novc + 40p*dncgov'   $ G/S covlp at 0V (F/m)
++   cgdl_n     = '330p*n_spec + s_novc + 40p*dncgov'   $ G/D covlp at 0V (F/m)
++   cgso_n     = 0p                          $ G/S overlap cap offset (F/meter)
++   cgdo_n     = 0p                          $ G/D overlap cap offset (F/meter)
++   rsh_n      = 8                           $ S/D sheet resistance (ohms/sq)
++   js_n       = 80n                         $ N+ Area Sat Cur (A/meter**2)
++   jsw_n      = 50f                         $ N+ Sidewall Sat Cur (A/meter)
++   n_n        = 1.02                        $ Ideality
++   cj_nstd    = '0.85m*n_spec + s_ncja + 0.20m*dncj'       $ N+ Diode Cap (F/m**2)
++   cj_n       = 'cj_nstd*(1-p5vonly) + cj_n50*p5vonly'
++   pb_n       = '0.61*(1-p5vonly) + pb_n50*p5vonly'        $ Voltage dependence
++   mj_n       = '0.43*(1-p5vonly) + mj_n50*p5vonly'
++   cjsw_n     = '(145p + 36.2p*dncjsw)*(1-p5vonly) + cjsw_n50*p5vonly' $ N+ STI Sidewall Cap (F/meter)
++   pbsw_n     = '0.42*(1-p5vonly) + pbsw_n50*p5vonly'      $ Voltage dependence
++   mjsw_n     = '0.32*(1-p5vonly) + mjsw_n50*p5vonly'
++   cjsg_n     = '435p + 109p*dncjsg'        $ N+ Gate Sidewall Cap (F/meter)
++   pbsg_n     = 1.0                         $ Voltage dependence
++   mjsg_n     = 0.63
++   cta_n      = 1.0m                        $ Cap temperature dependence
++   pta_n      = 0.7m
++   ctp_n      = 1.6m
++   ptp_n      = 0.3m
++   tcjsg_n    = 0.9m
++   tpbsg_n    = 1.3m
++   hdif_n     = 0.26u                       $ Center Diff Contact to gate (m)
++   noidevan   = 1.8e-11                     $ Area, 1/f statistics (meter*2)
++   noistdn    = 1.0500                      $ 3-sigma log noise distribution
+*
+*                                              PFET
+*
++   xpvth0     = agauss('cnr_pf18*(1-fixcnr)',1,3)    $ Distributions
++   dpvth0     = xpvth0
++   xpu0       = agauss('cnr_pf18*(1-fixcnr)',1,3)
++   dpu0       = xpu0
++   xpcgov     = agauss('-cnr_pf18',1,3)
++   dpcgov     = xpcgov
++   xpcj       = agauss('-cnr_pf18',1,3)
++   dpcj       = xpcj
++   xpcjsw     = agauss('-cnr_pf18',1,3)
++   dpcjsw     = xpcjsw
++   xpcjsg     = agauss('-cnr_pf18',1,3)
++   dpcjsg     = xpcjsg
++   xprdsw     = agauss('-cnr_pf18*(1-fixcnr)',1,3)
++   dprdsw     = xprdsw
++   xnoip      = agauss('-cnr_noip',1,3)
++   dnoip      = xnoip
+*
+*                                            $ Fixed Corner Adders
++   cvth_p     = 'fixcnr * skewfix(-0.4143,-0.3315,-0.49493,cnr_pf18)'
++   cpvt_p     = 'fixcnr * skewfix(0,0.00054078,-0.0002781,cnr_pf18)'
++   cxl_p      = 'fixcnr * skewfix(1.75e-8,2.4e-8,0.9e-8,cnr_pf18)'
++   clpc_p     = 'fixcnr * skewfix(1.75e-8,2.4e-8,0.9e-8,cnr_pc)'
++   cxw_p      = 'fixcnr * skewfix(-1.5e-8,-3.5e-8,0.5e-8,cnr_pf18)'
++   cwrx_p     = 'fixcnr * skewfix(-1.5e-8,-3.5e-8,0.5e-8,cnr_rx)'
++   cu0_p      = 'fixcnr * skewfix(98.59,100.07,97.114,cnr_pf18)'
++   crds_p     = 'fixcnr * skewfix(319.9,305.5,334.3,cnr_pf18)'
+*
+*                                            $ Gate oxide thickness (meter)
++   tox_p      = '4.6n + 0.3n*distox + s_ntox'
+*                                            $ Base Threshold voltage (V)
++   vtol_p     = '0.045*dpvth0 - (tox_p-4.6n-s_ntox)*7.49E7*(1-fixcnr)'
++   vth0_p     = '-0.4143 + vtol_p + cvth_p - s_pvtl'
++   pvth0_p    = '0 + cpvt_p'
++   ltol_p     = '-8.5n*distpc*(1-fixcnr)'
++   lint_p     = '0.0175u + ltol_p + cxl_p + clpc_p + s_pdel' $ Delta L (one side)
++   wtol_p     = '-0.05u*distrx*(1-fixcnr)'
++   wint_p     = '-0.015u + wtol_p + cxw_p + cwrx_p'       $ Delta W (one side)
++   u0_p       = 'exp(4.591 + 0.12*dpu0) + cu0_p + s_pu0'  $ Base mobility (cm**2/Vsec)
++   rdsw_p     = '319.9 + 32.0*dprdsw + crds_p'    $ Base series res (ohm-um)
++   cgsl_p     = '333p*n_spec + s_povc + 40p*dpcgov'   $ G/S covlp at 0V (F/m)
++   cgdl_p     = '333p*n_spec + s_povc + 40p*dpcgov'   $ G/D covlp at 0V (F/m)
++   cgso_p     = 17p                         $ G/S overlap cap offset (F/meter)
++   cgdo_p     = 17p                         $ G/D overlap cap offset (F/meter)
++   rsh_p      = 8                           $ S/D sheet resistance (ohms/sq)
++   js_p       = '85n*(1 + 0.1*p5vonly)'     $ P+ Area Sat Cur (A/meter**2)
++   jsw_p      = 30f                         $ P+ Sidewall Sat Cur (A/meter)
++   n_p        = 1.01                        $ Ideality
++   cj_pstd    = '1.15m*n_spec + s_pcja + 0.16m*dpcj'      $ P+ Diode Cap (F/m**2)
++   cj_p       = 'cj_pstd*(1-p5vonly) + cj_p50*p5vonly'
++   pb_p       = '0.73*(1-p5vonly) + pb_p50*p5vonly'       $ Voltage dependence
++   mj_p       = '0.39*(1-p5vonly) + mj_p50*p5vonly'
++   cjsw_p     = '(100p + 25p*dpcjsw)*(1-p5vonly) + cjsw_p50*p5vonly' $ P+ STI Sidewall Cap (F/meter)
++   pbsw_p     = '0.99*(1-p5vonly) + pbsw_p50*p5vonly'     $ Voltage dependence
++   mjsw_p     = '0.01*(1-p5vonly) + mjsw_p50*p5vonly'
++   cjsg_p     = '355.5p + 88.9p*dpcjsg'     $ P+ Gate Sidewall Cap (F/meter)
++   pbsg_p     = 0.983                       $ Voltage dependence
++   mjsg_p     = 0.551
++   cta_p      = 0.7m                        $ Cap temperature dependence
++   pta_p      = 1.6m
++   ctp_p      = 0.3m
++   ptp_p      = 0
++   tcjsg_p    = 1.0m
++   tpbsg_p    = 1.2m
++   hdif_p     = 0.26u                       $ Center Diff Contact to gate (m)
++   noidevap   = 1.8e-11                     $ Area, 1/f statistics (meter*2)
++   noistdp    = 1.2321                      $ 3-sigma log noise distribution
+*
+*                                              NFETHV
+*
++   xnhvvth0   = agauss('-cnr_nfhv*(1-fixcnr)',1,3)     $ Distributions
++   dnhvvth0   = xnhvvth0
++   xnhvvsat   = agauss('cnr_nfhv*(1-fixcnr)',1,3)
++   dnhvvsat   = xnhvvsat
++   xnhvu0     = agauss('cnr_nfhv*(1-fixcnr)',1,3)
++   dnhvu0     = xnhvu0
++   xnhvcj     = agauss('-cnr_nfhv',1,3)
++   dnhvcj     = xnhvcj
++   xnhvcjsw   = agauss('-cnr_nfhv',1,3)
++   dnhvcjsw   = xnhvcjsw
++   xnhvcjsg   = agauss('-cnr_nfhv',1,3)
++   dnhvcjsg   = xnhvcjsg
++   xnoinhv    = agauss('-cnr_noin',1,3)
++   dnoinhv    = xnoinhv
+*
+*                                            $ Fixed Corner Adders
++   cvth_nhv   = 'fixcnr * skewfix(0.5194,0.4353,0.6131,cnr_nfhv)'
++   cpvt_nhv   = 'fixcnr * skewfix(0,-0.0013387,0.0019304,cnr_nfhv)'
++   cxl_nhv    = 'fixcnr * skewfix(1.85e-8,2.7e-8,1e-8,cnr_nfhv)'
++   clpc_nhv   = 'fixcnr * skewfix(1.85e-8,2.7e-8,1e-8,cnr_pc)'
++   cxw_nhv    = 'fixcnr * skewfix(1e-8,-1e-8,3e-8,cnr_nfhv)'
++   cwrx_nhv   = 'fixcnr * skewfix(1e-8,-1e-8,3e-8,cnr_rx)'
++   cu0_nhv    = 'fixcnr * skewfix(574.7,652.3,561.1,cnr_nfhv)'
++   crds_nhv   = 'fixcnr * skewfix(150,70.34,157.91,cnr_nfhv)'
+*
+*                                            $ Gate oxide thickness (meter)
++   tox_nhv    = '3.5n + 0.3n*distox + s_ntox'
+*                                            $ Base Threshold voltage (V)
++   vtol_nhv   = '0.051*dnhvvth0 + (tox_nhv-3.5n-s_ntox)*7E7*(1-fixcnr)'
++   vth0_nhv   = '0.5194 + vtol_nhv + cvth_nhv + s_nhvtl'
++   pvth0_nhv  = '0 + cpvt_nhv'
++   vsat_nhv   = '9.897e4*exp(0.15*dnhvvsat)'  $ Saturation velocity (meter/sec)
++   ltol_nhv   = '-8.5n*distpc*(1-fixcnr)'
++   lint_nhv   = '0.0185u + ltol_nhv + cxl_nhv + clpc_nhv + s_nhdel' $ Delta L (one side)
++   wtol_nhv   = '-0.05u*distrx*(1-fixcnr)'
++   wint_nhv   = '0.01u + wtol_nhv + cxw_nhv + cwrx_nhv'     $ Delta W (one side)
++   u0_nhv     = '574.7*exp(0.27*dnhvu0) + cu0_nhv + s_nhu0' $ Base mobility (cm**2/Vsec)
++   rdsw_nhv   = '150 + 15*dnrdsw + crds_nhv'       $ Base series res (ohm-um)
++   cgsl_nhv   = '315p + 40p*dncgov'         $ G/S overlap cap at 0V (F/meter)
++   cgdl_nhv   = '315p + 40p*dncgov'         $ G/D overlap cap at 0V (F/meter)
++   cgso_nhv   = 0                           $ G/S overlap cap offset (F/meter)
++   cgdo_nhv   = 0                           $ G/D overlap cap offset (F/meter)
++   rsh_nhv    = 8                           $ S/D sheet resistance (ohms/sq)
++   js_nhv     = 80n                         $ N+ Area Sat Cur (A/meter**2)
++   jsw_nhv    = 50f                         $ N+ Sidewall Sat Cur (A/meter)
++   n_nhv      = 1.02                        $ Ideality
++   cj_nhv     = '1.050m + 0.16m*dnhvcj'     $ N+ Diode Cap (F/meter**2)
++   pb_nhv     = 0.999                       $ Voltage dependence
++   mj_nhv     = 0.666
++   cjsw_nhv   = '169p + 42.2p*dnhvcjsw'     $ N+ STI Sidewall Cap (F/meter)
++   pbsw_nhv   = 0.445                       $ Voltage dependence
++   mjsw_nhv   = 0.320
++   cjsg_nhv   = '443p + 111p*dnhvcjsg'      $ N+ Gate Sidewall Cap (F/meter)
++   pbsg_nhv   = 1.0                         $ Voltage dependence
++   mjsg_nhv   = 0.449
++   hdif_nhv   = 0.26u                       $ Center Diff Contact to gate (m)
+*
+*                                              PFETHV
+*
++   xphvvth0   = agauss('cnr_pfhv*(1-fixcnr)',1,3)   $ Distributions
++   dphvvth0   = xphvvth0
++   xphvu0     = agauss('cnr_pfhv*(1-fixcnr)',1,3)
++   dphvu0     = xphvu0
++   xphvcj     = agauss('-cnr_pfhv',1,3)
++   dphvcj     = xphvcj
++   xphvcjsw   = agauss('-cnr_pfhv',1,3)
++   dphvcjsw   = xphvcjsw
++   xphvcjsg   = agauss('-cnr_pfhv',1,3)
++   dphvcjsg   = xphvcjsg
++   xnoiphv    = agauss('-cnr_noip',1,3)
++   dnoiphv    = xnoiphv
+*
+*                                            $ Fixed Corner Adders
++   cvth_phv   = 'fixcnr * skewfix(-0.4961,-0.4146,-0.5745,cnr_pfhv)'
++   cpvt_phv   = 'fixcnr * skewfix(0,0.005211,0.002834,cnr_pfhv)'
++   cxl_phv    = 'fixcnr * skewfix(2e-8,2.85e-8,1.15e-8,cnr_pfhv)'
++   clpc_phv   = 'fixcnr * skewfix(2e-8,2.85e-8,1.15e-8,cnr_pc)'
++   cxw_phv    = 'fixcnr * skewfix(-1.5e-8,-3.5e-8,0.5e-8,cnr_pfhv)'
++   cwrx_phv   = 'fixcnr * skewfix(-1.5e-8,-3.5e-8,0.5e-8,cnr_rx)'
++   cu0_phv    = 'fixcnr * skewfix(240,256.01,197.52,cnr_pfhv)'
++   crds_phv   = 'fixcnr * skewfix(400,370,430,cnr_pfhv)'
+*
+*                                            $ Gate oxide thickness (meter)
++   tox_phv    = '3.5n + 0.3n*distox + s_ntox'
+*                                            $ Base Threshold voltage (V)
++   vtol_phv   = '0.054*dphvvth0 - (tox_phv-3.5n-s_ntox)*7.49E7*(1-fixcnr)'
++   vth0_phv   = '-0.4961 + vtol_phv + cvth_phv - s_phvtl'
++   pvth0_phv  = '0 + cpvt_phv'
++   ltol_phv   = '-8.5n*distpc*(1-fixcnr)'
++   lint_phv   = '0.02u + ltol_phv + cxl_phv + clpc_phv + s_phdel' $ Delta L (one side)
++   wtol_phv   = '-0.05u*distrx*(1-fixcnr)'
++   wint_phv   = '-0.015u + wtol_phv + cxw_phv + cwrx_phv' $ Delta W (one side)
++   u0_phv     = '240 + 52*dphvu0 + cu0_phv + s_phu0'      $ Base mobility (cm**2/Vsec)
++   rdsw_phv   = '400 + 40*dprdsw + crds_phv'   $ Base series res (ohm-um)
++   cgsl_phv   = '325p + 40p*dpcgov'         $ G/S overlap cap at 0V (F/meter)
++   cgdl_phv   = '325p + 40p*dpcgov'         $ G/D overlap cap at 0V (F/meter)
++   cgso_phv   = 0                           $ G/S overlap cap offset (F/meter)
++   cgdo_phv   = 0                           $ G/D overlap cap offset (F/meter)
++   rsh_phv    = 8                           $ S/D sheet resistance (ohms/sq)
++   js_phv     = 85n                         $ P+ Area Sat Cur (A/meter**2)
++   jsw_phv    = 30f                         $ P+ Sidewall Sat Cur (A/meter)
++   n_phv      = 1.01                        $ Ideality
++   cj_phv     = '1.22m + 0.16m*dphvcj'      $ P+ Diode Cap (F/meter**2)
++   pb_phv     = 0.74                        $ Voltage dependence
++   mj_phv     = 0.39
++   cjsw_phv   = '106.9p + 26.7p*dphvcjsw'   $ P+ STI Sidewall Cap (F/meter)
++   pbsw_phv   = 1.0                         $ Voltage dependence
++   mjsw_phv   = 0.01
++   cjsg_phv   = '456.9p + 114.2p*dphvcjsg'  $ P+ Gate Sidewall Cap (F/meter)
++   pbsg_phv   = 1.0                         $ Voltage dependence
++   mjsg_phv   = 0.4
++   hdif_phv   = 0.26u                       $ Center Diff Contact to gate (m)
+*
+*                                              NFET33
+*
++   xn33vth0   = agauss('-cnr_nf33*(1-fixcnr)',1,3)     $ Distributions
++   dn33vth0   = xn33vth0
++   xn33vsat   = agauss('cnr_nf33*(1-fixcnr)',1,3)
++   dn33vsat   = xn33vsat
++   xn33u0     = agauss('cnr_nf33*(1-fixcnr)',1,3)
++   dn33u0     = xn33u0
++   xn33cgov   = agauss('-cnr_nf33',1,3)
++   dn33cgov   = xn33cgov
++   xn33cj     = agauss('-cnr_nf33',1,3)
++   dn33cj     = xn33cj
++   xn33cjsw   = agauss('-cnr_nf33',1,3)
++   dn33cjsw   = xn33cjsw
++   xn33cjsg   = agauss('-cnr_nf33',1,3)
++   dn33cjsg   = xn33cjsg
++   xnoin33    = agauss('-cnr_noin',1,3)
++   dnoin33    = xnoin33
+*
+*                                            $ Fixed Corner Adders
++   cvth_n33   = 'fixcnr * skewfix(0.642,0.5303,0.7548,cnr_nf33)'
++   cpvt_n33   = 'fixcnr * skewfix(0,0.001091,-0.002607,cnr_nf33)'
++   cxl_n33    = 'fixcnr * skewfix(5.5e-8,6.6e-8,4.4e-8,cnr_nf33)'
++   clpc_n33   = 'fixcnr * skewfix(5.5e-8,6.6e-8,4.4e-8,cnr_pc)'
++   cxw_n33    = 'fixcnr * skewfix(1e-8,-1e-8,3e-8,cnr_nf33)'
++   cwrx_n33   = 'fixcnr * skewfix(1e-8,-1e-8,3e-8,cnr_rx)'
++   cu0_n33    = 'fixcnr * skewfix(500.4,567.9,432.8,cnr_nf33)'
++   crds_n33   = 'fixcnr * skewfix(465,413.21,583.97,cnr_nf33)'
+*
+*                                             $ Gate oxide thickness (meter)
++   tox_n33    = '7.9n + 0.50n*distoxdg + s_n33tox'
+*                                             $ Base Threshold voltage (V)
++   vtol_n33   = '0.06*dn33vth0 + (tox_n33-7.9n-s_n33tox)*6.337E7*(1-fixcnr)'
++   vth0_n33   = '0.642 + vtol_n33 + cvth_n33 + s_n33vtl'
++   pvth0_n33  = '0 + cpvt_n33'
++   vsat_n33   = 'exp(11.472+0.1*dn33vsat)'  $ Saturation velocity (meter/sec)
++   ltol_n33   = '-0.011u*distpc*(1-fixcnr)'
++   lint_n33   = '0.055u + ltol_n33 + cxl_n33 + clpc_n33 + s_n33del'  $ Delta L (one side)
++   wtol_n33   = '-0.05u*distrx*(1-fixcnr)'
++   wint_n33   = '0.01u + wtol_n33 + cxw_n33 + cwrx_n33'      $ Delta W (one side)
++   u0_n33     = 'exp(6.2154+0.4*dn33u0) + cu0_n33 + s_n33u0' $ Base mobility (cm**2/Vsec)
++   rdsw_n33   = '465 + 46.5*dnrdsw + crds_n33'     $ Base series res (ohm-um)
++   cgsl_n33   = '370p + 40p*dn33cgov'       $ G/S overlap cap at 0V (F/meter)
++   cgdl_n33   = '370p + 40p*dn33cgov'       $ G/D overlap cap at 0V (F/meter)
++   cgso_n33   = 0                           $ G/S overlap cap offset (F/meter)
++   cgdo_n33   = 0                           $ G/D overlap cap offset (F/meter)
++   rsh_n33    = 8                           $ S/D sheet resistance (ohms/sq)
++   js_n33     = 521.9n                      $ N+ Area Sat Cur (A/meter**2)
++   jsw_n33    = 0.7p                        $ N+ Sidewall Sat Cur (A/meter)
++   n_n33      = 1.114                       $ Ideality
++   cj_n33     = '0.90m + 0.16m*dn33cj'      $ N+ Diode Cap (F/meter**2)
++   pb_n33     = 0.534                       $ Voltage dependence
++   mj_n33     = 0.393
++   cjsw_n33   = '117.5p + 29.4p*dn33cjsw'   $ N+ STI Sidewall Cap (F/meter)
++   pbsw_n33   = 0.30                        $ Voltage dependence
++   mjsw_n33   = 0.24
++   cjsg_n33   = '344.25p + 86.1p*dn33cjsg'  $ N+ Gate Sidewall Cap (F/meter)
++   pbsg_n33   = 1.0                         $ Voltage dependence
++   mjsg_n33   = 0.797
++   hdif_n33   = 0.30u                       $ Center Diff Contact to gate (m)
+*
+*                                              PFET33
+*
++   xp33vth0   = agauss('cnr_pf33*(1-fixcnr)',1,3)    $ Distributions
++   dp33vth0   = xp33vth0
++   xp33u0     = agauss('cnr_pf33*(1-fixcnr)',1,3)
++   dp33u0     = xp33u0
++   xp33cgov   = agauss('-cnr_pf33',1,3)
++   dp33cgov   = xp33cgov
++   xp33cj     = agauss('-cnr_pf33',1,3)
++   dp33cj     = xp33cj
++   xp33cjsw   = agauss('-cnr_pf33',1,3)
++   dp33cjsw   = xp33cjsw
++   xp33cjsg   = agauss('-cnr_pf33',1,3)
++   dp33cjsg   = xp33cjsg
++   xnoip33    = agauss('-cnr_noip',1,3)
++   dnoip33    = xnoip33
+*
+*                                            $ Fixed Corner Adders
++   cvth_p33   = 'fixcnr * skewfix(-0.7035,-0.5961,-0.8105,cnr_pf33)'
++   cpvt_p33   = 'fixcnr * skewfix(0,0.0043526,-0.028635,cnr_pf33)'
++   cxl_p33    = 'fixcnr * skewfix(5.5e-8,6.6e-8,4.4e-8,cnr_pf33)'
++   clpc_p33   = 'fixcnr * skewfix(5.5e-8,6.6e-8,4.4e-8,cnr_pc)'
++   cxw_p33    = 'fixcnr * skewfix(-1.5e-8,-3.5e-8,0.5e-8,cnr_pf33)'
++   cwrx_p33   = 'fixcnr * skewfix(-1.5e-8,-3.5e-8,0.5e-8,cnr_rx)'
++   cu0_p33    = 'fixcnr * skewfix(123.7,136.68,120.26,cnr_pf33)'
++   crds_p33   = 'fixcnr * skewfix(1087,978.3,1196,cnr_pf33)'
+*
+*                                            $ Gate oxide thickness (meter)
++   tox_p33    = '8.0n + 0.50n*distoxdg + s_n33tox'
+*                                            $ Base Threshold voltage (V)
++   vtol_p33   = '0.06*dp33vth0 - (tox_p33-8.0n-s_n33tox)*8.64E7*(1-fixcnr)'
++   vth0_p33   = '-0.7035 + vtol_p33 + cvth_p33 - s_p33vtl'
++   pvth0_p33  = '0 + cpvt_p33'
++   ltol_p33   = '-0.011u*distpc*(1-fixcnr)'
++   lint_p33   = '0.055u + ltol_p33 + cxl_p33 + clpc_p33 + s_p33del'  $ Delta L (one side)
++   wtol_p33   = '-0.05u*distrx*(1-fixcnr)'
++   wint_p33   = '-0.015u + wtol_p33 + cxw_p33 + cwrx_p33'    $ Delta W (one side)
++   u0_p33    = 'exp(4.8179+0.18*dp33u0) + cu0_p33 + s_p33u0' $ Base mobility (cm**2/Vsec)
++   rdsw_p33   = '1087 + 108.7*dprdsw + crds_p33'   $ Base series res (ohm-um)
++   cgsl_p33   = '330p + 40p*dp33cgov'       $ G/S overlap cap at 0V (F/meter)
++   cgdl_p33   = '330p + 40p*dp33cgov'       $ G/D overlap cap at 0V (F/meter)
++   cgso_p33   = 0                           $ G/S overlap cap offset (F/meter)
++   cgdo_p33   = 0                           $ G/D overlap cap offset (F/meter)
++   rsh_p33    = 8                           $ S/D sheet resistance (ohms/sq)
++   js_p33     = 274.7n                      $ P+ Area Sat Cur (A/meter**2)
++   jsw_p33    = 39.9f                       $ P+ Sidewall Sat Cur (A/meter)
++   n_p33      = 1.1                         $ Ideality
++   cj_p33     = '1.19m + 0.16m*dp33cj'      $ P+ Diode Cap (F/meter**2)
++   pb_p33     = 0.710                       $ Voltage dependence
++   mj_p33     = 0.378
++   cjsw_p33   = '76.7p + 19.2p*dp33cjsw'    $ P+ STI Sidewall Cap (F/meter)
++   pbsw_p33   = 1.0                         $ Voltage dependence
++   mjsw_p33   = 0.1
++   cjsg_p33   = '288.7p + 72.2p*dp33cjsg'   $ P+ Gate Sidewall Cap (F/meter)
++   pbsg_p33   = 0.983                       $ Voltage dependence
++   mjsg_p33   = 0.489
++   hdif_p33   = 0.30u                       $ Center Diff Contact to gate (m)
+*
+*                                            NFET50
+*
++   xn50vth0  = agauss('-cnr_nf50',1,3)    $ Distributions
++   dn50vth0  = xn50vth0
++   xn50u0    = agauss(cnr_nf50,1,3)
++   dn50u0    = xn50u0
++   xn50cj    = agauss('-cnr_nf50',1,3)
++   dn50cj    = xn50cj
++   xn50cjsw  = agauss('-cnr_nf50',1,3)
++   dn50cjsw  = xn50cjsw
++   xn50cjsg  = agauss('-cnr_nf50',1,3)
++   dn50cjsg  = xn50cjsg
++   xnoin50   = agauss('-cnr_noin',1,3)
++   dnoin50   = xnoin50
++   xn50fol   = agauss('cnr_nf50',1,3)
++   dn50fol   = xn50fol
+*
++   tox_n50   = '10.90n + 0.8n*distoxtg*(1-fixcnr) + dtoxo_nfetm_fc + s_p50tox' $ Gate oxide thickness (meter)
++   vfb_n50   = '-1.0927 + 0.030*dn50vth0 + dvfbo_nfetm_fc + s_n50vtl'  $ Base Threshold voltage (V)
++   vfbl_n50  = '36.5m + dvfbl_nfetm_fc'
++   vfblw_n50 = '0 + dvfblw_nfetm_fc'
++   ltol_n50  = '-0.026u*distpc*(1-fixcnr)'
++   lint_n50  = '0.115u + ltol_n50 + dlap_nfetm_fc + s_n50del'   $ Delta L (one side)
++   lov_n50   = 'lint_n50 + 91n'
++   wtol_n50  = '-0.05u*distrx*(1-fixcnr)'
++   wint_n50  = '0.025u + wtol_n50 + dwot_nfetm_fc'              $ Delta W (one side)
++   uo_n50    = '0.055 + 2.8m*dn50u0 + duo_nfetm_fc + s_n50u0'   $ Base mobility (m**2/Vsec)
++   rsw_n50   = '264 + 32*dnrdsw + drsw1_nfetm_fc'               $ Base series resistance (ohm-um)
++   fol1_n50  = '258m + 28m*dn50fol + dfol1_nfetm_fc'            $ First order short channel roll-off and body effect
++   fol2_n50  = '2m + 0.5m*dn50fol + dfol2_nfetm_fc'             $ Second order short channel roll-off and body effect
++   thesatl_n50 = '634.5m + dthesatl_nfetm_fc'                   $ Saturation velocity
+*
++   rsh_n50  = 8                         $ S/D sheet resistance (ohms/sq)
++   js_n50   = 161.1n                    $ N+ Area Sat Cur (A/meter**2)
++   jsw_n50  = 57.52f                    $ N+ Sidewall Sat Cur (A/meter)
++   n_n50    = 1.048                     $ Ideality
++   cj_n50   = '0.720m + 0.20m*dn50cj + dcjorbot_nfetm_fc'   $ N+ Diode Cap (F/meter**2)
++   pb_n50   = 0.483                     $ Voltage dependence
++   mj_n50   = 0.2485
++   cjsw_n50 = '100p + 25p*dn50cjsw + dcjorsti_nfetm_fc'     $ N+ STI Sidewall Cap (F/meter)
++   pbsw_n50 = 1.0                       $ Voltage dependence
++   mjsw_n50 = 0.05
++   cjsg_n50 = '147.9p + 37p*dn50cjsg + dcjorgat_nfetm_fc'   $ N+ Gate Sidewall Cap (F/meter)
++   pbsg_n50 = 0.6105                    $ Voltage dependence
++   mjsg_n50 = 0.6067
++   cta_n50  = 829.1u                    $ Cap temperature dependence
++   pta_n50  = 1.266m
++   ctp_n50  = 613.8u
++   ptp_n50  = 2m
++   hdif_n50 = 0.38u                     $ Center Diff Contact to gate (m)
++   noideva_n50 = 1.8e-11                $ Area, 1/f statistics (meter*2)
++   noistd_n50  = 1.8                    $ 3-sigma log noise distribution
+*
+*                                            PFET50
+*
++   xp50vth0 = agauss(cnr_pf50,1,3)        $ Distributions
++   dp50vth0 = xp50vth0
++   xp50vsat = agauss(cnr_pf50,1,3)
++   dp50vsat = xp50vsat
++   xp50u0   = agauss(cnr_pf50,1,3)
++   dp50u0   = xp50u0
++   xp50cj   = agauss('-cnr_pf50',1,3)
++   dp50cj   = xp50cj
++   xp50cjsw = agauss('-cnr_pf50',1,3)
++   dp50cjsw = xp50cjsw
++   xp50cjsg = agauss('-cnr_pf50',1,3)
++   dp50cjsg = xp50cjsg
++   xnoip50  = agauss('-cnr_noip',1,3)
++   dnoip50  = xnoip50
++   xp50fol  = agauss('cnr_pf50',1,3)
++   dp50fol  = xp50fol
++   xp50dl   = agauss('-cnr_pf50',1,3)
++   dp50dl   = xp50dl
+*
++   tox_p50   = '11.15n + 0.8n*distoxtg*(1-fixcnr) + dtoxo_pfetm_fc + s_p50tox' $ Gate oxide thickness (meter)
++   vfb_p50   = '-1.0210 - 0.040*dp50vth0 + dvfbo_pfetm_fc - s_p50vtl'   $ Base Threshold voltage (V)
++   vfbl_p50  = '-0.0139 + dvfbl_pfetm_fc'
++   vfblw_p50 = '3m + dvfblw_pfetm_fc'
++   ltol_p50  = '-0.025u*distpc*(1-fixcnr)'
++   lint_p50  = '0.105u + ltol_p50 + dlap_pfetm_fc + s_p50del'      $ Delta L (one side)
++   lov_p50   = 'lint_p50 + 78.15n + dlov_pfetm_fc'
++   wtol_p50  = '-0.05u*distrx*(1-fixcnr)'
++   wint_p50  = '0.045u + wtol_p50 + dwot_pfetm_fc'                 $ Delta W (one side)
++   uo_p50    = '0.01785 + 0.0025*dp50u0 + duo_pfetm_fc + s_p50u0'  $ Base mobility (m**2/Vsec)
++   rsw_p50   = '690 + 90*dprdsw + drsw1_pfetm_fc'                  $ Base series resistance (ohm-um)
++   fol1_p50  = '58m + 5.5m*dp50fol + dfol1_pfetm_fc'               $ First order short channel roll-off and body effect
++   fol2_p50  = '35.94m + 3.5m*dp50fol + dfol2_pfetm_fc'            $ Second order short channel roll-off and body effect
++   thesatl_p50 = '393.0m + 20.26m*dp50vsat + dthesatl_pfetm_fc'    $ Saturation velocity
+*
++   rsh_p50  = 8                           $ S/D sheet resistance (ohms/sq)
++   js_p50   = 100n                        $ P+ Area Sat Cur (A/meter**2)
++   jsw_p50  = 25f                         $ P+ Sidewall Sat Cur (A/meter)
++   n_p50    = 1.0                         $ Ideality
++   cj_p50   = '0.970m + 0.16m*dp50cj + dcjorbot_pfetm_fc'   $ P+ Diode Cap (F/meter**2)
++   pb_p50   = 0.6095                      $ Voltage dependence
++   mj_p50   = 0.3065
++   cjsw_p50 = '111.3p + 27.8p*dp50cjsw + dcjorsti_pfetm_fc' $ P+ STI Sidewall Cap (F/meter)
++   pbsw_p50 = 0.525                       $ Voltage dependence
++   mjsw_p50 = 0.085
++   cjsg_p50 = '223.6p + 55.9p*dp50cjsg + dcjorgat_pfetm_fc' $ P+ Gate Sidewall Cap (F/meter)
++   pbsg_p50 = 0.6095                      $ Voltage dependence
++   mjsg_p50 = 0.514
++   cta_p50  = 829.1u                      $ Cap temperature dependence
++   pta_p50  = 1.266m
++   ctp_p50  = 613.8u
++   ptp_p50  = 1m
++   hdif_p50 = 0.38u                       $ Center Diff Contact to gate (m)
++   noideva_p50 = 8e-11                    $ Area, 1/f statistics (meter*2)
++   noistd_p50  = 1.5                      $ 3-sigma log noise distribution
+*
+*                                            P5PFET50
+*
++   tox_p5p50   = '11.05n + 0.8n*distoxtg*(1-fixcnr) + dtoxo_p5pfetm_fc' $ Gate oxide thickness (meter)
++   vfb_p5p50   = '-0.998 - 0.040*dp50vth0 + dvfbo_p5pfetm_fc'           $ Base Threshold voltage (V)
++   vfbl_p5p50  = '17.49m + dvfbl_p5pfetm_fc'
++   vfblw_p5p50 = '1u + dvfblw_p5pfetm_fc'
++   lint_p5p50  = '0.0775u + ltol_p50 + dlap_p5pfetm_fc'                $ Delta L (one side)
++   lov_p5p50   = 'lint_p5p50 + 73.3n'
++   wint_p5p50  = '0.045u + wtol_p50 + dwot_p5pfetm_fc'                 $ Delta W (one side)
++   uo_p5p50    = '18.475m + 2.0561m*dp50u0 + duo_p5pfetm_fc'           $ Base mobility (m**2/Vsec)
++   rsw_p5p50   = '750 + 150*dprdsw + drsw1_p5pfetm_fc'                 $ Base series resistance (ohm-um)
++   fol1_p5p50  = '153.15m + 2m*dp50fol + dfol1_p5pfetm_fc'             $ First order short channel roll-off and body effect
++   fol2_p5p50  = '444.1p + 8.33p*dp50fol + dfol2_p5pfetm_fc'           $ Second order short channel roll-off and body effect
++   thesatl_p5p50 = '263.5m + 20m*dp50vsat + dthesatl_p5pfetm_fc'       $ Saturation velocity
+*
++   js_p5p50   = 15n                         $ P+ Area Sat Cur (A/meter**2)
++   jsw_p5p50  = 5p                          $ P+ Sidewall Sat Cur (A/meter)
++   n_p5p50    = 1.0                         $ Ideality
++   cj_p5p50   = '0.970m + 0.16m*dp50cj + dcjorbot_p5pfetm_fc'  $ P+ Diode Cap (F/meter**2)
++   pb_p5p50   = 0.7987                      $ Voltage dependence
++   mj_p5p50   = 0.3881
++   cjsw_p5p50 = '91p + 22.75p*dp50cjsw + dcjorsti_p5pfetm_fc'  $ P+ STI Sidewall Cap (F/meter)
++   pbsw_p5p50 = 0.925                       $ Voltage dependence
++   mjsw_p5p50 = 0.010
++   cjsg_p5p50 = '216p + 54p*dp50cjsg + dcjorgat_p5pfetm_fc'    $ P+ Gate Sidewall Cap (F/meter)
++   pbsg_p5p50 = 0.930                       $ Voltage dependence
++   mjsg_p5p50 = 0.580
++   cta_p5p50  = 829.1u                      $ Cap temperature dependence
++   pta_p5p50  = 1.266m
++   ctp_p5p50  = 613.8u
++   ptp_p5p50  = 1m
++   noideva_p5p50 = 1.8e-11                  $ Area, 1/f statistics (meter*2)
++   noistd_p5p50  = 1.5                      $ 3-sigma log noise distribution
+*
+*                                              ZVT NFET
+*
++   xznvth0    = agauss('-cnr_zn*(1-fixcnr)',1,3)    $ Distributions
++   dznvth0    = xznvth0
++   xznvsat    = agauss('cnr_zn*(1-fixcnr)',1,3)
++   dznvsat    = xznvsat
++   xznu0      = agauss('cnr_zn*(1-fixcnr)',1,3)
++   dznu0      = xznu0
++   xzncgov    = agauss('-cnr_zn',1,3)
++   dzncgov    = xzncgov
++   xzncj      = agauss('-cnr_zn',1,3)
++   dzncj      = xzncj
++   xzncjsw    = agauss('-cnr_zn',1,3)
++   dzncjsw    = xzncjsw
++   xzncjsg    = agauss('-cnr_zn',1,3)
++   dzncjsg    = xzncjsg
++   xnoizn     = agauss('-cnr_noin',1,3)
++   dnoizn     = xnoizn
+*
+*                                            $ Fixed Corner Adders
++   cvth_zn    = 'fixcnr * skewfix(-68.78m,-185.91m,56.22m,cnr_zn)'
++   cpvt_zn    = 'fixcnr * skewfix(0,-0.0001,0.0001,cnr_zn)'
++   cxl_zn     = 'fixcnr * skewfix(10e-8,10.85e-8,9.15e-8,cnr_zn)'
++   clpc_zn    = 'fixcnr * skewfix(10e-8,10.85e-8,9.15e-8,cnr_pc)'
++   cxw_zn     = 'fixcnr * skewfix(34e-8,23.05e-8,46.95e-8,cnr_zn)'
++   cwrx_zn    = 'fixcnr * skewfix(34e-8,23.05e-8,46.95e-8,cnr_rx)'
++   cu0_zn     = 'fixcnr * skewfix(430,488.05,371.95,cnr_zn)'
++   crds_zn    = 'fixcnr * skewfix(216,115.56,345.6,cnr_zn)'
+*
+*                                            $ Gate oxide thickness (meter)
++   tox_zn     = '4.45n + 0.3n*distox + s_ntox'
+*                                            $ Base Threshold voltage (V)
++   vtol_zn    = '80m*dznvth0'
++   vth0_zn    = '-68.78m + vtol_zn + cvth_zn + s_znvtl'
++   pvth0_zn   = '0 + cpvt_zn'
++   vsat_zn    = '178.4k + 33.3k*dznvsat'    $ Saturation velocity (m/sec)
++   ltol_zn    = '-8.5n*distpc*(1-fixcnr)'
++   lint_zn    = '0.1u + ltol_zn + cxl_zn + clpc_zn + s_zndel' $ Delta L (one side)
++   wtol_zn    = '-0.25u*distrx*(1-fixcnr)'
++   wint_zn    = '0.34u + wtol_zn + cxw_zn + cwrx_zn'   $ Delta W (one side)
++   u0_zn      = '430 + 100*dznu0 + cu0_zn + s_znu0'    $ Base mobility (cm**2/Vsec)
++   rdsw_zn    = '216.0 + 43.2*dnrdsw + crds_zn'   $ Base series res (ohm-um)
++   cgsl_zn    = '1.67n + 0.17n*dzncgov'     $ G/S overlap cap at 0V (F/meter)
++   cgdl_zn    = '1.67n + 0.17n*dzncgov'     $ G/D overlap cap at 0V (F/meter)
++   cgso_zn    = 0p                          $ G/S overlap cap offset (F/meter)
++   cgdo_zn    = 0p                          $ G/D overlap cap offset (F/meter)
++   rsh_zn     = 8                           $ S/D sheet resistance (ohms/sq)
++   js_zn      = 6.567e-7                    $ N+ Area Sat Cur (A/meter**2)
++   jsw_zn     = 1e-25                       $ N+ Sidewall Sat Cur (A/meter)
++   n_zn       = 1.05                        $ Ideality
++   cj_zn      = '0.30m + 0.06m*dzncj'       $ N+ Diode Cap (F/meter**2)
++   pb_zn      = 0.60                        $ Voltage dependence
++   mj_zn      = 0.289
++   cjsw_zn    = 0                           $ N+ STI Sidewall Cap (F/meter)
++   pbsw_zn    = 0.479                       $ Voltage dependence
++   mjsw_zn    = 0.273
++   cjsg_zn    = '185p + 46.2p*dzncjsg'      $ N+ Gate Sidewall Cap (F/meter)
++   pbsg_zn    = 0.479                       $ Voltage dependence
++   mjsg_zn    = 0.273
++   cta_zn     = 1.6177m                     $ Cap temperature dependence
++   pta_zn     = 2.406m
++   tcjsg_zn   = 1.7163m
++   tpbsg_zn   = 2.119m
++   hdif_zn    = 0.26u                       $ Center Diff Contact to gate (m)
+*
+*                                              ZVT NFET33
+*
++   xz33vth0    = agauss('-cnr_zn33*(1-fixcnr)',1,3)    $ Distributions
++   dz33vth0    = xz33vth0
++   xz33vsat    = agauss('cnr_zn33*(1-fixcnr)',1,3)
++   dz33vsat    = xz33vsat
++   xz33u0      = agauss('cnr_zn33*(1-fixcnr)',1,3)
++   dz33u0      = xz33u0
++   xz33cgov    = agauss('-cnr_zn33',1,3)
++   dz33cgov    = xz33cgov
++   xz33cj      = agauss('-cnr_zn33',1,3)
++   dz33cj      = xz33cj
++   xz33cjsw    = agauss('-cnr_zn33',1,3)
++   dz33cjsw    = xz33cjsw
++   xz33cjsg    = agauss('-cnr_zn33',1,3)
++   dz33cjsg    = xz33cjsg
++   xnoiz33     = agauss('-cnr_noin',1,3)
++   dnoiz33     = xnoiz33
+*
+*                                            $ Fixed Corner Adders
++   cvth_z33    = 'fixcnr * skewfix(-0.07807,-0.19493,0.03828,cnr_zn33)'
++   cpvt_z33    = 'fixcnr * skewfix(0,-0.0001,0.0001,cnr_zn33)'
++   cxl_z33     = 'fixcnr * skewfix(10e-8,11.1e-8,8.9e-8,cnr_zn33)'
++   clpc_z33    = 'fixcnr * skewfix(10e-8,11.1e-8,8.9e-8,cnr_pc)'
++   cxw_z33     = 'fixcnr * skewfix(3.5e-7,1e-7,6e-7,cnr_zn33)'
++   cwrx_z33    = 'fixcnr * skewfix(3.5e-7,1e-7,6e-7,cnr_rx)'
++   cu0_z33     = 'fixcnr * skewfix(412.5,462.5,363,cnr_zn33)'
++   crds_z33    = 'fixcnr * skewfix(405,294.2,648,cnr_zn33)'
+*
+*                                            $ Gate oxide thickness (meter)
++   tox_z33     = '7.1n + 0.50n*distoxdg + s_n33tox'
+*                                            $ Base Threshold voltage (V)
++   vtol_z33    = '0.08*dz33vth0 + (tox_z33-7.1n-s_n33tox)*8.43E6*(1-fixcnr)'
++   vth0_z33    = '-0.07807 + vtol_z33 + cvth_z33 + s_z33vtl'
++   pvth0_z33   = '0 + cpvt_z33'
++   vsat_z33    = '80.55k + 18k*dz33vsat'    $ Saturation velocity (meter/sec)
++   ltol_z33    = '-0.011u*distpc*(1-fixcnr)'
++   lint_z33    = '0.1u + ltol_z33 + cxl_z33 + clpc_z33 + s_z33del' $ Delta L (one side)
++   wtol_z33    = '-0.25u*distrx*(1-fixcnr)'
++   wint_z33    = '0.05u + wtol_z33 + cxw_z33 + cwrx_z33'  $ Delta W (one side)
++   u0_z33      = '412.5 + 107*dz33u0 + cu0_z33 + s_z33u0' $ Base mobility (cm**2/Vsec)
++   rdsw_z33    = '405.0 + 81*dnrdsw + crds_z33'   $ Base series res (ohm-um)
++   cgsl_z33    = '700p + 80p*dz33cgov'      $ G/S overlap cap at 0V (F/meter)
++   cgdl_z33    = '700p + 80p*dz33cgov'      $ G/D overlap cap at 0V (F/meter)
++   cgso_z33    = 0                          $ G/S overlap cap offset (F/meter)
++   cgdo_z33    = 0                          $ G/D overlap cap offset (F/meter)
++   rsh_z33     = 8                          $ S/D sheet resistance (ohms/sq)
++   js_z33      = 6.567e-07                  $ N+ Area Sat Cur (A/meter**2)
++   jsw_z33     = 1e-25                      $ N+ Sidewall Sat Cur (A/meter)
++   n_z33       = 1.05                       $ Ideality
++   cj_z33      = '0.30m + 0.06m*dz33cj'     $ N+ Diode Cap (F/meter**2)
++   pb_z33      = 0.5688                     $ Voltage dependence
++   mj_z33      = 0.2879
++   cjsw_z33    = 0                          $ N+ STI Sidewall Cap (F/meter)
++   pbsw_z33    = 1.065                      $ Voltage dependence
++   mjsw_z33    = 0
++   cjsg_z33    = '130.8p + 26.2p*dz33cjsg'  $ N+ Gate Sidewall Cap (F/meter)
++   pbsg_z33    = 0.5651                     $ Voltage dependence
++   mjsg_z33    = 0.2869
++   cta_z33     = 1.6177m                    $ Cap temperature dependence
++   pta_z33     = 2.406m
++   tcjsg_z33   = 1.7163m
++   tpbsg_z33   = 2.119m
++   hdif_z33    = 0.30u                      $ Center Diff Contact to gate (m)
+*
+*                                              Nwell to Substrate Diode
+*
++   xnwcj       = agauss(0,1,3)              $ Distributions
++   dnwcj       = xnwcj
++   xnwcjsw     = agauss(0,1,3)
++   dnwcjsw     = xnwcjsw
++   xnwjs       = agauss(0,1,3)
++   dnwjs       = xnwjs
++   xnwrs       = agauss(cnr_res,1,3)
++   dnwrs       = xnwrs
+*
++   js_nw       = 1.4u                       $ Sat Current (A/meter**2)
++   jsw_nw      = 3.5p                       $ Sidewall Sat Current (A/meter)
++   n_nw        = 1.04                       $ Ideality
++   cj_nw       = '(0.166m*(1-phires)+0.25m*phires)*(1+0.20*dnwcj)'  $ Cap (F/m**2)
++   pb_nw       = 1.00                       $ Voltage dependence
++   mj_nw       = 0.52
++   cjsw_nw     = '(0.63n*(1-phires)+0.07n*phires)*(1+0.20*dnwcjsw)' $ Sidewall Cap (F/m)
++   pbsw_nw     = 0.61                       $ Voltage dependence
++   mjsw_nw     = 0.30
++   cta_nw      = 1.0m                       $ Cap temperature dependence
++   pta_nw      = 3.3m
++   ctp_nw      = 0
++   ptp_nw      = 1.6m
+*
++   nwrs        = '360*n_spec + s_nwrs + 110*dnwrs'   $ NW Sheet Rho (ohm/sq)
++   delnw       = '0.44u + 0.24u*distnw'     $ NW Image
+*
+*                                              DI Diode / VPNP
+*
++   xistdi      = agauss(cnr_res,1,3)        $ Distributions
++   distdi      = xistdi
++   tdeldi      = '0.5*distdi'               $ Sat Current Tolerance
+*
++   js_di       = '3.8u + 1.9u*dnwjs'        $ DI Nwell/SX Sat Current (A/meter**2)
++   jsw_di      = '5.2p + 2.6p*dnwjs'        $ Sidewall Sat Current (A/meter)
++   cj_di       = '0.20m + 0.05m*dnwcj'      $ Capacitance (F/meter**2)
++   cjsw_di     = '1.65n + 0.41n*dnwcjsw'    $ Sidewall Cap (F/meter)
+*
++   xaout_di    = 0.66                       $ Gain factors
++   xain_di     = 0.66
++   xpout_di    = '0.019*(1-p5vonly) + 0.44*p5vonly'
++   xpin_di     = '0.325*(1-p5vonly) + 0.44*p5vonly'
+*
+*                                              DI NDPW Diode
+*
++   xistdipi    = agauss(cnr_res,1,3)        $ Distributions
++   distdipi    = xistdipi
++   tdeldipi    = '0.5*distdipi'             $ Sat Current Tolerance
+*
++   jsi_dipi    = 133n                               $ Inner Fing Sat Curr (A/meter**2)
++   jswi_dipi   = '85f*(1-p5vonly) + 90f*p5vonly'    $ Inner Fing Sidewall (A/meter)
++   jso_dipi    = 105n                               $ Outer Fing Sat Curr (A/meter**2)
++   jswo_dipi   = '249f*(1-p5vonly) + 291f*p5vonly'  $ Outer Fing Sidewall (A/meter)
+*
++   xaout_dipi  = 0.46                       $ Gain factors
++   xain_dipi   = '0.41*(1-p5vonly) + 0.38*p5vonly'
++   xpout_dipi  = '0.19*(1-p5vonly) + 0.17*p5vonly'
++   xpin_dipi   = 0.55
+*
+*                                              Pwell to N-isolation Diode
+*
++   xpwicj      = agauss(0,1,3)              $ Distributions
++   dpwicj      = xpwicj
++   xpwicjsw    = agauss(0,1,3)
++   dpwicjsw    = xpwicjsw
+*
++   js_pwi      = 0.38u                      $ Sat Current (A/meter**2)
++   jsw_pwi     = 0.40p                      $ Sidewall Sat Cur (A/meter)
++   n_pwi       = 1.045                      $ Ideality
++   cj_pwi      = '0.88m + 0.22m*dpwicj'     $ Capacitance (F/meter**2)
++   pb_pwi      = 0.75                       $ Voltage dependence
++   mj_pwi      = 0.35
++   cjsw_pwi    = '1.06n + 0.275n*dpwicjsw'  $ Sidewall Cap (F/meter)
++   pbsw_pwi    = 0.64                       $ Voltage dependence
++   mjsw_pwi    = 0.32
++   cta_pwi     = 1.0m                       $ Cap temperature dependence
++   pta_pwi     = 0.9m
++   ctp_pwi     = 1.8m
++   ptp_pwi     = 1.7m
+*                                              N-isolation to Substrate Diode
+*
++   xpixcj      = agauss(0,1,3)              $ Distributions
++   dpixcj      = xpixcj
++   xpixcjsw    = agauss(0,1,3)
++   dpixcjsw    = xpixcjsw
+*
++   js_pix      = 1.45u                      $ Sat Current (A/meter**2)
++   jsw_pix     = 0.05p                      $ Sidewall Sat Cur (A/meter)
++   n_pix       = 1.03                       $ Ideality
++   cj_pix      = '(0.13m*(1-phires)+0.009m*phires)*(1+0.25*dpixcj)'  $ Cap (F/m**2)
++   pb_pix      = 0.49                       $ Voltage dependence
++   mj_pix      = 0.27
++   cjsw_pix    = '(0.42n*(1-phires)+1.7n*phires)*(1+0.25*dpixcjsw)'  $ Sidewall Cap (F/m)
++   pbsw_pix    = 0.48                       $ Voltage dependence
++   mjsw_pix    = 0.31
++   cta_pix     = 1.3m                       $ Cap temperature dependence
++   pta_pix     = 2.3m
++   ctp_pix     = 2.8m
++   ptp_pix     = 2.0m
+*                                              VLNPN
+*
++   xvlisb   = agauss('-cnr_pc',1,3)         $ Distributions
++   dvlisb   = xvlisb
++   xvlpnf   = agauss('-cnr_pc',1,3)
++   dvlpnf   = xvlpnf
+*
++   vlpnf    = '1.06 + 0.025*dvlpnf'         $ Ideality
+*
++   dstvlic  = '10**(0.20*distpc)'
+*
++   vlisc    = '3.270p/dstvlic'              $ Lat npn coll sat current
++   vlisbpa  = '2.910e-27*(1+0.32*dvlisb)'   $ Lat npn p/a  base sat current
++   vlisbp   = '7.965f*(1+0.32*dvlisb)'      $ Lat npn peri base sat current
+*
++   vlvef    = '2.50 + 1.2*distpc'           $ Early voltage
++   distavc  = '10**(0.345*distpc)'
++   vlavc2   = '11.62*distavc'               $ Weak avalanche voltage
++   vlntf    = '29.5p + 5p*distpc'           $ Transit time
+*
+*                                              JFETJC
+*
++   xio_jfetjc    = agauss(cnr_jfet,1,3)     $ Distributions
++   dio_jfetjc    = xio_jfetjc
++   xvpo_jfetjc   = agauss(cnr_jfet,1,3)
++   dvpo_jfetjc   = xvpo_jfetjc
++   xcjg_jfetjc   = agauss('-cnr_jfet',1,3)
++   dcjg_jfetjc   = xcjg_jfetjc
++   xcjgb_jfetjc  = agauss('-cnr_jfet',1,3)
++   dcjgb_jfetjc  = xcjgb_jfetjc
++   xcjgbn_jfetjc = agauss('-cnr_jfet',1,3)
++   dcjgbn_jfetjc = xcjgbn_jfetjc
+*
++   io_jfetjc_n    = 60.6
++   io_jfetjc_f    = 'io_jfetjc_n + 30*dio_jfetjc'
++   vpo_jfetjc_n   = -2.658
++   vpo_jfetjc_f   = 'vpo_jfetjc_n - 0.70*dvpo_jfetjc'
++   cjg_jfetjc_n   = 1.52e-3
++   cjg_jfetjc_f   = 'cjg_jfetjc_n + 0.15e-3*dcjg_jfetjc'
++   cjgb_jfetjc_n  = 1.52e-3
++   cjgb_jfetjc_f  = 'cjgb_jfetjc_n + 0.15e-3*dcjgb_jfetjc'
++   cjgbn_jfetjc_n = 0.90e-3
++   cjgbn_jfetjc_f = 'cjgbn_jfetjc_n + 0.40e-3*dcjgbn_jfetjc'
+*
++   xnpcrs   = agauss(cnr_res,1,3)           $ N+ Poly Rs Distribution
++   dnpcrs   = xnpcrs
++   opnpcrsn = 360                           $ N+ Poly Rs, ohm/sq
++   opnpcrsf = 'opnpcrsn + 60*dnpcrs'
+*
+*                                              nMOS Varactor / PCDCAPs
+*
++   nco_mv   = 8.95m                         $ Unit capacitance (F/meter**2)
++   co_mv    = 'nco_mv - 0.895m*(s_comv + distox*n_spec)'
++   nqs_mv   = 560u                          $ NWell depletion region charge
++   qs_mv    = 'nqs_mv - 56u*(s_qsnw + dnwrs*n_spec)'
++   qp_mv    = '7.6m - 0.9m*dnpcrs'          $ Gate depletion charge
++   pon_mv   = 1m                            $ Hole-to-Electron density ratio
+*
++   nco_mv33 = 4.75m                         $ Unit capacitance (F/meter**2)
++   co_mv33  = 'nco_mv33 - 0.475m*(s_comv33 + distoxdg*n_spec)'
++   nqs_mv33 = 510u                          $ NWell depletion region charge
++   qs_mv33  = 'nqs_mv33 - 51u*(s_qsnw + dnwrs*n_spec)'
++   pon_mv33 = 17m                           $ Hole-to-Electron density ratio
+*
++   nco_mv50 = 2.97m                         $ Unit capacitance (F/meter**2)
++   co_mv50  = 'nco_mv50 - 0.30m*(s_comv50 + distoxtg*n_spec)'
++   nqs_mv50 = 355u                          $ NWell depletion region charge
++   qs_mv50  = 'nqs_mv50 - 46u*(s_qsnw + dnwrs*n_spec)'
++   qp_mv50  = '7.0m - 1.0m*dnpcrs'          $ Gate depletion charge
+*
+*                                              PFET in PWell Capacitor
+*
++   xpwirs   = agauss(cnr_res,1,3)
++   dpwirs   = xpwirs
++   pwirs    = '400 + 120*dpwirs'            $ Isolated PW Sheet Rho (ohm/sq)
+*
++   nco_pmv  = 8.6m
++   co_pmv   = 'nco_pmv - 0.95m*distox'      $ Unit capacitance (F/meter**2)
++   nqs_pmv  = 480u
++   qs_pmv   = 'nqs_pmv - 60u*dpwirs'        $ PWell depletion region charge
++   qp_pmv   = '8m - 1.25m*dpcrs'            $ Gate depletion charge
+*
+*                                              HA Varactor
+*
++   xaxvar  = agauss(cnr_cap,1,3)            $ Distributions
++   daxvar  = xaxvar
++   xazvar  = agauss('-cnr_cap',1,3)
++   dazvar  = xazvar
++   xayvar  = agauss(cnr_cap,1,3)
++   dayvar  = xayvar
+*
++   xnrnw   = agauss('-cnr_cap',1,3)         $ Sheet Resistivity distributions
++   dnrnw   = xnrnw
++   xnbnsr  = agauss('-cnr_cap',1,3)
++   dnbnsr  = xnbnsr
++   xncjsa  = agauss('-cnr_cap',1,3)         $ NS to Sub Cap distributions
++   dncjsa  = xncjsa
++   xncjsp  = agauss('-cnr_cap',1,3)
++   dncjsp  = xncjsp
+*
++    axvar  = '0.17*(daxvar*n_spec + s_havar)'   $ Doping variations
++    azvar  = '0.42*(dazvar*n_spec - s_havar)'
++    ayvar  = '0.30*(dayvar*n_spec + s_havar)'
+*
++   nncahav = 2.45m
++   nncphav = 0.195n
+*                                              Sheet Resistivities
++   delns   = '0.90u  + 0.30u*distns'        $ NS Image (with outdiffusion)
++   nrnw    = '20p + 5p*dnrnw'               $ Vertical NWell (ohm-meter**2)
++   nbnsr   = '118 + 25*dnbnsr'              $ Buried Subcollector (ohm/sq)
+*
++   ncjsa   = '0.105m + 0.050m*dncjsa'       $ NS Substrate Area (F/meter**2)
++   ncjsp   = '0.990n + 0.200n*dncjsp'       $ NS Sidewall (F/meter)
+*
++   delnsti = delns
++   phaedge = 0.19u
++   pdiffedge = 0.18u
+*
+*                                              Schottky Barrier Diode
+*
++   xsbdphib = agauss('-cnr_res',1,3)        $ Distributions
++   dsbdphib = xsbdphib
++   xsbdlk   = agauss(cnr_res,1,3)
++   dsbdlk   = xsbdlk
++   xsbdcj   = agauss('-cnr_cap',1,3)
++   dsbdcj   = xsbdcj
+*
++   delbnn   =  -0.30u                       $ BN photo + P+ outdiffusion
++   delbn    = 'delbnn - 0.10u*ddlbn'
+*
++   sbdphib  = '0.6465 + 0.060*dsbdphib'     $ Barrier Height
++   sbdlk    = '1.2k+0.96k*dsbdlk'           $ Reverse Leakage Current
+*
++   nvepi    = '0.90n + 0.45n*dsbdphib'      $ Ver EPI res (ohms-meter**2)
++   nvepigr  = 9.0p                          $ Ver res under gr (ohms-meter**2)
+*
++   nnsbdcj  = 0.755m                        $ SBD Cj area (F/meter**2)
++   nsbdcj   = 'nnsbdcj + 0.157m*dsbdcj'
+*
++   nnsbdcjp = 0.685n                        $ SBD Cj peri (F/meter)
++   nsbdcjp  = 'nnsbdcjp + 0.142n*dsbdcj'
+*
+*                                              No Guardring SBD
+*
++   xsnwphib = agauss('-cnr_res',1,3)        $ Distributions
++   dsnwphib = xsnwphib
++   xsnwcj   = agauss('-cnr_cap',1,3)
++   dsnwcj   = xsnwcj
+*
++   snwphib  = '0.6465 + 0.060*dsnwphib'     $ Barrier Height
+*
++   nnsnwcj  = 3.67m                         $ SBDNW Cj area (F/meter**2)
++   nsnwcj   = 'nnsnwcj + 0.734m*dsnwcj'
+*
+*                                              P-type SBD
+*
++  xpsbdphib = agauss('-cnr_res',1,3)
++  dpsbdphib = xpsbdphib
++    xpsbdcj = agauss('-cnr_cap',1,3)
++    dpsbdcj = xpsbdcj
+*
++     delbnp = -0.20u                         $ pSBD effective dW
++   psbdphib = '0.41567 + 0.023*dpsbdphib'    $ pSBD barrier height
++    psbdlka = '4.0e11*exp(0.855*dpsbdphib)'  $ pSBD Rev Leakage Current area
++    psbdlkp = '2.62e5*exp(0.855*dpsbdphib)'  $ pSBD Rev Leakage Current peri
+*
++    npsbdcj = '2.2m + 0.66m*dpsbdcj'         $ pSBD Cj area (F/meter**2)
++   npsbdcjp = '0.31n + 0.125n*dpsbdcj'       $ pSBD Cj peri (F/meter)
+*
++      pvepi = '2.0n + 1.2n*dpsbdphib'      $ pSBD Vertical EPI res (ohm-m**2)
+*
++      xpirs = agauss(cnr_res,1,3)
++      dpirs = xpirs
++      pirs  = '1200 + 400*dpirs'           $ PI Sheet Rho (ohm/sq)
+*
+*                                              BEOL Area Cap (F/meter**2)
+*
++   xpcap   = agauss(0,1,3)                  $ Distribution
++   dpcap   = xpcap
++   tpcap   = '1.0 + 0.20*dpcap'             $ Extracted wiring cap tolerance
+*
+*                                              Single / Dual MIM Capacitors
+*
++   xccmimqa  = agauss(cnr_cap,1,3)           $ Capacitance distributions
++   dccmimqa  = xccmimqa
++   xccmimha  = agauss(cnr_cap,1,3)
++   dccmimha  = xccmimha
++   xccmimp   = agauss(cnr_cap,1,3)
++   dccmimp   = xccmimp
++   xcdlcmimp = agauss(cnr_cap,1,3)
++   dcdlcmimp = xcdlcmimp
++   xistmq   = agauss(0,1,3)                 $ Image distributions
++   distmq   = xistmq
++   xistmh   = agauss(0,1,3)
++   distmh   = xistmh
++   xftrs    = agauss('-cnr_cap',1,3)
++   dftrs    = xftrs
++   xqtt     = agauss(cnr_cap,1,3)
++   dqtt     = xqtt
++   xhtt     = agauss(cnr_cap,1,3)
++   dhtt     = xhtt
+*
++   nccmimqa  =  2.05m                        $ MIM Qx Cap area (F/meter**2)
++   ccmimqa   = 'nccmimqa*n_spec + s_cmimqa + 0.205m*dccmimqa'
++   nccmimha  =  2.05m                        $ MIM Hx Cap area (F/meter**2)
++   ccmimha   = 'nccmimha*n_spec + s_cmimha + 0.205m*dccmimha'
++   nccmimp   =  0.14n                        $ Single MIM Cap peri (F/meter)
++   ccmimp    = 'nccmimp + 0.07n*dccmimp'
++   ncdlcmimp =  0.44n                        $ Dual MIM Cap peri (F/meter)
++   cdlcmimp  = 'ncdlcmimp + 0.22n*dcdlcmimp'
+*
++   ndelmq   = -0.23u                        $ Q level Image
++   delmq    = 'ndelmq + 0.30u*distmq'
++   ndelmh   = -0.23u                        $ H level Image
++   delmh    = 'ndelmh + 0.30u*distmh'
+*
++   prvft    = '-0.60 + exp(0.223*dftrs)'    $ FT Via Resistance (ohm/via)
+*
++   qtt      = '0.242u + 0.0202u*dqtt'       $ QT Thickness
++   htt      = '0.242u + 0.0202u*dhtt'       $ HT Thickness
+*
++   qtrs     = '0.17 - 0.034*dqtt'           $ QT Plate Res (ohm/sq)
+*
+*                                           Thinner Nitride (HD) MIM Capacitors
+*
++   nhdcmimqa =  2.70m                        $ MIM Qx Cap area (F/meter**2)
++   hdcmimqa  = 'nhdcmimqa + 0.405m*dccmimqa'
++   nhdcmimha =  2.70m                        $ MIM Hx Cap area (F/meter**2)
++   hdcmimha  = 'nhdcmimha + 0.405m*dccmimha'
++   nhdcmimp  =  0.2975n                      $ Single MIM Cap peri (F/meter)
++   hdcmimp   = 'nhdcmimp + 0.14875n*dccmimp'
++   nhddcmimp =  0.425n                       $ Dual MIM Cap peri (F/meter)
++   hddcmimp  = 'nhddcmimp + 0.2125n*dcdlcmimp'
+*
+*                                              High-K MIM Capacitors
+*
++   xchkcmima = agauss(cnr_cap,1,3)           $ Capacitance distributions
++   dchkcmima = xchkcmima
++   xchkcmimp = agauss(cnr_cap,1,3)
++   dchkcmimp = xchkcmimp
+*
++   nchkcmima =  4.1m                         $ High-K MIM Cap area (F/meter**2)
++   chkcmima  = 'nchkcmima*n_spec + s_hkcmima + 0.41m*dchkcmima'
++   nchkcmimp =  0.53n                        $ High-K MIM Cap peri (F/meter)
++   chkcmimp  = 'nchkcmimp + 0.265n*dchkcmimp'
+*
+*                                              BEOL Devices
+*
++   xistm1  = agauss(cnr_ind,1,3)            $ Image distributions
++   distm1  = xistm1
++   xistm2  = agauss(cnr_ind,1,3)
++   distm2  = xistm2
++   xistm3  = agauss(cnr_ind,1,3)
++   distm3  = xistm3
++   xistm4  = agauss(cnr_ind,1,3)
++   distm4  = xistm4
++   xistm5  = agauss(cnr_ind,1,3)
++   distm5  = xistm5
++   xistmt  = agauss(cnr_ind,1,3)
++   distmt  = xistmt
++   xistml  = agauss(cnr_ind,1,3)
++   distml  = xistml
++   xistmz  = agauss(cnr_ind,1,3)
++   distmz  = xistmz
++   xistam  = agauss(cnr_ind,1,3)
++   distam  = xistam
++   xiste1  = agauss(cnr_ind,1,3)
++   diste1  = xiste1
++   xiste2  = agauss(0,1,3)
++   diste2  = xiste2
++   xistma  = agauss(cnr_ind,1,3)
++   distma  = xistma
+*
++   delm1   = '0.006u + 0.045u*distm1'       $ M1 mask bias, M1<0.5um
++   delm1i  = '0.01u + 0.07u*distm1'         $ M1 mask bias, M1>=0.5um
++   delm2   = '-0.0316u + 0.07u*distm2'      $ M2 mask bias
++   delm3   = '-0.0316u + 0.07u*distm3'      $ M3 mask bias
++   delm4   = '-0.0316u + 0.07u*distm4'      $ M4 mask bias
++   delm5   = '-0.0316u + 0.07u*distm5'      $ M5 mask bias
++   delmt   = '-0.0316u + 0.07u*distmt'      $ MT mask bias
++   delml   = '0.02u + 0.43u*distml'         $ ML mask bias
++   delmz   = '0 + 0.07u*distmz'             $ MZ mask bias
++   delam   = '-0.1116u + 0.60u*distam'      $ AM mask bias
++   dele1   = '0 + 0.25u*diste1'             $ E1 mask bias
++   dele2   = '0 + 0.25u*diste2'             $ E2 mask bias
++   delma   = '-0.1116u + 0.60u*distma'      $ MA mask bias
+*
++   xpmsxt  = agauss(0,1,3)                  $ Profile distributions
++   dpmsxt  = xpmsxt
++   xcapct  = agauss(cnr_ind,1,3)
++   dcapct  = xcapct
++   xm1t    = agauss(cnr_ind,1,3)
++   dm1t    = xm1t
++   xm2t    = agauss(cnr_ind,1,3)
++   dm2t    = xm2t
++   xm3t    = agauss(cnr_ind,1,3)
++   dm3t    = xm3t
++   xm4t    = agauss(cnr_ind,1,3)
++   dm4t    = xm4t
++   xm5t    = agauss(cnr_ind,1,3)
++   dm5t    = xm5t
++   xmtt    = agauss(cnr_ind,1,3)
++   dmtt    = xmtt
++   xmlt    = agauss(cnr_ind,1,3)
++   dmlt    = xmlt
++   xmzt    = agauss(cnr_ind,1,3)
++   dmzt    = xmzt
++   xamt    = agauss(cnr_ind,1,3)
++   damt    = xamt
++   xe1t    = agauss(cnr_ind,1,3)
++   de1t    = xe1t
++   xmat    = agauss(cnr_ind,1,3)
++   dmat    = xmat
++   xm1m2t  = agauss(cnr_ind,1,3)
++   dm1m2t  = xm1m2t
++   xm2m3t  = agauss(cnr_ind,1,3)
++   dm2m3t  = xm2m3t
++   xm3m4t  = agauss(cnr_ind,1,3)
++   dm3m4t  = xm3m4t
++   xm4m5t  = agauss(cnr_ind,1,3)
++   dm4m5t  = xm4m5t
++   xm1mtt  = agauss(cnr_ind,1,3)
++   dm1mtt  = xm1mtt
++   xmxmtt  = agauss(cnr_ind,1,3)
++   dmxmtt  = xmxmtt
++   xmtmlt  = agauss(cnr_ind,1,3)
++   dmtmlt  = xmtmlt
++   xmtmzt  = agauss(cnr_ind,1,3)
++   dmtmzt  = xmtmzt
++   xmtamt  = agauss(cnr_ind,1,3)
++   dmtamt  = xmtamt
++   xmte1t  = agauss(cnr_ind,1,3)
++   dmte1t  = xmte1t
++   xe1mat  = agauss(cnr_ind,1,3)
++   de1mat  = xe1mat
++   dck1s   = 'sqrt(dcapct*dcapct + dm1t*dm1t)'
+*
++   pmsxt   = 'npmsxt + 12.5u*dpmsxt'        $ P- substrate Thickness
++   tih     = 0.35u                          $ 7WL stack height due to TI (not in 7RF)
++   capchr  = '0.29u*phires'                 $ CA height delta for 7HR only
++   capct   = '0.21u + capchr + 0.13u*dcapct'  $ CA between PC and M1 1.0 <= M1 <= Wmax
++   capcti  = '0.26u + capchr + 0.13u*dcapct'  $ CA between PC and M1 0.5 <= M1 <= 1.0
++   m1tn    =  0.425u
++   m1t     = 'm1tn + 0.14u*dm1t'            $ M1 Thickness 1.0 <= M1 <= Wmax
++   m1tin   =  0.375u
++   m1ti    = 'm1tin + 0.14u*dm1t'           $ M1 Thickness 0.5 <= M1 <= 1.0
++   m1tvn   =  0.325u
++   m1tv    = 'm1tvn + 0.14u*dm1t'           $ M1 Thickness M1 < 0.5um
++   m2tn    =  0.48u
++   m2t     = 'm2tn + 0.057u*dm2t'           $ M2 Thickness
++   m3tn    =  0.48u
++   m3t     = 'm3tn + 0.057u*dm3t'           $ M3 Thickness
++   m4tn    =  0.48u
++   m4t     = 'm4tn + 0.057u*dm4t'           $ M4 Thickness
++   m5tn    =  0.48u
++   m5t     = 'm5tn + 0.057u*dm5t'           $ M5 Thickness
++   mttn    =  0.48u
++   mtt     = 'mttn + 0.057u*dmtt'           $ MT Thickness
++   mlt     = '2.0u + 0.2u*dmlt'             $ ML Thickness
++   mzt     = '0.54u + 0.05u*dmzt'           $ MZ Thickness
++   amt     = '4.0u + 0.4u*damt'             $ AM Thickness
++   e1t     = '3.0u + 0.5u*de1t'             $ E1 Thickness
++   e2t     = '3.0u + 0.5u*de1mat'           $ E2 Thickness
++   mat     = '4.0u + 0.4u*dmat'             $ MA Thickness
++   m1m2tn  =  0.40u
++   m1m2t   = 'm1m2tn + 0.08u*dm1m2t'        $ M1-M2 Thickness 1.0 <= M1 <= Wmax
++   m2m3tn  =  0.55u
++   m2m3t   = 'm2m3tn + 0.183u*dm2m3t'       $ M2-M3 Thickness
++   m3m4tn  =  0.55u
++   m3m4t   = 'm3m4tn + 0.183u*dm3m4t'       $ M3-M4 Thickness
++   m4m5tn  =  0.55u
++   m4m5t   = 'm4m5tn + 0.183u*dm4m5t'       $ M4-M5 Thickness
++   m1mttn  =  0.40u
++   m1mtt   = 'm1mttn + 0.08u*dm1mtt'        $ M1-MT Thickness
++   mxmttn  =  0.55u
++   mxmtt   = 'mxmttn + 0.183u*dmxmtt'       $ Mx-MT Thickness (Mx=M2,M3 or M4)
++   mtmlt   = '4.00u + 0.50u*dmtmlt'         $ MT-ML Thickness
++   mtmzt   = '4.10u + 0.50u*dmtmzt'         $ MT-MZ Thickness
++   mtamt   = '4.00u + 0.50u*dmtamt'         $ MT-AM Thickness
++   mte1t   = '4.00u + 0.50u*dmte1t'         $ MT-E1 Thickness
++   e1mat   = '3.00u + 0.50u*de1mat'         $ E1-MA Thickness
++   ck1s    = '0.031m + 0.003m*dck1s'        $ K1 Res Area Cap (F/meter**2)
++   ck1sf   = '0.020n + 0.012n*dck1s'        $ K1 Res Fringe Cap (F/meter)
+*
++   xe2rs   = agauss('-cnr_ind',1,3)         $ Sheet resistivity distributions
++   de2rs   = xe2rs
++   xrsub   = agauss(0,1,3)
++   drsub   = xrsub
++   xrsubbb = agauss(0,1,3)
++   drsubbb = xrsubbb
++   xrsubhr = agauss(0,1,3)
++   drsubhr = xrsubhr
++   xrsubc  = agauss(0,1,3)
++   drsubc  = xrsubc
+*
++   m1rs    = '0.062 - 0.023*dm1t'           $ M1 Rs (ohm/sq) 1.0 <= M1 <= Wmax
++   m1rsi   = '0.071 - 0.031*dm1t'           $ M1 Rs (ohm/sq) 0.5 <= M1 <= 1.0
++   m1rsv   = '0.084 - 0.042*dm1t'           $ M1 Rs (ohm/sq) M1 < 0.5um
++   m2rs    = '0.089 - 0.014*dm2t'           $ M2 Rs (ohm/sq)
++   m3rs    = '0.089 - 0.014*dm3t'           $ M3 Rs (ohm/sq)
++   m4rs    = '0.089 - 0.014*dm4t'           $ M4 Rs (ohm/sq)
++   m5rs    = '0.089 - 0.014*dm5t'           $ M5 Rs (ohm/sq)
++   mtrs    = '0.089*n_spec + s_mtrs - 0.014*dmtt'     $ MT Rs (ohm/sq)
++   mlrs    = '0.014*n_spec + s_mlrs - 0.003*dmlt'     $ ML Rs (ohm/sq)
++   mzrs    = '0.069*n_spec + s_mzrs - 0.012*dmlt'     $ MZ Rs (ohm/sq)
++   amrs    = '0.007*n_spec + s_ammars - 0.0015*damt'  $ AM Rs (ohm/sq)
++   e1rstol = '0.00126*de1t'                 $ E1 Rs Tolerance (ohm/sq)
++   e1rs    = '0.0063 - e1rstol'             $ E1 Rs (ohm/sq) W > 25um
++   e1rsi   = '0.0060 - e1rstol'             $ E1 Rs (ohm/sq) 1.5 <= W <= 25um
++   e2rs    = '0.0060 + 0.00126*de2rs'       $ E2 Rs (ohm/sq)
++   mars    = '0.007*n_spec + s_ammars - 0.0015*dmat'  $ MA Rs (ohm/sq)
++   rsub    = '0.135 + 0.025*drsub'            $ PWell Sub Res (ohm-meter)
++   rsubbb  = 'exp(0.21+0.58*drsubbb) + 0.306' $ BB Sub Res (ohm-meter)
++   rsubhr  = 'exp(0.97+3*drsubhr) + 7.36'     $ HiRes Sub Res (ohm-meter)
++   rsubc   = '6.0n + 0.23n*drsubc'          $ Sub Contact Res (ohm-meter**2)
+*
+*                                              Temp Coefficients (per degC)
+*
++   tnwrs   = 0.0020                         $ NW Rs
++   tm1rs   = 0.0033                         $ M1 Rs
++   tm2rs   = 0.0033                         $ M2 Rs
++   tm3rs   = 0.0033                         $ M3 Rs
++   tm4rs   = 0.0033                         $ M4 Rs
++   tm5rs   = 0.0033                         $ M5 Rs
++   tmxrs   = 0.0033                         $ MX Rs
++   tmtrs   = 0.0033                         $ MT Rs
++   tmlrs   = 0.0033                         $ ML Rs
++   tmzrs   = 0.0033                         $ MZ Rs
++   tamrs   = 0.0033                         $ AM Rs
++   te1rs   = 0.0033                         $ E1 Rs
++   tmars   = 0.0033                         $ MA Rs
++   trsub   = 0.0040                         $ Substrate Resistivity DC
++   tacrsub = 0.0020                         $ Substrate Resistivity AC
++   trsubc  = 0.0036                         $ Substrate Contact Resistance
++   tnbnsr  = 0.00205                        $ N+ Subcollector Rs
++   tpcrsi  = 0.0032                         $ Silicided Poly Rs
+*
+.endl

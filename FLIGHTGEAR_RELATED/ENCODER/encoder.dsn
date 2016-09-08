@@ -1,0 +1,212 @@
+(pcb /home/saul/Dropbox/Work/projects/kicad/FLIGHTGEAR_RELATED/ENCODER/encoder.dsn
+  (parser
+    (string_quote ")
+    (space_in_quoted_tokens on)
+    (host_cad "KiCad's Pcbnew")
+    (host_version "(2014-04-07 BZR 4791)-product")
+  )
+  (resolution um 10)
+  (unit um)
+  (structure
+    (layer F.Cu
+      (type signal)
+      (property
+        (index 0)
+      )
+    )
+    (layer B.Cu
+      (type signal)
+      (property
+        (index 1)
+      )
+    )
+    (boundary
+      (path pcb 0  138500 -87500  138500 -120000  139000 -120000  158500 -120000
+            158500 -87500  138500 -87500)
+    )
+    (via "Via[0-1]_889:635_um")
+    (rule
+      (width 300)
+      (clearance 254.1)
+      (clearance 254.1 (type default_smd))
+      (clearance 63.5 (type smd_smd))
+    )
+  )
+  (placement
+    (component Capacitors_SMD:c_0603
+      (place C1 152500 -117000 front 270 (PN C))
+      (place C2 144500 -117000 front 270 (PN C))
+      (place C3 143500 -95500 front 270 (PN C))
+    )
+    (component SMD_Packages:SM0603_Resistor
+      (place R4 147500 -95500 front 180 (PN R))
+      (place R5 150500 -95500 front 0 (PN R))
+    )
+    (component fg_footprints:MERP12_2412BG
+      (place U1 148501 -105004 front 0 (PN ENCODER))
+    )
+    (component Pin_Headers:Pin_Header_Straight_2x03
+      (place P2 148500 -91000 front 0 (PN CONN_3X2))
+    )
+    (component Saul:Mhole
+      (place P3 155500 -91000 front 0 (PN CONN_1))
+      (place P4 141500 -91000 front 0 (PN CONN_1))
+    )
+    (component Pin_Headers:Pin_Header_Straight_2x02
+      (place P1 148500 -117000 front 0 (PN CONN_2X2))
+    )
+  )
+  (library
+    (image Capacitors_SMD:c_0603
+      (outline (path signal 127  558.8 -406.4  558.8 406.4))
+      (outline (path signal 127  -558.8 381  -558.8 -406.4))
+      (outline (path signal 127  -812.8 406.4  812.8 406.4))
+      (outline (path signal 127  812.8 406.4  812.8 -406.4))
+      (outline (path signal 127  812.8 -406.4  -812.8 -406.4))
+      (outline (path signal 127  -812.8 -406.4  -812.8 406.4))
+      (pin Rect[T]Pad_899.16x1000.76_um 1 751.84 0)
+      (pin Rect[T]Pad_899.16x1000.76_um 2 -751.84 0)
+    )
+    (image SMD_Packages:SM0603_Resistor
+      (outline (path signal 127  -500.38 698.5  -1206.5 698.5))
+      (outline (path signal 127  -1206.5 698.5  -1206.5 -698.5))
+      (outline (path signal 127  -1206.5 -698.5  -500.38 -698.5))
+      (outline (path signal 127  1206.5 698.5  500.38 698.5))
+      (outline (path signal 127  1206.5 698.5  1206.5 -698.5))
+      (outline (path signal 127  1206.5 -698.5  500.38 -698.5))
+      (pin Rect[T]Pad_635x1143_um 1 -762 0)
+      (pin Rect[T]Pad_635x1143_um 2 762 0)
+    )
+    (image fg_footprints:MERP12_2412BG
+      (outline (path signal 150  -6000 7000  6000 7000))
+      (outline (path signal 150  6000 7000  6000 -7500))
+      (outline (path signal 150  6000 -7500  -6000 -7500))
+      (outline (path signal 150  -6000 -7500  -6000 7000))
+      (pin Oval[A]Pad_1500x2000_um 1 3000 7000)
+      (pin Oval[A]Pad_1500x2000_um 2 1000 7000)
+      (pin Oval[A]Pad_1500x2000_um 3 -1000 7000)
+      (pin Oval[A]Pad_1500x2000_um 4 -3000 7000)
+      (pin Oval[A]Pad_1500x2000_um 5 -2500 -7500)
+      (pin Oval[A]Pad_1500x2000_um 6 0 -7500)
+      (pin Oval[A]Pad_1500x2000_um 7 2500 -7500)
+      (pin Round[A]Pad_3000_um @1 -6500 0)
+      (pin Round[A]Pad_3000_um @2 6500 0)
+    )
+    (image Pin_Headers:Pin_Header_Straight_2x03
+      (outline (path signal 254  -3810 0  -1270 0))
+      (outline (path signal 254  -1270 0  -1270 -2540))
+      (outline (path signal 254  -3810 -2540  3810 -2540))
+      (outline (path signal 254  3810 -2540  3810 2540))
+      (outline (path signal 254  3810 2540  -1270 2540))
+      (outline (path signal 254  -3810 -2540  -3810 0))
+      (outline (path signal 254  -3810 2540  -3810 0))
+      (outline (path signal 254  -1270 2540  -3810 2540))
+      (pin Rect[A]Pad_1727.2x1727.2_um 1 -2540 -1270)
+      (pin Oval[A]Pad_1727.2x1727.2_um 2 -2540 1270)
+      (pin Oval[A]Pad_1727.2x1727.2_um 3 0 -1270)
+      (pin Oval[A]Pad_1727.2x1727.2_um 4 0 1270)
+      (pin Oval[A]Pad_1727.2x1727.2_um 5 2540 -1270)
+      (pin Oval[A]Pad_1727.2x1727.2_um 6 2540 1270)
+    )
+    (image Saul:Mhole
+      (pin Round[A]Pad_3200.4_um 1 0 0)
+    )
+    (image Pin_Headers:Pin_Header_Straight_2x02
+      (outline (path signal 254  -2540 0  -2540 -2540))
+      (outline (path signal 254  -2540 -2540  0 -2540))
+      (outline (path signal 254  0 -2540  0 0))
+      (outline (path signal 254  0 0  -2540 0))
+      (outline (path signal 254  -2540 0  -2540 2540))
+      (outline (path signal 254  -2540 2540  2540 2540))
+      (outline (path signal 254  2540 2540  2540 -2540))
+      (outline (path signal 254  2540 -2540  0 -2540))
+      (pin Rect[A]Pad_1727.2x1727.2_um 1 -1270 -1270)
+      (pin Oval[A]Pad_1727.2x1727.2_um 2 -1270 1270)
+      (pin Oval[A]Pad_1727.2x1727.2_um 3 1270 -1270)
+      (pin Oval[A]Pad_1727.2x1727.2_um 4 1270 1270)
+    )
+    (padstack Round[A]Pad_3000_um
+      (shape (circle F.Cu 3000))
+      (shape (circle B.Cu 3000))
+      (attach off)
+    )
+    (padstack Round[A]Pad_3200.4_um
+      (shape (circle F.Cu 3200.4))
+      (shape (circle B.Cu 3200.4))
+      (attach off)
+    )
+    (padstack Oval[A]Pad_1500x2000_um
+      (shape (path F.Cu 1500  0 -250  0 250))
+      (shape (path B.Cu 1500  0 -250  0 250))
+      (attach off)
+    )
+    (padstack Oval[A]Pad_1727.2x1727.2_um
+      (shape (path F.Cu 1727.2  0 0  0 0))
+      (shape (path B.Cu 1727.2  0 0  0 0))
+      (attach off)
+    )
+    (padstack Rect[T]Pad_635x1143_um
+      (shape (rect F.Cu -317.5 -571.5 317.5 571.5))
+      (attach off)
+    )
+    (padstack Rect[T]Pad_899.16x1000.76_um
+      (shape (rect F.Cu -449.58 -500.38 449.58 500.38))
+      (attach off)
+    )
+    (padstack Rect[A]Pad_1727.2x1727.2_um
+      (shape (rect F.Cu -863.6 -863.6 863.6 863.6))
+      (shape (rect B.Cu -863.6 -863.6 863.6 863.6))
+      (attach off)
+    )
+    (padstack "Via[0-1]_889:635_um"
+      (shape (circle F.Cu 889))
+      (shape (circle B.Cu 889))
+      (attach off)
+    )
+  )
+  (network
+    (net GND
+      (pins C1-2 C2-2 C3-2 U1-1 U1-6 P2-2 P2-4 P2-6 P1-2 P1-4)
+    )
+    (net "Net-(C1-Pad1)"
+      (pins C1-1 U1-7 P1-3)
+    )
+    (net "Net-(C2-Pad1)"
+      (pins C2-1 U1-5 P1-1)
+    )
+    (net "Net-(C3-Pad1)"
+      (pins C3-1 U1-4 P2-1)
+    )
+    (net "Net-(R4-Pad1)"
+      (pins R4-1 U1-3)
+    )
+    (net "Net-(R5-Pad1)"
+      (pins R5-1 U1-2)
+    )
+    (net "Net-(P2-Pad3)"
+      (pins R4-2 P2-3)
+    )
+    (net "Net-(P2-Pad5)"
+      (pins R5-2 P2-5)
+    )
+    (net "Net-(P3-Pad1)"
+      (pins P3-1)
+    )
+    (net "Net-(P4-Pad1)"
+      (pins P4-1)
+    )
+    (class kicad_default "" +5V GND "Net-(C1-Pad1)" "Net-(C2-Pad1)" "Net-(C3-Pad1)"
+      "Net-(P1-Pad3)" "Net-(P1-Pad4)" "Net-(P2-Pad3)" "Net-(P2-Pad5)" "Net-(P3-Pad1)"
+      "Net-(P4-Pad1)" "Net-(R4-Pad1)" "Net-(R5-Pad1)"
+      (circuit
+        (use_via Via[0-1]_889:635_um)
+      )
+      (rule
+        (width 300)
+        (clearance 254.1)
+      )
+    )
+  )
+  (wiring
+  )
+)

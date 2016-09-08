@@ -1,0 +1,4 @@
+(fp_lib_table
+  (lib (name FGFS)(type KiCad)(uri /home/saul/Dropbox/Work/projects/kicad/custom_libraries/FGFS/fg_footprints.pretty)(options "")(descr ""))
+  (lib (name SAUL)(type Legacy)(uri /home/saul/Dropbox/Work/projects/kicad/custom_libraries/SAUL/Saul_footprints.mod)(options "")(descr ""))
+)

@@ -1,0 +1,170 @@
+(pcb /home/saul/Dropbox/Work/projects/kicad/10M_OSCILLATOR/10M_OSCILLATOR.dsn
+  (parser
+    (string_quote ")
+    (space_in_quoted_tokens on)
+    (host_cad "KiCad's Pcbnew")
+    (host_version "(2013-mar-13)-testing")
+  )
+  (resolution um 10)
+  (unit um)
+  (structure
+    (layer F.Cu
+      (type signal)
+      (property
+        (index 0)
+      )
+    )
+    (layer B.Cu
+      (type signal)
+      (property
+        (index 1)
+      )
+    )
+    (boundary
+      (path pcb 0  139065 -89535  139065 -107315  153035 -107315  153035 -89535
+            139065 -89535)
+    )
+    (via "Via[0-1]_889:635_um" "Via[0-1]_889:0_um")
+    (rule
+      (width 254)
+      (clearance 254.1)
+      (clearance 254.1 (type default_smd))
+      (clearance 63.5 (type smd_smd))
+    )
+  )
+  (placement
+    (component SM0603_Capa
+      (place C1 146050 -105410 front 0 (PN C))
+      (place C2 144000 -99000 front 0 (PN C))
+      (place C3 148000 -99000 front 180 (PN C))
+    )
+    (component PIN_ARRAY_2X1
+      (place P1 141000 -104000 front 270 (PN CONN_2))
+      (place P2 151000 -104000 front 270 (PN CONN_2))
+    )
+    (component SM0603
+      (place R1 146000 -91000 front 180 (PN R))
+    )
+    (component "sc70-6"
+      (place U1 146050 -102870 front 270 (PN NC7WZ04))
+    )
+    (component "HC-49V"
+      (place X1 146000 -95000 front 0 (PN CRYSTAL))
+    )
+  )
+  (library
+    (image SM0603_Capa
+      (outline (path signal 119.38  500.38 -650.24  1198.88 -650.24))
+      (outline (path signal 119.38  -500.38 -650.24  -1198.88 -650.24))
+      (outline (path signal 119.38  500.38 650.24  1198.88 650.24))
+      (outline (path signal 119.38  -1198.88 650.24  -500.38 650.24))
+      (outline (path signal 119.38  1198.88 635  1198.88 -635))
+      (outline (path signal 119.38  -1198.88 -635  -1198.88 635))
+      (pin Rect[T]Pad_635x1143_um 1 -762 0)
+      (pin Rect[T]Pad_635x1143_um 2 762 0)
+    )
+    (image PIN_ARRAY_2X1
+      (outline (path signal 152.4  -2540 -1270  -2540 1270))
+      (outline (path signal 152.4  -2540 1270  2540 1270))
+      (outline (path signal 152.4  2540 1270  2540 -1270))
+      (outline (path signal 152.4  2540 -1270  -2540 -1270))
+      (pin Rect[A]Pad_1524x1524_um 1 -1270 0)
+      (pin Round[A]Pad_1524_um 2 1270 0)
+    )
+    (image SM0603
+      (outline (path signal 127  -1143 635  1143 635))
+      (outline (path signal 127  1143 635  1143 -635))
+      (outline (path signal 127  1143 -635  -1143 -635))
+      (outline (path signal 127  -1143 -635  -1143 635))
+      (pin Rect[T]Pad_635x1143_um 1 -762 0)
+      (pin Rect[T]Pad_635x1143_um 2 762 0)
+    )
+    (image "sc70-6"
+      (outline (path signal 127  0 647.7  0 1206.5))
+      (outline (path signal 127  -444.5 -647.7  -1104.9 12.7))
+      (outline (path signal 127  -596.9 -647.7  -1104.9 -152.4))
+      (outline (path signal 127  647.7 647.7  647.7 1206.5))
+      (outline (path signal 127  -647.7 647.7  -647.7 1206.5))
+      (outline (path signal 127  0 -647.7  0 -1206.5))
+      (outline (path signal 127  647.7 -647.7  647.7 -1206.5))
+      (outline (path signal 127  -647.7 -647.7  -647.7 -1206.5))
+      (outline (path signal 127  -1104.9 647.7  1104.9 647.7))
+      (outline (path signal 127  1104.9 647.7  1104.9 -647.7))
+      (outline (path signal 127  1104.9 -647.7  -1104.9 -647.7))
+      (outline (path signal 127  -1104.9 -647.7  -1104.9 647.7))
+      (pin Rect[T]Pad_406.4x660.4_um 1 -660.4 -1016)
+      (pin Rect[T]Pad_406.4x660.4_um 3 660.4 -1016)
+      (pin Rect[T]Pad_406.4x660.4_um 2 0 -1016)
+      (pin Rect[T]Pad_406.4x660.4_um 4 660.4 1016)
+      (pin Rect[T]Pad_406.4x660.4_um 6 -660.4 1016)
+      (pin Rect[T]Pad_406.4x660.4_um 5 0 1016)
+    )
+    (image "HC-49V"
+      (outline (path signal 317.5  -3175 -2540  3175 -2540))
+      (outline (path signal 317.5  -3175 2540  3175 2540))
+      (pin Round[A]Pad_1422.4_um 1 -2540 0)
+      (pin Round[A]Pad_1422.4_um 2 2540 0)
+    )
+    (padstack Round[A]Pad_1422.4_um
+      (shape (circle F.Cu 1422.4))
+      (shape (circle B.Cu 1422.4))
+      (attach off)
+    )
+    (padstack Round[A]Pad_1524_um
+      (shape (circle F.Cu 1524))
+      (shape (circle B.Cu 1524))
+      (attach off)
+    )
+    (padstack Rect[T]Pad_406.4x660.4_um
+      (shape (rect F.Cu -203.2 -330.2 203.2 330.2))
+      (attach off)
+    )
+    (padstack Rect[T]Pad_635x1143_um
+      (shape (rect F.Cu -317.5 -571.5 317.5 571.5))
+      (attach off)
+    )
+    (padstack Rect[A]Pad_1524x1524_um
+      (shape (rect F.Cu -762 -762 762 762))
+      (shape (rect B.Cu -762 -762 762 762))
+      (attach off)
+    )
+    (padstack "Via[0-1]_889:635_um"
+      (shape (circle F.Cu 889))
+      (shape (circle B.Cu 889))
+      (attach off)
+    )
+    (padstack "Via[0-1]_889:0_um"
+      (shape (circle F.Cu 889))
+      (shape (circle B.Cu 889))
+      (attach off)
+    )
+  )
+  (network
+    (net +5V
+      (pins C1-2 P1-1 U1-5)
+    )
+    (net GND
+      (pins C1-1 C2-2 C3-2 P1-2 P2-2 U1-2)
+    )
+    (net "N-000003"
+      (pins P2-1 U1-4)
+    )
+    (net "N-000004"
+      (pins C2-1 R1-2 U1-1 X1-1)
+    )
+    (net "N-000005"
+      (pins C3-1 R1-1 U1-3 U1-6 X1-2)
+    )
+    (class kicad_default "" +5V GND "N-000003" "N-000004" "N-000005"
+      (circuit
+        (use_via Via[0-1]_889:635_um)
+      )
+      (rule
+        (width 254)
+        (clearance 254.1)
+      )
+    )
+  )
+  (wiring
+  )
+)

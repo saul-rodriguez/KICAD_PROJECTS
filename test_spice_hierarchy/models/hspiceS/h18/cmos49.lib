@@ -1,0 +1,71 @@
+.lib cmostm
+* Case No. 1
+.inc './LV_DEV/fixed_corner_lv.inc' lvtt
+.inc './LV_DEV/fixed_corner_hv.inc' hvtt
+.inc './LV_DEV/passive_corner_lv.inc' lvdtt
+.inc './LV_DEV/process_lv.inc' 
+.inc './LV_DEV/process_hv.inc' 
+.inc './LV_DEV/models.inc' 
+.endl 
+
+.lib cmoswp
+* Case No. 2
+.inc './LV_DEV/fixed_corner_lv.inc' lvff
+.inc './LV_DEV/fixed_corner_hv.inc' hvff
+.inc './LV_DEV/passive_corner_lv.inc' lvdmax
+.inc './LV_DEV/process_lv.inc' 
+.inc './LV_DEV/process_hv.inc' 
+.inc './LV_DEV/models.inc'
+.endl 
+
+.lib cmosws
+* Case No. 3
+.inc './LV_DEV/fixed_corner_lv.inc' lvss
+.inc './LV_DEV/fixed_corner_hv.inc' hvdd
+.inc './LV_DEV/passive_corner_lv.inc' lvdmin
+.inc './LV_DEV/process_lv.inc' 
+.inc './LV_DEV/process_hv.inc' 
+.inc './LV_DEV/models.inc'
+.endl 
+
+.lib cmoswo
+* Case No. 4
+.inc './LV_DEV/fixed_corner_lv.inc' lvfs
+.inc './LV_DEV/fixed_corner_hv.inc' hvfs
+.inc './LV_DEV/passive_corner_lv.inc' lvdmax
+.inc './LV_DEV/process_lv.inc' 
+.inc './LV_DEV/process_hv.inc' 
+.inc './LV_DEV/models.inc'
+.endl 
+
+.lib cmoswz
+* Case No. 5
+.inc './LV_DEV/fixed_corner_lv.inc' lvsf
+.inc './LV_DEV/fixed_corner_hv.inc' hvsf
+.inc './LV_DEV/passive_corner_lv.inc' lvdmin
+.inc './LV_DEV/process_lv.inc' 
+.inc './LV_DEV/process_hv.inc' 
+.inc './LV_DEV/models.inc'
+.endl 
+
+.lib cmosfff
+* Case No. 6
+.inc './LV_DEV/fixed_corner_lv.inc' lvfff
+.inc './LV_DEV/fixed_corner_hv.inc' hvfff
+.inc './LV_DEV/passive_corner_lv.inc' lvdmax
+.inc './LV_DEV/process_lv.inc' 
+.inc './LV_DEV/process_hv.inc' 
+.inc './LV_DEV/models.inc'
+.endl 
+
+.lib cmosssf
+* Case No. 7
+.inc './LV_DEV/fixed_corner_lv.inc' lvssf
+.inc './LV_DEV/fixed_corner_hv.inc' hvssf
+.inc './LV_DEV/passive_corner_lv.inc' lvdmin
+.inc './LV_DEV/process_lv.inc' 
+.inc './LV_DEV/process_hv.inc' 
+.inc './LV_DEV/models.inc'
+.endl 
+
+* Owner: austriamicrosystems

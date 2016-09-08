@@ -1,0 +1,94 @@
+Cmp-Mod V01 Created by Cvpcb (2014-04-07 BZR 4791)-product   date = ons  9 apr 2014 20:10:30
+
+BeginCmp
+TimeStamp = /52A0EF43;
+Reference = C1;
+ValeurCmp = 0.1u;
+IdModule  = SMD_Packages:SM0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /5345478C;
+Reference = P1;
+ValeurCmp = CONN_5X2;
+IdModule  = Pin_Headers:Pin_Header_Straight_2x05;
+EndCmp
+
+BeginCmp
+TimeStamp = /53454C17;
+Reference = P2;
+ValeurCmp = CONN_1;
+IdModule  = SAUL:Mhole;
+EndCmp
+
+BeginCmp
+TimeStamp = /53454C2B;
+Reference = P3;
+ValeurCmp = CONN_1;
+IdModule  = SAUL:Mhole;
+EndCmp
+
+BeginCmp
+TimeStamp = /52A0ED1F;
+Reference = R1;
+ValeurCmp = 10K;
+IdModule  = SMD_Packages:SM0603_Resistor;
+EndCmp
+
+BeginCmp
+TimeStamp = /52A0ED2A;
+Reference = R2;
+ValeurCmp = 10K;
+IdModule  = SMD_Packages:SM0603_Resistor;
+EndCmp
+
+BeginCmp
+TimeStamp = /52A0E983;
+Reference = R3;
+ValeurCmp = 39K;
+IdModule  = SMD_Packages:SM0603_Resistor;
+EndCmp
+
+BeginCmp
+TimeStamp = /52A0E97D;
+Reference = R4;
+ValeurCmp = 39K;
+IdModule  = SMD_Packages:SM0603_Resistor;
+EndCmp
+
+BeginCmp
+TimeStamp = /52A0E94A;
+Reference = R5;
+ValeurCmp = 39K;
+IdModule  = SMD_Packages:SM0603_Resistor;
+EndCmp
+
+BeginCmp
+TimeStamp = /52A0D9DC;
+Reference = U1;
+ValeurCmp = HT16K33;
+IdModule  = SMD_Packages:SO28;
+EndCmp
+
+BeginCmp
+TimeStamp = /52A0DBCF;
+Reference = U2;
+ValeurCmp = BC56_11;
+IdModule  = SAUL:BC56_11;
+EndCmp
+
+BeginCmp
+TimeStamp = /534548E6;
+Reference = U3;
+ValeurCmp = BAV99W;
+IdModule  = SMD_Packages:SOT23-SPECIAL;
+EndCmp
+
+BeginCmp
+TimeStamp = /53458B83;
+Reference = U4;
+ValeurCmp = BC56_11;
+IdModule  = SAUL:BC56_11;
+EndCmp
+
+EndListe

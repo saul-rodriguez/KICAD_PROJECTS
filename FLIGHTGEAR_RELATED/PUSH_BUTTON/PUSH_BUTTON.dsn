@@ -1,0 +1,187 @@
+(pcb /home/saul/Dropbox/Work/projects/kicad/FLIGHTGEAR_RELATED/PUSH_BUTTON/PUSH_BUTTON.dsn
+  (parser
+    (string_quote ")
+    (space_in_quoted_tokens on)
+    (host_cad "KiCad's Pcbnew")
+    (host_version "(2014-04-07 BZR 4791)-product")
+  )
+  (resolution um 10)
+  (unit um)
+  (structure
+    (layer F.Cu
+      (type signal)
+      (property
+        (index 0)
+      )
+    )
+    (layer B.Cu
+      (type signal)
+      (property
+        (index 1)
+      )
+    )
+    (boundary
+      (path pcb 0  153500 -89500  153500 -115500  161500 -115500  161500 -89500
+            153500 -89500)
+    )
+    (via "Via[0-1]_889:635_um")
+    (rule
+      (width 254)
+      (clearance 254.1)
+      (clearance 254.1 (type default_smd))
+      (clearance 63.5 (type smd_smd))
+    )
+  )
+  (placement
+    (component SMD_Packages:SM0603_Capa
+      (place 0.1u1 156000 -99750 front 0 (PN C))
+    )
+    (component SMD_Packages:SM0603_Resistor
+      (place 1k1 159250 -99750 front 180 (PN R))
+    )
+    (component SMD_Packages:SM1206
+      (place D1 157500 -97250 front 180 (PN LED))
+    )
+    (component Pin_Headers:Pin_Header_Straight_2x02
+      (place P1 157500 -93000 front 0 (PN CONN_2X2))
+    )
+    (component Saul_footprints:PCB_PUSH_bottom
+      (place S1 157500 -105500 front 0 (PN PBUTTON))
+    )
+    (component Saul_footprints:Mhole
+      (place P2 157500 -112500 front 0 (PN CONN_1))
+    )
+  )
+  (library
+    (image SMD_Packages:SM0603_Capa
+      (outline (path signal 119.38  500.38 -650.24  1198.88 -650.24))
+      (outline (path signal 119.38  -500.38 -650.24  -1198.88 -650.24))
+      (outline (path signal 119.38  500.38 650.24  1198.88 650.24))
+      (outline (path signal 119.38  -1198.88 650.24  -500.38 650.24))
+      (outline (path signal 119.38  1198.88 635  1198.88 -635))
+      (outline (path signal 119.38  -1198.88 -635  -1198.88 635))
+      (pin Rect[T]Pad_635x1143_um 1 -762 0)
+      (pin Rect[T]Pad_635x1143_um 2 762 0)
+    )
+    (image SMD_Packages:SM0603_Resistor
+      (outline (path signal 127  -500.38 698.5  -1206.5 698.5))
+      (outline (path signal 127  -1206.5 698.5  -1206.5 -698.5))
+      (outline (path signal 127  -1206.5 -698.5  -500.38 -698.5))
+      (outline (path signal 127  1206.5 698.5  500.38 698.5))
+      (outline (path signal 127  1206.5 698.5  1206.5 -698.5))
+      (outline (path signal 127  1206.5 -698.5  500.38 -698.5))
+      (pin Rect[T]Pad_635x1143_um 1 -762 0)
+      (pin Rect[T]Pad_635x1143_um 2 762 0)
+    )
+    (image SMD_Packages:SM1206
+      (outline (path signal 127  -2540 1143  -2540 -1143))
+      (outline (path signal 127  -2540 -1143  -889 -1143))
+      (outline (path signal 127  889 1143  2540 1143))
+      (outline (path signal 127  2540 1143  2540 -1143))
+      (outline (path signal 127  2540 -1143  889 -1143))
+      (outline (path signal 127  -889 1143  -2540 1143))
+      (pin Rect[T]Pad_1524x2032_um 1 -1651 0)
+      (pin Rect[T]Pad_1524x2032_um 2 1651 0)
+    )
+    (image Pin_Headers:Pin_Header_Straight_2x02
+      (outline (path signal 254  -2540 0  -2540 -2540))
+      (outline (path signal 254  -2540 -2540  0 -2540))
+      (outline (path signal 254  0 -2540  0 0))
+      (outline (path signal 254  0 0  -2540 0))
+      (outline (path signal 254  -2540 0  -2540 2540))
+      (outline (path signal 254  -2540 2540  2540 2540))
+      (outline (path signal 254  2540 2540  2540 -2540))
+      (outline (path signal 254  2540 -2540  0 -2540))
+      (pin Rect[A]Pad_1727.2x1727.2_um 1 -1270 -1270)
+      (pin Oval[A]Pad_1727.2x1727.2_um 2 -1270 1270)
+      (pin Oval[A]Pad_1727.2x1727.2_um 3 1270 -1270)
+      (pin Oval[A]Pad_1727.2x1727.2_um 4 1270 1270)
+    )
+    (image Saul_footprints:PCB_PUSH_bottom
+      (outline (path signal 304.8  -3048 3048  3048 3048))
+      (outline (path signal 304.8  3048 3048  3048 -3048))
+      (outline (path signal 304.8  3048 -3048  -3048 -3048))
+      (outline (path signal 304.8  -3048 -3048  -3048 3048))
+      (outline (path signal 2540  803.219 0  763.906 -248.208  649.817 -472.12  472.12 -649.817
+            248.208 -763.906  0 -803.219  -248.208 -763.906  -472.12 -649.817
+            -649.817 -472.12  -763.906 -248.208  -803.219 0  -763.906 248.208
+            -649.817 472.12  -472.12 649.817  -248.208 763.906  0 803.219
+            248.208 763.906  472.12 649.817  649.817 472.12  763.906 248.208))
+      (pin Round[A]Pad_1998.98_um 1 -2250.44 3251.2)
+      (pin Round[A]Pad_1998.98_um 3 2250.44 -3251.2)
+      (pin Round[A]Pad_1998.98_um 4 2250.44 3251.2)
+      (pin Round[A]Pad_1998.98_um 2 -2250.44 -3251.2)
+    )
+    (image Saul_footprints:Mhole
+      (pin Round[A]Pad_3200.4_um 1 0 0)
+    )
+    (padstack Round[A]Pad_1998.98_um
+      (shape (circle F.Cu 1998.98))
+      (shape (circle B.Cu 1998.98))
+      (attach off)
+    )
+    (padstack Round[A]Pad_3200.4_um
+      (shape (circle F.Cu 3200.4))
+      (shape (circle B.Cu 3200.4))
+      (attach off)
+    )
+    (padstack Oval[A]Pad_1727.2x1727.2_um
+      (shape (path F.Cu 1727.2  0 0  0 0))
+      (shape (path B.Cu 1727.2  0 0  0 0))
+      (attach off)
+    )
+    (padstack Rect[T]Pad_635x1143_um
+      (shape (rect F.Cu -317.5 -571.5 317.5 571.5))
+      (attach off)
+    )
+    (padstack Rect[T]Pad_1524x2032_um
+      (shape (rect F.Cu -762 -1016 762 1016))
+      (attach off)
+    )
+    (padstack Rect[A]Pad_1727.2x1727.2_um
+      (shape (rect F.Cu -863.6 -863.6 863.6 863.6))
+      (shape (rect B.Cu -863.6 -863.6 863.6 863.6))
+      (attach off)
+    )
+    (padstack "Via[0-1]_889:635_um"
+      (shape (circle F.Cu 889))
+      (shape (circle B.Cu 889))
+      (attach off)
+    )
+  )
+  (network
+    (net GND
+      (pins 0.1u1-2 D1-2 P1-2 P1-4 S1-4)
+    )
+    (net "Net-(0.1u1-Pad1)"
+      (pins 0.1u1-1 P1-1 S1-1)
+    )
+    (net "Net-(1k1-Pad1)"
+      (pins 1k1-1 P1-3)
+    )
+    (net "Net-(1k1-Pad2)"
+      (pins 1k1-2 D1-1)
+    )
+    (net "Net-(S1-Pad2)"
+      (pins S1-2)
+    )
+    (net "Net-(S1-Pad3)"
+      (pins S1-3)
+    )
+    (net "Net-(P2-Pad1)"
+      (pins P2-1)
+    )
+    (class kicad_default "" GND "Net-(0.1u1-Pad1)" "Net-(10k1-Pad2)" "Net-(1k1-Pad1)"
+      "Net-(1k1-Pad2)" "Net-(P2-Pad1)" "Net-(S1-Pad2)" "Net-(S1-Pad3)"
+      (circuit
+        (use_via Via[0-1]_889:635_um)
+      )
+      (rule
+        (width 254)
+        (clearance 254.1)
+      )
+    )
+  )
+  (wiring
+  )
+)

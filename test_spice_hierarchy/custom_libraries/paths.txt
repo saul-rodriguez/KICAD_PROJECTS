@@ -1,0 +1,4 @@
+/home/saul/Dropbox/Work/projects/kicad/custom_libraries/SAUL/Saul_footprints.mod
+/home/saul/Dropbox/Work/projects/kicad/custom_libraries/WALTER/w_pin_strip.mod
+/home/saul/Dropbox/Work/projects/kicad/custom_libraries/FGFS/fg_footprints.pretty
+/home/saul/Dropbox/Work/projects/kicad/custom_libraries/Saul_footprints_new.pretty

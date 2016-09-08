@@ -1,0 +1,231 @@
+// Path, Component, Release: cmhv7sf/rel/HSPICE/models/pcap.va, 7hv_models, mod_cmhv7sf
+// CMVC Revision: 1.2 10/01/29 16:09:54
+//
+// VerilogA model for 7HV ptype varactors
+// Includes primary cap with temperature effects,
+// IBM CONFIDENTIAL
+// (C) 2010 IBM Corporation
+
+`include "constants.vams"
+`include "disciplines.vams"
+
+module pvarcap (gate, well);
+inout gate, well;
+electrical gate, well, nv, nfp, nfs, deplet;
+
+parameter real pareac=0 from [0.0:inf);
+parameter real co_pva=4.8m;
+parameter real qs_pva=360u;
+parameter real qp_pva=8m;
+parameter real pon_pva=0m;
+parameter real vbi_pva=-0.09;
+parameter real deltemp=0;
+parameter real Bo=38.922872;
+parameter real cot_pva=0.1m;
+parameter real pont_pva=0m;
+parameter real vbit_pva=-3m;
+//parameter real vcc1_pva=0m;
+//parameter real vcc2_pva=0m;
+parameter real r0=+0.707106781186547524400844362e+00;
+parameter real r1=-0.117851130197757920733474060e+00;
+parameter real r2=+0.196418550329596534555790101e-01;
+parameter real r3=-0.261891400439460743868007786e-02;
+parameter real r4=+0.272803542124439631327486251e-03;
+parameter real r5=-0.220840962672165415836536489e-04;
+parameter real r6=+0.142897093493754092600111846e-05;
+parameter real r7=-0.866042990871236924849162701e-07;
+parameter real r8=+0.631489680843610257702514469e-08;
+parameter real r9=-0.443774133579853095961218682e-09;
+parameter real r10=+0.991516471330756159451828189e-11;
+parameter real exp40=2.3538526683702e+17;
+parameter real c0=+1.0;
+parameter real c1=-1.0;
+parameter real c2=+0.5;
+parameter real c3=-0.1666666666666667e+0;
+parameter real c4=+0.4166666666666667e-1;
+parameter real c5=-0.8333333333333333e-2;
+parameter real c6=+0.1388888888888889e-2;
+parameter real c7=-0.1984129841298413e-3;
+parameter real c8=+0.2480158730158730e-4;
+parameter real c9=-0.2755731922398589e-5;
+parameter real c10=+0.2755371922398589e-6;
+parameter real wellres=0.0;
+parameter real accres=5.00;
+parameter real depres=1.50;
+
+real b, pon, qs, qp;
+real vbi, vox, qox, cox;
+real fs, fs_init, fs0, diff0s, fs_max, err_fs, dfs, vs, facs, dfacs, ds, voxs;
+real fp, fp_init, fp0, diff0p, fp_max, err_fp, dfp, vp, facp, dfacp, dp, voxp;
+real x, y, expm, arg;
+real adjwellres;
+integer i, ilast, j, jlast;
+
+   analog begin
+      b = Bo*298.15/(298.15+deltemp);
+      cox = co_pva*(1 + cot_pva*deltemp);
+      qs = qs_pva*sqrt((298.15+deltemp)/298.15);
+      qp = qp_pva*sqrt((298.15+deltemp)/298.15);
+      pon = pon_pva*(1 + pont_pva*deltemp);
+      vbi = vbi_pva + vbit_pva*deltemp;
+// Calculate surface potential at silicon
+      vs = V(nfp,deplet);
+      fs = V(nfs,deplet);
+// Protect against large initial guesses
+      if (vs < -0.5) begin
+        fs_max = -2*ln(abs(cox*vs/qs))/b;
+        fs = max(fs,fs_max);
+      end
+        fs_init = fs;
+      err_fs=1.0;
+      i = 0;
+// Use "for" loop, but check error and skip computation when satisfied.
+      for (i=1; ((i<=100) && (err_fs>1e-16)); i=i+1)
+      begin
+         fs0 = fs;
+         x = b*fs;
+         if (pon == 0.0)
+         begin
+// Better expansion if pon=0
+            if (x <= -40)
+              facs = -sqrt(exp40*(-x+39.0)+x-1.0);
+            else if (x > 39.0)
+              facs = sqrt(-1.0+x);
+            else if (x < -0.5)
+              facs = -sqrt(exp(-x)+x-1);
+            else if (x > 0.5)
+              facs = sqrt(exp(-x)+x-1);
+            else if (abs(x) > 0.1)
+              facs = x*(r0+x*(r1+x*(r2+x*(r3+x*(r4+x*(r5+x*(r6+x*(r7+x*(r8+x*(r9+x*r10))))))))));
+            else
+              facs = x*(r0+x*(r1+x*(r2+x*(r3+x*(r4+x*r5)))));
+         end
+         else
+         begin
+            if (x <= -40)
+              arg = exp40*(-x+39.0)+x-1.0 + (pon/2)*x*x;
+            else if (x > 39.0)
+              arg = x-1.0 + (pon/2)*x*x;
+            else if (abs(x) >= 0.1)
+              arg = (exp(-x)+x-1) + (pon/2)*x*x;
+            else if (abs(x) > 0.01)
+              arg = x*(x*(c2+x*(c3+x*(c4+x*(c5+x*(c6+x*(c7+x*(c8+x*(c9+x*c10))))))))) + (pon/2)*x*x;
+            else
+              arg = x*(x*(c2+x*(c3+x*(c4+x*c5)))) + (pon/2)*x*x;
+            if (x == 0.0)
+              facs = x*sqrt(pon/2 + c2);
+            else if (x > 0.0)
+              facs = sqrt(arg);
+            else
+              facs = -sqrt(arg);
+         end
+         if (x <= -40)
+           expm = exp40*(-x+39.0)+1.0;
+         else if (x > 39.0)
+           expm = 1.0;
+         else if (abs(x) >= 0.1)
+           expm = (-exp(-x) + 1);
+         else if (abs(x) > 0.01)
+           expm = -x*(c1+x*(c2+x*(c3+x*(c4+x*(c5+x*(c6+x*(c7+x*(c8+x*(c9+x*c10)))))))));
+         else
+           expm = -x*(c1+x*(c2+x*(c3+x*(c4+x*c5))));
+         if (facs != 0.0)
+           dfacs = (b/2)*(expm + pon*x)/facs;
+         else
+           dfacs = 0.0;
+         ds = qs*facs;
+         voxs = ds/cox;
+//         voxs = ds/cox - vcc1_pva*pow(ds/cox,2) - vcc2_pva*pow(ds/cox,3);
+// Function to solve is f = -(vs-voxs-fs) =0
+         dfs = 1 + qs*dfacs/cox;
+// Update surface potential
+         if (dfs != 0.0)
+           fs = fs + (vs-voxs-fs)/dfs;
+         diff0s = fs-fs0;
+         err_fs = abs(diff0s);
+// If more than 10 iterations, relax convergence condition.
+         if (i > 10) err_fs=err_fs/5;
+         ilast = i;
+      end
+// Calculate surface potential at gate
+      vp = V(nfs,nv);
+      fp = V(nfp,nv);
+// Protect against large initial guesses
+      if (vp < -0.5) begin
+        fp_max = -2*ln(abs(cox*vp/qp))/b;
+        fp = max(fp,fp_max);
+      end
+        fp_init = fp;
+      err_fp=1.0;
+      j = 0;
+// Use "for" loop, but check error and skip computation when satisfied.
+      for (j=1; ((j<=100) && (err_fp>1e-16)); j=j+1)
+      begin
+         fp0 = fp;
+         y = b*fp;
+         if (y <= -40)
+           facp = -sqrt(exp40*(-y+39.0)+y-1.0);
+         else if (y > 39.0)
+           facp = sqrt(-1.0+y);
+         else if (y < -0.5)
+           facp = -sqrt(exp(-y)+y-1);
+         else if (y > 0.5)
+           facp = sqrt(exp(-y)+y-1);
+         else if (abs(y) > 0.1)
+           facp = y*(r0+y*(r1+y*(r2+y*(r3+y*(r4+y*(r5+y*(r6+y*(r7+y*(r8+y*(r9+y*r10))))))))));
+         else
+           facp = y*(r0+y*(r1+y*(r2+y*(r3+y*(r4+y*r5)))));
+         if (y <= -40)
+           expm = exp40*(-y+39.0)+1.0;
+         else if (y > 39.0)
+           expm = 1.0;
+         else if (abs(y) >= 0.1)
+           expm = (-exp(-y) + 1);
+         else if (abs(y) > 0.01)
+           expm = -y*(c1+y*(c2+y*(c3+y*(c4+y*(c5+y*(c6+y*(c7+y*(c8+y*(c9+y*c10)))))))));
+         else
+           expm = -y*(c1+y*(c2+y*(c3+y*(c4+y*c5))));
+         if (facp != 0.0)
+           dfacp = (b/2)*expm/facp;
+         else
+           dfacp = 0.0;
+         dp = qp*facp;
+         voxp = dp/cox;
+//         voxp = dp/cox - vcc1_pva*pow(dp/cox,2) - vcc2_pva*pow(dp/cox,3);
+// Function to solve is f = -(vp-voxp-fp) =0
+         dfp = 1 + qp*dfacp/cox;
+// Update surface potential
+         if (dfp != 0.0)
+           fp = fp + (vp-voxp-fp)/dfp;
+         diff0p = fp-fp0;
+         err_fp = abs(diff0p);
+// If more than 10 iterations, relax convergence condition.
+         if (j > 10) err_fp=err_fp/5;
+         jlast = j;
+      end
+//
+// Return results to simulator
+//
+// Define voltages
+      V(nv,gate)  <+ vbi;        // Built in voltage
+      V(nfs,deplet) <+ fs;         // Silicon surface potential
+      V(nfp,nv)   <+ fp;         // Gate surface potential
+//
+// Capacitance from field in oxide
+      vox = V(nfp,nfs);
+      qox = cox*vox*pareac;
+//      qox = cox*(vox + vcc1_pva*pow(vox,2) + vcc2_pva*pow(vox,3))*pareac;
+      I(nfp,nfs)   <+ ddt(qox);
+//
+//  Resistance from well
+      if (fs >= 0.0)
+        adjwellres = wellres*(1.0 + depres*fs);
+      else
+        adjwellres = wellres*(1.0 + accres*fs);
+      V(deplet,well) <+ I(deplet,well)*adjwellres;
+//      $strobe("v = %e wellres= %e  adjwellres= %e", V(gate,well), wellres, adjwellres);
+//      $strobe("vbi = %e fp= %e  fs= %e", vbi, fp, fs);
+//
+    end
+
+endmodule

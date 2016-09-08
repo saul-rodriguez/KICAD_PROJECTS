@@ -1,0 +1,103 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP 0
+D ground for spice simulations
+K ground gnd spice
+$ENDCMP
+#
+$CMP C
+D capacitor
+K C capacitor spice
+$ENDCMP
+#
+$CMP D
+D diode
+K D diode spice
+$ENDCMP
+#
+$CMP I
+D current source
+K current source spice
+$ENDCMP
+#
+$CMP L
+D inductor
+K L inductor spice
+$ENDCMP
+#
+$CMP QNPN
+D NPN transistor
+K NPN transistor spice
+$ENDCMP
+#
+$CMP QNPN_LARGE
+D NPN transistor (large)
+K NPN transistor spice
+$ENDCMP
+#
+$CMP QPNP
+D PNP transistor
+K PNP transistor spice
+$ENDCMP
+#
+$CMP QPNP_LARGE
+D PNP transistor (large)
+K PNP transistor spice
+$ENDCMP
+#
+$CMP R
+D resistor
+K R resistor spice
+$ENDCMP
+#
+$CMP V
+D voltage source
+K voltage source spice
+$ENDCMP
+#
+$CMP VAC
+D voltage source ac
+K voltage source ac spice
+$ENDCMP
+#
+$CMP VAC_LARGE
+D voltage source ac
+K voltage source ac spice
+$ENDCMP
+#
+$CMP V_LARGE
+D voltage source
+K voltage source spice
+$ENDCMP
+#
+$CMP cap
+D capacitor
+K C capacitor spice
+$ENDCMP
+#
+$CMP idc
+D current source
+K current source spice
+$ENDCMP
+#
+$CMP ind
+D inductor
+K L inductor spice
+$ENDCMP
+#
+$CMP res
+D resistor
+K R resistor spice
+$ENDCMP
+#
+$CMP vdc
+D voltage source
+K voltage source spice
+$ENDCMP
+#
+$CMP vsin
+D voltage source
+K voltage source spice
+$ENDCMP
+#
+#End Doc Library

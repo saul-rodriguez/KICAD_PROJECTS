@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="utf-8"?>
+<export version="D">
+    <design>
+        <source>/home/saul/Dropbox/Work/projects/kicad/BATTERY_DCDC_READER2/BAT_DC_SUPPLY_READER.sch</source>
+        <date>Wed 30 Apr 2014 11:06:15 AM CEST</date>
+        <tool>Eeschema (2014-04-07 BZR 4791)-product</tool>
+    </design>
+    <components>
+        <comp ref="C1">
+            <value>4.7u</value>
+            <footprint>SM0603_Capa</footprint>
+            <libsource lib="device" part="C"/>
+            <sheetpath names="/" tstamps="/"/>
+            <tstamp>5319F3F3</tstamp>
+        </comp>
+        <comp ref="BT1">
+            <value>BATTERY</value>
+            <footprint>BX0035</footprint>
+            <libsource lib="device" part="BATTERY"/>
+            <sheetpath names="/" tstamps="/"/>
+            <tstamp>5319F422</tstamp>
+        </comp>
+        <comp ref="U1">
+            <value>MCP1640T_SOT23</value>
+            <footprint>SOT23_6</footprint>
+            <libsource lib="SAUL" part="MCP1640T_SOT23"/>
+            <sheetpath names="/" tstamps="/"/>
+            <tstamp>5319F488</tstamp>
+        </comp>
+        <comp ref="L1">
+            <value>INDUCTOR</value>
+            <footprint>SM1812E</footprint>
+            <libsource lib="device" part="INDUCTOR"/>
+            <sheetpath names="/" tstamps="/"/>
+            <tstamp>5319F4DE</tstamp>
+        </comp>
+        <comp ref="R1">
+            <value>470k</value>
+            <footprint>SM0603</footprint>
+            <libsource lib="device" part="R"/>
+            <sheetpath names="/" tstamps="/"/>
+            <tstamp>5319F524</tstamp>
+        </comp>
+        <comp ref="R2">
+            <value>150k</value>
+            <footprint>SM0603</footprint>
+            <libsource lib="device" part="R"/>
+            <sheetpath names="/" tstamps="/"/>
+            <tstamp>5319F531</tstamp>
+        </comp>
+        <comp ref="C2">
+            <value>10u</value>
+            <footprint>SM1206</footprint>
+            <libsource lib="device" part="C"/>
+            <sheetpath names="/" tstamps="/"/>
+            <tstamp>5319F595</tstamp>
+        </comp>
+        <comp ref="P3">
+            <value>CONN_6</value>
+            <footprint>pin_strip_6-90</footprint>
+            <libsource lib="conn" part="CONN_6"/>
+            <sheetpath names="/" tstamps="/"/>
+            <tstamp>5319F90F</tstamp>
+        </comp>
+        <comp ref="R3">
+            <value>2.2k</value>
+            <libsource lib="device" part="R"/>
+            <sheetpath names="/" tstamps="/"/>
+            <tstamp>531D75EE</tstamp>
+        </comp>
+        <comp ref="D1">
+            <value>LED</value>
+            <libsource lib="device" part="LED"/>
+            <sheetpath names="/" tstamps="/"/>
+            <tstamp>531D75FD</tstamp>
+        </comp>
+        <comp ref="P4">
+            <value>CONN_1</value>
+            <libsource lib="conn" part="CONN_1"/>
+            <sheetpath names="/" tstamps="/"/>
+            <tstamp>531D7CA5</tstamp>
+        </comp>
+        <comp ref="P5">
+            <value>CONN_1</value>
+            <libsource lib="conn" part="CONN_1"/>
+            <sheetpath names="/" tstamps="/"/>
+            <tstamp>531D7CB8</tstamp>
+        </comp>
+        <comp ref="P6">
+            <value>CONN_1</value>
+            <libsource lib="conn" part="CONN_1"/>
+            <sheetpath names="/" tstamps="/"/>
+            <tstamp>531D7CBE</tstamp>
+        </comp>
+        <comp ref="P7">
+            <value>CONN_1</value>
+            <libsource lib="conn" part="CONN_1"/>
+            <sheetpath names="/" tstamps="/"/>
+            <tstamp>531D7CC4</tstamp>
+        </comp>
+        <comp ref="BT2">
+            <value>BATTERY</value>
+            <footprint>BX0035</footprint>
+            <libsource lib="device" part="BATTERY"/>
+            <sheetpath names="/" tstamps="/"/>
+            <tstamp>535F7555</tstamp>
+        </comp>
+        <comp ref="X1">
+            <value>20MHz</value>
+            <libsource lib="device" part="CRYSTAL"/>
+            <sheetpath names="/" tstamps="/"/>
+            <tstamp>535F83D5</tstamp>
+        </comp>
+        <comp ref="C3">
+            <value>15p</value>
+            <footprint>SM0603_Capa</footprint>
+            <libsource lib="device" part="C"/>
+            <sheetpath names="/" tstamps="/"/>
+            <tstamp>535F8415</tstamp>
+        </comp>
+        <comp ref="C4">
+            <value>15p</value>
+            <footprint>SM0603_Capa</footprint>
+            <libsource lib="device" part="C"/>
+            <sheetpath names="/" tstamps="/"/>
+            <tstamp>535F842A</tstamp>
+        </comp>
+        <comp ref="R4">
+            <value>1M</value>
+            <footprint>SM0603</footprint>
+            <libsource lib="device" part="R"/>
+            <sheetpath names="/" tstamps="/"/>
+            <tstamp>535F8543</tstamp>
+        </comp>
+        <comp ref="U2">
+            <value>NC7WZ04</value>
+            <libsource lib="SAUL" part="NC7WZ04"/>
+            <sheetpath names="/" tstamps="/"/>
+            <tstamp>535F85DE</tstamp>
+        </comp>
+        <comp ref="U3">
+            <value>74LS74AD</value>
+            <libsource lib="SAUL" part="74LS74AD"/>
+            <sheetpath names="/" tstamps="/"/>
+            <tstamp>5360B9A3</tstamp>
+        </comp>
+        <comp ref="K1">
+            <value>CONN_3</value>
+            <libsource lib="conn" part="CONN_3"/>
+            <sheetpath names="/" tstamps="/"/>
+            <tstamp>5319FD25</tstamp>
+        </comp>
+    </components>
+    <libparts>
+        <libpart lib="device" part="BATTERY">
+            <fields>
+                <field name="Reference">BT</field>
+                <field name="Value">BATTERY</field>
+            </fields>
+            <pins>
+                <pin num="1" name="+" type="passive"/>
+                <pin num="2" name="-" type="passive"/>
+            </pins>
+        </libpart>
+        <libpart lib="device" part="C">
+            <description>Condensateur non polarise</description>
+            <footprints>
+                <fp>SM*</fp>
+                <fp>C?</fp>
+                <fp>C1-1</fp>
+            </footprints>
+            <fields>
+                <field name="Reference">C</field>
+                <field name="Value">C</field>
+            </fields>
+            <pins>
+                <pin num="1" name="~" type="passive"/>
+                <pin num="2" name="~" type="passive"/>
+            </pins>
+        </libpart>
+        <libpart lib="device" part="CRYSTAL">
+            <fields>
+                <field name="Reference">X</field>
+                <field name="Value">CRYSTAL</field>
+            </fields>
+            <pins>
+                <pin num="1" name="1" type="passive"/>
+                <pin num="2" name="2" type="passive"/>
+            </pins>
+        </libpart>
+        <libpart lib="device" part="INDUCTOR">
+            <fields>
+                <field name="Reference">L</field>
+                <field name="Value">INDUCTOR</field>
+            </fields>
+            <pins>
+                <pin num="1" name="1" type="passive"/>
+                <pin num="2" name="2" type="passive"/>
+            </pins>
+        </libpart>
+        <libpart lib="device" part="LED">
+            <footprints>
+                <fp>LED-3MM</fp>
+                <fp>LED-5MM</fp>
+                <fp>LED-10MM</fp>
+                <fp>LED-0603</fp>
+                <fp>LED-0805</fp>
+                <fp>LED-1206</fp>
+                <fp>LEDV</fp>
+            </footprints>
+            <fields>
+                <field name="Reference">D</field>
+                <field name="Value">LED</field>
+            </fields>
+            <pins>
+                <pin num="1" name="A" type="passive"/>
+                <pin num="2" name="K" type="passive"/>
+            </pins>
+        </libpart>
+        <libpart lib="device" part="R">
+            <description>Resistance</description>
+            <footprints>
+                <fp>R?</fp>
+                <fp>SM0603</fp>
+                <fp>SM0805</fp>
+                <fp>R?-*</fp>
+                <fp>SM1206</fp>
+            </footprints>
+            <fields>
+                <field name="Reference">R</field>
+                <field name="Value">R</field>
+            </fields>
+            <pins>
+                <pin num="1" name="~" type="passive"/>
+                <pin num="2" name="~" type="passive"/>
+            </pins>
+        </libpart>
+        <libpart lib="conn" part="CONN_1">
+            <description>1 pin</description>
+            <fields>
+                <field name="Reference">P</field>
+                <field name="Value">CONN_1</field>
+            </fields>
+            <pins>
+                <pin num="1" name="1" type="passive"/>
+            </pins>
+        </libpart>
+        <libpart lib="conn" part="CONN_3">
+            <description>Symbole general de connecteur</description>
+            <fields>
+                <field name="Reference">K</field>
+                <field name="Value">CONN_3</field>
+            </fields>
+            <pins>
+                <pin num="1" name="P1" type="passive"/>
+                <pin num="2" name="PM" type="passive"/>
+                <pin num="3" name="P3" type="passive"/>
+            </pins>
+        </libpart>
+        <libpart lib="conn" part="CONN_6">
+            <description>ymbole general de connecteur</description>
+            <fields>
+                <field name="Reference">P</field>
+                <field name="Value">CONN_6</field>
+            </fields>
+            <pins>
+                <pin num="1" name="1" type="passive"/>
+                <pin num="2" name="2" type="passive"/>
+                <pin num="3" name="3" type="passive"/>
+                <pin num="4" name="4" type="passive"/>
+                <pin num="5" name="5" type="passive"/>
+                <pin num="6" name="6" type="passive"/>
+            </pins>
+        </libpart>
+        <libpart lib="SAUL" part="MCP1640T_SOT23">
+            <fields>
+                <field name="Reference">U</field>
+                <field name="Value">MCP1640T_SOT23</field>
+            </fields>
+            <pins>
+                <pin num="1" name="SW" type="passive"/>
+                <pin num="2" name="GND" type="passive"/>
+                <pin num="3" name="EN" type="passive"/>
+                <pin num="4" name="VFB" type="passive"/>
+                <pin num="5" name="VOUT" type="passive"/>
+                <pin num="6" name="VIN" type="passive"/>
+            </pins>
+        </libpart>
+        <libpart lib="SAUL" part="NC7WZ04">
+            <fields>
+                <field name="Reference">U</field>
+                <field name="Value">NC7WZ04</field>
+            </fields>
+            <pins>
+                <pin num="1" name="A1" type="input"/>
+                <pin num="2" name="GND" type="input"/>
+                <pin num="3" name="A1" type="input"/>
+                <pin num="4" name="Y1" type="input"/>
+                <pin num="5" name="VCC" type="input"/>
+                <pin num="6" name="Y1" type="input"/>
+            </pins>
+        </libpart>
+        <libpart lib="SAUL" part="74LS74AD">
+            <fields>
+                <field name="Reference">U</field>
+                <field name="Value">74LS74AD</field>
+            </fields>
+            <pins>
+                <pin num="1" name="CLR'" type="input"/>
+                <pin num="2" name="D" type="input"/>
+                <pin num="3" name="CLK" type="input"/>
+                <pin num="4" name="PRE'" type="input"/>
+                <pin num="5" name="Q" type="input"/>
+                <pin num="6" name="Q'" type="input"/>
+                <pin num="7" name="GND" type="input"/>
+                <pin num="8" name="Q'" type="input"/>
+                <pin num="9" name="Q" type="input"/>
+                <pin num="10" name="PRE'" type="input"/>
+                <pin num="11" name="CLK" type="input"/>
+                <pin num="12" name="D" type="input"/>
+                <pin num="13" name="CLR'" type="input"/>
+                <pin num="14" name="VCC" type="input"/>
+            </pins>
+        </libpart>
+    </libparts>
+    <libraries>
+        <library logical="device">
+            <uri>/usr/local/share/kicad/library/device.lib</uri>
+        </library>
+        <library logical="conn">
+            <uri>/usr/local/share/kicad/library/conn.lib</uri>
+        </library>
+        <library logical="SAUL">
+            <uri>../custom_libraries/SAUL/SAUL.lib</uri>
+        </library>
+    </libraries>
+    <nets>
+        <net code="1" name="Net-(R1-Pad2)">
+            <node ref="U1" pin="4"/>
+            <node ref="R2" pin="1"/>
+            <node ref="R1" pin="2"/>
+        </net>
+        <net code="2" name="GND">
+            <node ref="BT2" pin="2"/>
+            <node ref="C3" pin="1"/>
+            <node ref="C4" pin="1"/>
+            <node ref="U1" pin="2"/>
+            <node ref="C1" pin="2"/>
+            <node ref="D1" pin="2"/>
+            <node ref="R2" pin="2"/>
+            <node ref="P3" pin="6"/>
+            <node ref="P3" pin="4"/>
+            <node ref="P3" pin="2"/>
+            <node ref="U3" pin="7"/>
+            <node ref="C2" pin="2"/>
+            <node ref="U2" pin="2"/>
+        </net>
+        <net code="3" name="Net-(D1-Pad1)">
+            <node ref="D1" pin="1"/>
+            <node ref="R3" pin="2"/>
+        </net>
+        <net code="4" name="Net-(C3-Pad2)">
+            <node ref="U2" pin="1"/>
+            <node ref="R4" pin="2"/>
+            <node ref="X1" pin="1"/>
+            <node ref="C3" pin="2"/>
+        </net>
+        <net code="5" name="Net-(L1-Pad1)">
+            <node ref="L1" pin="1"/>
+            <node ref="U1" pin="1"/>
+        </net>
+        <net code="6" name="Net-(C4-Pad2)">
+            <node ref="C4" pin="2"/>
+            <node ref="U2" pin="6"/>
+            <node ref="X1" pin="2"/>
+            <node ref="R4" pin="1"/>
+            <node ref="U2" pin="3"/>
+        </net>
+        <net code="7" name="Net-(BT1-Pad1)">
+            <node ref="U1" pin="3"/>
+            <node ref="BT1" pin="1"/>
+            <node ref="U1" pin="6"/>
+            <node ref="L1" pin="2"/>
+            <node ref="C1" pin="1"/>
+        </net>
+        <net code="8" name="+5V">
+            <node ref="U3" pin="14"/>
+            <node ref="U3" pin="4"/>
+            <node ref="U3" pin="1"/>
+            <node ref="U2" pin="5"/>
+            <node ref="R1" pin="1"/>
+            <node ref="P3" pin="5"/>
+            <node ref="U1" pin="5"/>
+            <node ref="C2" pin="1"/>
+            <node ref="R3" pin="1"/>
+        </net>
+        <net code="9" name="Net-(U2-Pad4)">
+            <node ref="U2" pin="4"/>
+            <node ref="U3" pin="3"/>
+        </net>
+        <net code="10" name="Net-(U3-Pad2)">
+            <node ref="U3" pin="6"/>
+            <node ref="U3" pin="2"/>
+        </net>
+        <net code="11" name="Net-(K1-Pad3)">
+            <node ref="K1" pin="3"/>
+        </net>
+        <net code="12" name="Net-(BT2-Pad1)">
+            <node ref="K1" pin="2"/>
+            <node ref="BT2" pin="1"/>
+        </net>
+        <net code="13" name="/OSC">
+            <node ref="U3" pin="5"/>
+            <node ref="P3" pin="3"/>
+        </net>
+        <net code="14" name="/BAT">
+            <node ref="K1" pin="1"/>
+            <node ref="BT1" pin="2"/>
+            <node ref="P3" pin="1"/>
+        </net>
+        <net code="15" name="Net-(P4-Pad1)">
+            <node ref="P4" pin="1"/>
+        </net>
+        <net code="16" name="Net-(P5-Pad1)">
+            <node ref="P5" pin="1"/>
+        </net>
+        <net code="17" name="Net-(P6-Pad1)">
+            <node ref="P6" pin="1"/>
+        </net>
+        <net code="18" name="Net-(P7-Pad1)">
+            <node ref="P7" pin="1"/>
+        </net>
+    </nets>
+</export>

@@ -1,0 +1,195 @@
+
+(session PUSH_BUTTON.ses
+  (base_design PUSH_BUTTON.dsn)
+  (placement
+    (resolution um 10)
+    (component SMD_Packages:SM0603_Capa
+      (place 0.1u1 1560000 -997500 front 0)
+    )
+    (component SMD_Packages:SM0603_Resistor
+      (place 1k1 1592500 -997500 front 180)
+    )
+    (component SMD_Packages:SM1206
+      (place D1 1575000 -972500 front 180)
+    )
+    (component Pin_Headers:Pin_Header_Straight_2x02
+      (place P1 1575000 -930000 front 0)
+    )
+    (component Saul_footprints:PCB_PUSH_bottom
+      (place S1 1575000 -1055000 front 0)
+    )
+    (component Saul_footprints:Mhole
+      (place P2 1575000 -1125000 front 0)
+    )
+  )
+  (was_is
+  )
+  (routes 
+    (resolution um 10)
+    (parser
+      (host_cad "KiCad's Pcbnew")
+      (host_version "(2014-04-07 BZR 4791)-product")
+    )
+    (library_out 
+      (padstack "Via[0-1]_889:635_um"
+        (shape
+          (circle F.Cu 8890 0 0)
+        )
+        (shape
+          (circle B.Cu 8890 0 0)
+        )
+        (attach off)
+      )
+    )
+    (network_out 
+      (net GND
+        (wire
+          (path F.Cu 2540
+            1569664 -997500
+            1569689 -997500
+          )
+        )
+        (wire
+          (path F.Cu 2540
+            1567620 -997500
+            1569664 -997500
+          )
+        )
+        (wire
+          (path F.Cu 2540
+            1597504 -1022488
+            1594652 -1022488
+            1569664 -997500
+          )
+        )
+        (wire
+          (path F.Cu 2540
+            1583031 -929749
+            1574749 -921467
+            1574749 -917300
+          )
+        )
+        (wire
+          (path F.Cu 2540
+            1587700 -929749
+            1583031 -929749
+          )
+        )
+        (wire
+          (path F.Cu 2540
+            1583031 -929749
+            1574751 -938029
+            1574751 -967672
+            1569923 -972500
+          )
+        )
+        (wire
+          (path F.Cu 2540
+            1558490 -972500
+            1569923 -972500
+          )
+        )
+        (wire
+          (path F.Cu 2540
+            1558490 -972500
+            1558490 -986473
+          )
+        )
+        (wire
+          (path F.Cu 2540
+            1569689 -997500
+            1558662 -986473
+            1558490 -986473
+          )
+        )
+        (wire
+          (path F.Cu 2540
+            1562300 -917300
+            1574749 -917300
+          )
+        )
+        (wire
+          (path F.Cu 2540
+            1587700 -917300
+            1587700 -929749
+          )
+        )
+      )
+      (net "Net-(0.1u1-Pad1)"
+        (wire
+          (path F.Cu 2540
+            1552380 -997500
+            1552380 -987972
+          )
+        )
+        (wire
+          (path F.Cu 2540
+            1552380 -987972
+            1549717 -987972
+            1547056 -985311
+            1547056 -960278
+            1552185 -955149
+            1562300 -955149
+          )
+        )
+        (wire
+          (path F.Cu 2540
+            1552496 -1022488
+            1552380 -1022372
+            1552380 -997500
+          )
+        )
+        (wire
+          (path F.Cu 2540
+            1562300 -942700
+            1562300 -955149
+          )
+        )
+      )
+      (net "Net-(1k1-Pad1)"
+        (wire
+          (path F.Cu 2540
+            1600120 -997500
+            1600120 -987972
+          )
+        )
+        (wire
+          (path F.Cu 2540
+            1587700 -942700
+            1587700 -955149
+          )
+        )
+        (wire
+          (path F.Cu 2540
+            1587700 -955149
+            1597815 -955149
+            1602944 -960278
+            1602944 -985148
+            1600120 -987972
+          )
+        )
+      )
+      (net "Net-(1k1-Pad2)"
+        (wire
+          (path F.Cu 2540
+            1584880 -997500
+            1584880 -987972
+          )
+        )
+        (wire
+          (path F.Cu 2540
+            1591510 -972500
+            1591510 -986473
+          )
+        )
+        (wire
+          (path F.Cu 2540
+            1591510 -986473
+            1590011 -987972
+            1584880 -987972
+          )
+        )
+      )
+    )
+  )
+)

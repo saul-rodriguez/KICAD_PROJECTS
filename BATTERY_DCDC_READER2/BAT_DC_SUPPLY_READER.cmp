@@ -1,0 +1,178 @@
+Cmp-Mod V01 Created by Cvpcb (2014-jul-16 BZR unknown)-product   date = tis  5 aug 2014 15:44:33
+
+BeginCmp
+TimeStamp = /5319F422;
+Reference = BT1;
+ValeurCmp = BATTERY;
+IdModule  = Saul_footprints_new:CR123A;
+EndCmp
+
+BeginCmp
+TimeStamp = /535F7555;
+Reference = BT2;
+ValeurCmp = BATTERY;
+IdModule  = Saul_footprints_new:CR123A;
+EndCmp
+
+BeginCmp
+TimeStamp = /535F8415;
+Reference = C1;
+ValeurCmp = 15p;
+IdModule  = SMD_Packages:SM0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /535F842A;
+Reference = C2;
+ValeurCmp = 15p;
+IdModule  = SMD_Packages:SM0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /5319F3F3;
+Reference = C3;
+ValeurCmp = 4.7u;
+IdModule  = SMD_Packages:SM0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /5319F595;
+Reference = C4;
+ValeurCmp = 10u;
+IdModule  = SMD_Packages:SM0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /53E0BC00;
+Reference = C5;
+ValeurCmp = 1n;
+IdModule  = SMD_Packages:SM0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /53E0C77F;
+Reference = C6;
+ValeurCmp = 10u;
+IdModule  = SMD_Packages:SM0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /531D75FD;
+Reference = D1;
+ValeurCmp = LED;
+IdModule  = SMD_Packages:SM1206;
+EndCmp
+
+BeginCmp
+TimeStamp = /5319FD25;
+Reference = K1;
+ValeurCmp = CONN_3;
+IdModule  = Pin_Headers:Pin_Header_Straight_1x03;
+EndCmp
+
+BeginCmp
+TimeStamp = /531D7CA5;
+Reference = P1;
+ValeurCmp = CONN_1;
+IdModule  = Saul_footprints:Mhole;
+EndCmp
+
+BeginCmp
+TimeStamp = /531D7CB8;
+Reference = P2;
+ValeurCmp = CONN_1;
+IdModule  = Saul_footprints:Mhole;
+EndCmp
+
+BeginCmp
+TimeStamp = /5319F90F;
+Reference = P3;
+ValeurCmp = CONN_6;
+IdModule  = Pin_Headers:Pin_Header_Straight_1x06;
+EndCmp
+
+BeginCmp
+TimeStamp = /531D7CBE;
+Reference = P4;
+ValeurCmp = CONN_1;
+IdModule  = Saul_footprints:Mhole;
+EndCmp
+
+BeginCmp
+TimeStamp = /531D7CC4;
+Reference = P5;
+ValeurCmp = CONN_1;
+IdModule  = Saul_footprints:Mhole;
+EndCmp
+
+BeginCmp
+TimeStamp = /535F8543;
+Reference = R1;
+ValeurCmp = 1M;
+IdModule  = SMD_Packages:SM0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /5319F524;
+Reference = R2;
+ValeurCmp = 40k;
+IdModule  = SMD_Packages:SM0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /5319F531;
+Reference = R3;
+ValeurCmp = 10k;
+IdModule  = SMD_Packages:SM0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /531D75EE;
+Reference = R4;
+ValeurCmp = 2.2k;
+IdModule  = SMD_Packages:SM0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /53E0CBAE;
+Reference = RV1;
+ValeurCmp = POT;
+IdModule  = Saul_footprints:R_POT_DIP;
+EndCmp
+
+BeginCmp
+TimeStamp = /535F85DE;
+Reference = U1;
+ValeurCmp = NC7WZ04;
+IdModule  = Transistors_SMD:sc70-6;
+EndCmp
+
+BeginCmp
+TimeStamp = /53E09CB4;
+Reference = U2;
+ValeurCmp = MCP1702;
+IdModule  = Transistors_SMD:sot89;
+EndCmp
+
+BeginCmp
+TimeStamp = /53E0B75B;
+Reference = U3;
+ValeurCmp = MCP1725;
+IdModule  = SMD_Packages:SO8E;
+EndCmp
+
+BeginCmp
+TimeStamp = /5360B9A3;
+Reference = U4;
+ValeurCmp = 74LS74AD;
+IdModule  = SMD_Packages:SO14E;
+EndCmp
+
+BeginCmp
+TimeStamp = /535F83D5;
+Reference = X1;
+ValeurCmp = 20MHz;
+IdModule  = Crystals:Crystal_HC49-U_Vertical;
+EndCmp
+
+EndListe

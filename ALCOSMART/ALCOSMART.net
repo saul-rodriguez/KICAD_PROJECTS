@@ -1,0 +1,275 @@
+# EESchema Netlist Version 1.1 created  Sat 18 Aug 2012 10:49:56 AM CEST
+(
+ ( /50202367 qfn-20  U4 PIC18F14K22_QFN {Lib=PIC18F14K22_QFN}
+  (    1 /MCLR )
+  (    2 ? )
+  (    3 ? )
+  (    4 ? )
+  (    5 ? )
+  (    6 ? )
+  (    7 N-000044 )
+  (    8 N-000043 )
+  (    9 N-000045 )
+  (   10 N-000042 )
+  (   11 ? )
+  (   12 ? )
+  (   13 ? )
+  (   14 /INT2 )
+  (   15 /PGC )
+  (   16 /PGD )
+  (   17 GND )
+  (   18 VDD )
+  (   19 ? )
+  (   20 ? )
+ )
+ ( /50202469 RN42_LONG_PAD  U2 RN42 {Lib=RN42}
+  (    1 GND )
+  (    2 ? )
+  (    3 ? )
+  (    4 ? )
+  (    5 ? )
+  (    6 ? )
+  (    7 ? )
+  (    8 ? )
+  (    9 ? )
+  (   10 ? )
+  (   11 VDD )
+  (   12 GND )
+  (   13 N-000044 )
+  (   14 N-000045 )
+  (   15 N-000039 )
+  (   16 N-000039 )
+  (   17 ? )
+  (   18 ? )
+  (   19 ? )
+  (   20 ? )
+  (   21 ? )
+  (   22 N-000040 )
+  (   23 ? )
+  (   24 ? )
+  (   28 GND )
+  (   29 GND )
+  (   30 ? )
+  (   31 ? )
+  (   32 ? )
+  (   33 ? )
+  (   34 ? )
+  (   35 ? )
+ )
+ ( /50202765 LED-1206  D1 LED {Lib=LED}
+  (    1 VDD )
+  (    2 N-000041 )
+ )
+ ( /50202786 SM0603  R2 1K {Lib=R}
+  (    1 N-000043 )
+  (    2 N-000041 )
+ )
+ ( /5020307C SM0603  R1 1K {Lib=R}
+  (    1 VDD )
+  (    2 N-000046 )
+ )
+ ( /502030AB pin_strip_2  P2 CONN_2 {Lib=CONN_2}
+  (    1 N-000046 )
+  (    2 N-000040 )
+ )
+ ( /5020352D pin_strip_6-90  P4 CONN_6 {Lib=CONN_6}
+  (    1 /MCLR )
+  (    2 VDD )
+  (    3 GND )
+  (    4 /PGD )
+  (    5 /PGC )
+  (    6 ? )
+ )
+ ( /50211153 SM0603_Capa  C1 10u {Lib=C}
+  (    1 VDD )
+  (    2 GND )
+ )
+ ( /50281A7C sot23-6  U3 MCP1640T_SOT23 {Lib=MCP1640T_SOT23}
+  (    1 N-000009 )
+  (    2 GND )
+  (    3 /VPOW )
+  (    4 N-000001 )
+  (    5 VDD )
+  (    6 /VPOW )
+ )
+ ( /50281F11 SM1812  L1 INDUCTOR {Lib=INDUCTOR}
+  (    1 N-000009 )
+  (    2 /VPOW )
+ )
+ ( /502823F0 SM0603_Capa  C2 4.7u {Lib=C}
+  (    1 /VPOW )
+  (    2 GND )
+ )
+ ( /502828EA SM0603  R3 444K {Lib=R}
+  (    1 VDD )
+  (    2 N-000001 )
+ )
+ ( /502828F0 SM0603  R4 300K {Lib=R}
+  (    1 N-000001 )
+  (    2 GND )
+ )
+ ( /50283FA3 MR513  U5 MR513 {Lib=MR513}
+  (    1 /VPOW )
+  (    2 N-000042 )
+  (    3 N-000042 )
+  (    4 GND )
+ )
+ ( /50284A78 SM0603  C3 0.1u {Lib=C}
+  (    1 VDD )
+  (    2 GND )
+ )
+ ( /502AB035 SM2112L  C4 47u {Lib=C}
+  (    1 VDD )
+  (    2 GND )
+ )
+ ( /502B64CC pin_strip_2  P1 CONN_2 {Lib=CONN_2}
+  (    1 /VPOW )
+  (    2 GND )
+ )
+ ( /502F52FE pin_strip_2  P3 CONN_2 {Lib=CONN_2}
+  (    1 GND )
+  (    2 /INT2 )
+ )
+)
+*
+{ Allowed footprints by component:
+$component D1
+ LED-3MM
+ LED-5MM
+ LED-10MM
+ LED-0603
+ LED-0805
+ LED-1206
+ LEDV
+$endlist
+$component R2
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R1
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component C1
+ SM*
+ C?
+ C1-1
+$endlist
+$component C2
+ SM*
+ C?
+ C1-1
+$endlist
+$component R3
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component R4
+ R?
+ SM0603
+ SM0805
+ R?-*
+ SM1206
+$endlist
+$component C3
+ SM*
+ C?
+ C1-1
+$endlist
+$component C4
+ SM*
+ C?
+ C1-1
+$endlist
+$endfootprintlist
+}
+{ Pin List by Nets
+Net 1 "" ""
+ R4 1
+ U3 4
+ R3 2
+Net 2 "GND" "GND"
+ P3 1
+ C3 2
+ P1 2
+ C4 2
+ U2 12
+ C2 2
+ U2 1
+ U4 17
+ U2 29
+ P4 3
+ U2 28
+ U3 2
+ U5 4
+ C1 2
+ R4 2
+Net 9 "" ""
+ L1 1
+ U3 1
+Net 10 "/INT2" "INT2"
+ U4 14
+ P3 2
+Net 17 "/VPOW" "VPOW"
+ C2 1
+ P1 1
+ L1 2
+ U3 3
+ U3 6
+ U5 1
+Net 18 "VDD" "VDD"
+ R1 1
+ D1 1
+ C1 1
+ U4 18
+ U2 11
+ R3 1
+ C4 1
+ C3 1
+ P4 2
+ U3 5
+Net 39 "" ""
+ U2 16
+ U2 15
+Net 40 "" ""
+ U2 22
+ P2 2
+Net 41 "" ""
+ D1 2
+ R2 2
+Net 42 "" ""
+ U5 2
+ U5 3
+ U4 10
+Net 43 "" ""
+ U4 8
+ R2 1
+Net 44 "" ""
+ U2 13
+ U4 7
+Net 45 "" ""
+ U4 9
+ U2 14
+Net 46 "" ""
+ R1 2
+ P2 1
+Net 47 "/PGC" "PGC"
+ U4 15
+ P4 5
+Net 49 "/MCLR" "MCLR"
+ P4 1
+ U4 1
+Net 50 "/PGD" "PGD"
+ U4 16
+ P4 4
+}
+#End

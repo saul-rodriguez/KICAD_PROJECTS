@@ -1,0 +1,17 @@
+Cmp-Mod V01 Created by CvPcb (2013-mar-13)-testing date = Tue 15 Oct 2013 11:15:57 AM CEST
+
+BeginCmp
+TimeStamp = /525BEF81;
+Reference = U1;
+ValeurCmp = PLCC44;
+IdModule  = PLCC44MS;
+EndCmp
+
+BeginCmp
+TimeStamp = /525BF3F1;
+Reference = U2;
+ValeurCmp = PLCC44;
+IdModule  = DIP44_600_2;
+EndCmp
+
+EndListe

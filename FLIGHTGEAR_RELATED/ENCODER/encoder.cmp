@@ -1,0 +1,73 @@
+Cmp-Mod V01 Created by Cvpcb (2014-04-07 BZR 4791)-product   date = lör 12 apr 2014 18:50:40
+
+BeginCmp
+TimeStamp = /5300EC97;
+Reference = C1;
+ValeurCmp = C;
+IdModule  = Capacitors_SMD:c_0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /5300ECA2;
+Reference = C2;
+ValeurCmp = C;
+IdModule  = Capacitors_SMD:c_0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /5300EB0E;
+Reference = C3;
+ValeurCmp = C;
+IdModule  = Capacitors_SMD:c_0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /534916F7;
+Reference = P1;
+ValeurCmp = CONN_2X2;
+IdModule  = Pin_Headers:Pin_Header_Straight_2x02;
+EndCmp
+
+BeginCmp
+TimeStamp = /534918F5;
+Reference = P2;
+ValeurCmp = CONN_3X2;
+IdModule  = Pin_Headers:Pin_Header_Straight_2x03;
+EndCmp
+
+BeginCmp
+TimeStamp = /53496D73;
+Reference = P3;
+ValeurCmp = CONN_1;
+IdModule  = Saul:Mhole;
+EndCmp
+
+BeginCmp
+TimeStamp = /53496D85;
+Reference = P4;
+ValeurCmp = CONN_1;
+IdModule  = Saul:Mhole;
+EndCmp
+
+BeginCmp
+TimeStamp = /5300EA42;
+Reference = R4;
+ValeurCmp = R;
+IdModule  = SMD_Packages:SM0603_Resistor;
+EndCmp
+
+BeginCmp
+TimeStamp = /5300EA09;
+Reference = R5;
+ValeurCmp = R;
+IdModule  = SMD_Packages:SM0603_Resistor;
+EndCmp
+
+BeginCmp
+TimeStamp = /5300E8DF;
+Reference = U1;
+ValeurCmp = ENCODER;
+IdModule  = fg_footprints:MERP12_2412BG;
+EndCmp
+
+EndListe

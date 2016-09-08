@@ -1,0 +1,5 @@
+(fp_lib_table
+  (lib (name Saul_footprints)(type Legacy)(uri /home/saul/Dropbox/Work/projects/kicad/custom_libraries/SAUL/Saul_footprints.mod)(options "")(descr ""))
+  (lib (name pin_strip)(type Legacy)(uri /home/saul/Dropbox/Work/projects/kicad/custom_libraries/WALTER/w_pin_strip.mod)(options "")(descr ""))
+  (lib (name fg_footprints)(type KiCad)(uri /home/saul/Dropbox/Work/projects/kicad/custom_libraries/FGFS/fg_footprints.pretty)(options "")(descr ""))
+)

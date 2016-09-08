@@ -1,0 +1,17 @@
+.lib biptm
+* Case No. 1
+.inc './LV_DEV/fixed_corner_hv.inc' hvbiptt'
+
+.endl 
+
+.lib biphs
+* Case No. 3
+.inc './LV_DEV/fixed_corner_hv.inc' hvbiphs'
+.endl 
+
+.lib biplb
+* Case No. 4
+.inc './LV_DEV/fixed_corner_hv.inc' hvbiplb'
+.endl 
+
+* Owner: austriamicrosystems

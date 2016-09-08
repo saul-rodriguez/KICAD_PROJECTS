@@ -1,0 +1,265 @@
+EESchema Schematic File Version 2  date Mon 13 Aug 2012 02:22:15 PM CEST
+LIBS:power
+LIBS:device
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:special
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:valves
+LIBS:SAUL
+LIBS:ACDC-cache
+EELAYER 25  0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date "13 aug 2012"
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L BP5041A5 U1
+U 1 1 501C250A
+P 4550 3400
+F 0 "U1" H 4300 3700 60  0000 C CNN
+F 1 "BP5041A5" H 4550 3450 60  0000 C CNN
+F 2 "BP5041A5" H 4550 3550 60  0000 C CNN
+	1    4550 3400
+	1    0    0    -1  
+$EndComp
+$Comp
+L CP C1
+U 1 1 501C2592
+P 3450 4350
+F 0 "C1" H 3500 4450 50  0000 L CNN
+F 1 "10u" H 3500 4250 50  0000 L CNN
+F 2 "CP_13x21mm" H 3500 4350 50  0000 C CNN
+	1    3450 4350
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R1
+U 1 1 501C25C8
+P 3900 4050
+F 0 "R1" V 3980 4050 50  0000 C CNN
+F 1 "10" V 3900 4050 50  0000 C CNN
+F 2 "R4" V 4000 4050 50  0000 C CNN
+	1    3900 4050
+	0    -1   -1   0   
+$EndComp
+$Comp
+L DIODE D1
+U 1 1 501C25FC
+P 3050 4050
+F 0 "D1" H 3050 4150 40  0000 C CNN
+F 1 "DIODE" H 3050 3950 40  0000 C CNN
+F 2 "D4" H 3050 4050 40  0000 C CNN
+	1    3050 4050
+	1    0    0    -1  
+$EndComp
+$Comp
+L CP C2
+U 1 1 501C261E
+P 4350 4350
+F 0 "C2" H 4200 4450 50  0000 L CNN
+F 1 "0.1u" H 4150 4250 50  0000 L CNN
+F 2 "CAP_MKS_26x6" H 4150 4350 50  0000 C CNN
+	1    4350 4350
+	1    0    0    -1  
+$EndComp
+$Comp
+L CP C3
+U 1 1 501C2624
+P 4750 4350
+F 0 "C3" H 4800 4450 50  0000 L CNN
+F 1 "100u" H 4800 4250 50  0000 L CNN
+F 2 "CP_8x13mm" H 4800 4350 50  0000 C CNN
+	1    4750 4350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2650 4050 2850 4050
+Wire Wire Line
+	3250 4050 3650 4050
+Wire Wire Line
+	4150 4050 4350 4050
+Wire Wire Line
+	4350 3950 4350 4150
+Connection ~ 4350 4050
+Wire Wire Line
+	5300 4700 2650 4700
+Wire Wire Line
+	4550 4700 4550 3950
+Wire Wire Line
+	3450 4150 3450 4050
+Connection ~ 3450 4050
+Wire Wire Line
+	3450 4550 3450 4700
+Connection ~ 3450 4700
+Wire Wire Line
+	4350 4550 4350 4700
+Connection ~ 4350 4700
+Wire Wire Line
+	4750 4700 4750 4550
+Connection ~ 4550 4700
+Wire Wire Line
+	4750 3950 4750 4150
+Wire Wire Line
+	4750 4050 5900 4050
+Connection ~ 4750 4050
+Connection ~ 4750 4700
+$Comp
+L CONN_2 P1
+U 1 1 501CCD41
+P 2300 4400
+F 0 "P1" V 2250 4400 40  0000 C CNN
+F 1 "CONN_2" V 2350 4400 40  0000 C CNN
+F 2 "pin_strip_2" V 2450 4400 40  0000 C CNN
+	1    2300 4400
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	2650 3150 2650 4300
+Wire Wire Line
+	2650 4700 2650 4500
+$Comp
+L CONN_1 P4
+U 1 1 501D76B1
+P 5800 3050
+F 0 "P4" H 5880 3050 40  0000 L CNN
+F 1 "CONN_1" H 5800 3105 30  0001 C CNN
+F 2 "~" H 5800 3205 30  0000 C CNN
+	1    5800 3050
+	1    0    0    -1  
+$EndComp
+NoConn ~ 5650 3050
+$Comp
+L G2RL-1-H U2
+U 1 1 501E837F
+P 3250 2700
+F 0 "U2" H 2800 3150 60  0000 C CNN
+F 1 "G2RL-1-H" H 3300 2850 60  0000 C CNN
+F 2 "G2RL1H" H 3300 2950 60  0000 C CNN
+	1    3250 2700
+	-1   0    0    -1  
+$EndComp
+$Comp
+L CONN_3 K1
+U 1 1 501E84AA
+P 6250 4150
+F 0 "K1" V 6200 4150 50  0000 C CNN
+F 1 "CONN_3" V 6300 4150 40  0000 C CNN
+F 2 "pin_strip_3" V 6400 4150 40  0000 C CNN
+	1    6250 4150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5900 4150 5300 4150
+Wire Wire Line
+	5400 4250 5900 4250
+Wire Wire Line
+	4050 2500 5500 2500
+NoConn ~ 3150 2000
+Text Label 5600 4050 0    60   ~ 0
+VCC
+Text Label 5600 4150 0    60   ~ 0
+N_VSS
+Text Label 5550 4250 0    60   ~ 0
+VCTRL
+$Comp
+L CONN_2 P2
+U 1 1 501E8900
+P 2100 2700
+F 0 "P2" V 2050 2700 40  0000 C CNN
+F 1 "CONN_2" V 2150 2700 40  0000 C CNN
+F 2 "CMM5_2" V 2250 2700 40  0000 C CNN
+	1    2100 2700
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	3250 3150 2450 3150
+Wire Wire Line
+	2450 3150 2450 2800
+Wire Wire Line
+	2450 2600 2450 1800
+Wire Wire Line
+	2450 1800 3350 1800
+Wire Wire Line
+	3350 1800 3350 2000
+Connection ~ 2650 3150
+Connection ~ 2650 4050
+Text Label 2750 3150 0    60   ~ 0
+L_IN
+Text Label 2700 1800 0    60   ~ 0
+L_OUT
+$Comp
+L CONN_1 P3
+U 1 1 501F7185
+P 5800 2650
+F 0 "P3" H 5880 2650 40  0000 L CNN
+F 1 "CONN_1" H 5800 2705 30  0001 C CNN
+F 2 "~" H 5800 2805 30  0000 C CNN
+	1    5800 2650
+	1    0    0    -1  
+$EndComp
+NoConn ~ 5650 2650
+$Comp
+L CONN_1 P6
+U 1 1 501F7295
+P 6200 3050
+F 0 "P6" H 6280 3050 40  0000 L CNN
+F 1 "CONN_1" H 6200 3105 30  0001 C CNN
+F 2 "~" H 6200 3205 30  0000 C CNN
+	1    6200 3050
+	1    0    0    -1  
+$EndComp
+NoConn ~ 6050 3050
+$Comp
+L CONN_1 P5
+U 1 1 501F729C
+P 6200 2650
+F 0 "P5" H 6280 2650 40  0000 L CNN
+F 1 "CONN_1" H 6200 2705 30  0001 C CNN
+F 2 "~" H 6200 2805 30  0000 C CNN
+	1    6200 2650
+	1    0    0    -1  
+$EndComp
+NoConn ~ 6050 2650
+Wire Wire Line
+	5300 4150 5300 4700
+Wire Wire Line
+	4050 2650 5400 2650
+Wire Wire Line
+	5400 2650 5400 4250
+Wire Wire Line
+	5500 2500 5500 4050
+Connection ~ 5500 4050
+$EndSCHEMATC

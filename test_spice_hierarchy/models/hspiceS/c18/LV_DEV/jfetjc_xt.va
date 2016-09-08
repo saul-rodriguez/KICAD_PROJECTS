@@ -1,0 +1,504 @@
+// Path, Component, Release: cmrf7sf/rel/HSPICE/models/jfetjc_xt.va, rf7sf_models, mod_cmrf7sf
+// CMVC Revision: 2.0
+//****************************************************************
+// VerilogA model for CMRF7SF JFET 
+// Layout assumptions
+//    - #nf=even
+//    - # Source >= # drain, 
+//****************************************************************
+`include "disciplines.vams" 
+`include "constants.vams"
+
+module jfetjc_xt(d, g, s, n);
+inout d, g, s, n;
+electrical d, g, s, n;        // external nodes drain, gate, source, nw-isolation
+
+//*** instance parameters
+parameter real w = 10e-6 from [5e-6: 50e-6];     // top gate width per finger [m]
+parameter real l = 0.4e-6 from [0.4e-6: 0.5e-6]; // top gate length [m]
+parameter real nf = 1 from [1: 100];             // top gate fingers
+
+//*** fitting parameters
+parameter real I0 = 60.6;     // preface of current at Vg=0 [A/um]
+parameter real vpo = -2.658;  // effective cutoff threshold voltage, always less than zero
+parameter real P1 = 1.262;    
+parameter real P2 = 3.08;     
+parameter real P3 = -2.033;   
+parameter real P4 = 2529e-9;  
+parameter real P5 = 15.56;    
+parameter real P6 = 24.16;    
+
+parameter real P1a = 0.009986; 
+parameter real P2a = -0.1866; 
+parameter real P3a = -0.1111; 
+parameter real P4a = 0.0053; 
+parameter real P5a = 0.004245; 
+parameter real P6a = -0.0341; 
+
+parameter real pvd  = 0.014; 
+parameter real pvd2 = 0e-3;  
+parameter real evd2 = 1.1;   
+parameter real avd1 = 1.337; 
+parameter real avd2 = 0.0;
+parameter real lamda0= 0.02472; 
+parameter real heff = 0.4147;
+parameter real heffa = 0.584;
+parameter real ua = 0.0;
+parameter real ub = 0.0;
+parameter real ug = 0.0;
+parameter real vdsat=3.003;
+parameter real ril = 0.35;     
+parameter real vil = 0.05;     
+parameter real vil2 = 0.5;     
+
+parameter real deltaw=0.45e-6;
+parameter real deltawc=0e-6;
+parameter real deltal=-0.02e-6;
+
+//*** Temperature 
+parameter real Tnom = 25.0; 
+parameter real trise = 0.0;            // Difference sim. temp and device temp, [C deg]
+parameter real Temper = 0.0;
+
+parameter real Isg0    = 8.0e-16; 
+parameter real Isgb0   = 8.0e-16; 
+parameter real Isgbn0  = 4.0e-16; 
+parameter real stlkg   = 0.4;
+parameter real nlkg    = 1.0;       
+parameter real nlkg_gb = 1.0;       
+parameter real nlkg_gbn = 1.0;      
+
+parameter real nii = 1;
+parameter real viioff = 3.0;
+parameter real jii0 = 1e-2;       // A/m per finger
+parameter real eii0 = 8.0;          // eii0 >=1
+parameter real vii0 = 8.0;
+parameter real aiibg = 5.5;
+
+//*** gate junction CV
+parameter real Pbg    = 1.10;     
+parameter real Pbgb   = 1.10;     
+parameter real Pbgbn  = 1.10;     
+parameter real Pbnsub = 0.7;      
+
+parameter real Mjg    = 0.5;      
+parameter real Mjgb   = 0.55;     
+parameter real Mjgbn  = 0.55;     
+parameter real Mjnsub = 0.33;     
+
+parameter real fpartgt = 0.5;     
+parameter real fpartgb = 0.5;     
+parameter real Fcg   = 0.5;       
+parameter real Fcgb  = 0.5;       
+parameter real Fcgbn = 0.5;       
+
+parameter real Coffnf1 = 5.5e-9;  
+
+parameter real Cjgt0 = 1.520e-3;  // top_gate-channel zero-bias j-capacitance [F/m2]
+parameter real Cjgb0 = 1.52e-3;   // bottomGate-channel zero-bias j-capacitance [F/m2]
+parameter real Cjgbn0 = 0.9e-3;   // bottom G-nwell zero-bias j-capacitance [F/m2]
+
+parameter real ageff= 0.05;       
+
+parameter real tau0=0e5;          
+
+parameter real Cmgds0  = 0.0e-9;          // parasitic Gtop-S/D wiring coupling cap [F/m]
+parameter real Cmgbdend0 = 0.00e-15;      // parasitic D to top gate wiring coupling cap [F]
+parameter real Cmgbsend0 = 0.00e-15;      // parasitic S to top gate wiring coupling cap [F]
+parameter real Cmgbd0 = 0.32e-9;          // parasitic D to top gate wiring coupling cap [F/m]
+parameter real Cmgbs0 = 0.32e-9;          // parasitic S to top gate wiring coupling cap [F/m]
+
+//*** parasitic resistors
+parameter real Rg0  = 3.0;    
+parameter real Rgb0 = 120.0;  
+
+parameter real Rgbs0 = 80.0;  
+parameter real Rgbd0 = 80.0;  
+
+parameter real Rgbsw0 = 1.0;  
+parameter real Rgbdw0 = 1.0;  
+
+parameter real Rnw0 = 80.0;   
+
+parameter real Rd0  = 0.15;   
+parameter real Rs0  = 0.15;   
+
+parameter real Rns0 = 0.0;    
+parameter real Rnd0 = 0.0;    
+
+// temperature parameters
+parameter real kt1 = -0.8;    
+parameter real ute = -0.4;
+
+//*** flicker noise
+parameter real sfl = 2e-12;                 
+parameter real sflexp = 0.90;
+parameter real af = 1.1;
+   
+//*** internal nodes definition  
+electrical di, si, gi, gbsi, gbdi, ndi, nsi;   
+
+  real d_sti, w_sd, d_stigb;                                     // design dimensions
+  real areag, areagb, areagbn, len_gb, wid_gb, al, aw, wnw, lnw; // calculated dimensions
+  real areagceff;
+  real weff, weffc, weffctg, leff;
+  real nfs, nfd, nfhalf;
+
+  real Rg, Rgb, Rng, Rnd, Rns, Rgbs, Rgbd, Rs, Rd;
+  real Vds, Vgs, Vgd, Vgbs, Vgbd, Vgbsn, Vgbdn, Vdg; 
+  real vdse;
+  real I0_l, I0t, Ids, Igs, Igd, Igbs, Igbd, Igbsn, Igbdn;
+  real I0t_T, lamda, avd, pavd;
+  real uneff;
+  real avgs, TV0, TV1, TV3, TV4, TV5, TV6, avgs_t;
+  real T_nom, T, T1, Vth;
+  real vpo_T, vpo_l, pvd_l;
+  real etmp;
+
+  real Isg,   Isg_T,   exp_vgd,   exp_vgs;
+  real Isgb,  Isgb_T,  exp_vgbd,  exp_vgbs;
+  real Isgbn, Isgbn_T, exp_vgbdn, exp_vgbsn;
+
+  real Iiigd, pii;
+
+  real Pbg_T,  F1g,  F2g,  F3g,  F1g_T,   Cjgt_T,  Cgs_T,   Cgd_T;
+  real Pbgb_T, F1gb, F2gb, F3gb, F1gb_T,  Cjgb_T,  Cgbs_T,  Cgbd_T;
+  real Pbgbn_T,F1gbn,F2gbn,F3gbn,F1gbn_T, Cjgbn_T, Cgbsn_T, Cgbdn_T;
+  real Cmgs_T, Cmgd_T, Cmgbs_T, Cmgbd_T;                       // wire cap
+  real Qcgs, Qcgd, Qcgbs, Qcgbd, Qcgbdn, Qcgbsn, Qcmgd, Qcmgs; // charge from cap
+
+  real signVds;
+
+  `define alpha 7.02e-4
+  `define beta 1108
+  `define EG_0 1.16
+  `define EG_300 1.11
+  `define TREF 300
+
+  analog function real Eg;
+     input T;
+     real T;
+     begin  
+          Eg = `EG_0 - (`alpha) * T * T / (`beta + T);     
+     end
+  endfunction
+
+  analog begin
+
+    Vds   = V(di,si);
+    Vgs   = V(gi,si); 
+    Vgbs  = V(gbsi,si);  
+    Vgbsn = V(gbsi,nsi);
+    Vgbd  = V(gbdi,di);
+    Vgbdn = V(gbdi,ndi);
+
+//*** source-drain interchange
+    signVds = 1.0;
+    if (Vds < 0.0 ) begin
+      signVds = -1.0;
+      Vgs   = Vgs - Vds;
+      Vgbs  = Vgbs - Vds;
+      Vgbd  = Vgbd + Vds;
+      Vds = -Vds;
+    end
+
+    Vgd = Vgs - Vds;
+    Vdg = - Vgd;
+
+//*** geometry calculation: 
+    d_sti   = 0.28e-6;       // RX_G-S/D STI width=0.28um
+    w_sd    = 0.5e-6;        // S/D width=0.5um
+    d_stigb = 0.5e-6;        // S/D to bottomGate STI width=0.5um
+    nfhalf = nf/2;
+    nfs = floor (nfhalf + 0.5);
+    nfd = floor (nfhalf - 0.5);
+
+    weff = w  - deltaw;
+    weffc = w - deltawc;
+    weffctg = w + 2.0 * d_stigb;   
+    leff = l - deltal;
+    len_gb = (nf * l) + ((nf+1) * w_sd) + 2.0*d_stigb + (2.0*nf*d_sti);
+    wid_gb = (w + 2.0*d_stigb);
+
+    areag   = weffctg * leff * nf;                    
+    areagceff= areag;
+
+    areagb  = areag;
+    areagbn = weff * nf * (l + w_sd + 2*d_sti);  
+
+    aw = w + 2.0 * d_stigb;
+    al = (l + w_sd + 2.0 * d_sti) * nf;
+    if ( aw > al ) begin
+       wnw = aw; lnw = al;
+    end
+    else begin 
+       wnw = al; lnw = aw;
+    end
+
+//*** temperature
+    T_nom = Tnom;
+    T1 = T_nom + `P_CELSIUS0;
+    T = $temperature + trise;         
+    Vth = $vt;                
+
+//*** Resistor calculation
+    Rg   = 0.66 * Rg0 * (w/l) / nf;
+    Rgb  = Rgb0 * ( wnw / (20.0*wnw + 12.0 * lnw));
+
+    Rgbs = (Rgb + Rgbs0/sqrt(nf) + (Rgbsw0 * sqrt(nf)/ 4.0));   
+    Rgbd = (Rgb + Rgbd0/sqrt(nf) + (Rgbsw0 * sqrt(nf)/ 4.0));   
+
+    Rng  = Rnw0 * wnw / (2.0*wnw + 6.0 * lnw);
+    Rns  = Rns0 * nf/4.0;
+    Rnd  = Rnd0 * nf/4.0;
+
+    Rs = Rs0 * (w/10e-6);
+    Rd = Rd0 * (w/10e-6);
+
+//**** junction leakage
+    Isg    = Isg0  * areag * 1e12;              
+    Isg_T  = Isg * exp (stlkg*`P_Q * Eg(`TREF) / (`P_K * T) * (T / T1 - 1));
+
+    Isgb   = Isgb0 * areagb * 1e12;
+    Isgb_T = Isgb * exp (stlkg*`P_Q * Eg(`TREF) / (`P_K * T) * (T / T1 - 1));
+
+    Isgbn  = Isgbn0 * areagbn * 1e12;
+    Isgbn_T= Isgbn * exp (stlkg*`P_Q * Eg(`TREF) / (`P_K * T) * (T / T1 - 1));
+
+    exp_vgd = limexp(Vgd / (nlkg*Vth)); 
+    exp_vgs = limexp(Vgs / (nlkg*Vth)); 
+    Igd = Isg_T * (exp_vgd - 1);
+    Igs = Isg_T * (exp_vgs - 1);
+
+    exp_vgbd = limexp(Vgbd / (nlkg_gb*Vth)); 
+    exp_vgbs = limexp(Vgbs / (nlkg_gb*Vth)); 
+    Igbd = Isgb_T * (exp_vgbd - 1);
+    Igbs = Isgb_T * (exp_vgbs - 1);
+
+    exp_vgbdn = limexp(Vgbdn / (nlkg_gbn*Vth)); 
+    exp_vgbsn = limexp(Vgbsn / (nlkg_gbn*Vth)); 
+    Igbdn = Isgbn_T * (exp_vgbdn - 1);
+    Igbsn = Isgbn_T * (exp_vgbsn - 1);
+
+//*** junction caps
+     Pbg_T   = T / T1 * Pbg   - 2 * `P_K * T / `P_Q * log (pow(T / T1, 1.5) );
+     Pbgb_T  = T / T1 * Pbgb  - 2 * `P_K * T / `P_Q * log (pow(T / T1, 1.5) );
+     Pbgbn_T = T / T1 * Pbgbn - 2 * `P_K * T / `P_Q * log (pow(T / T1, 1.5) );
+
+     Cjgt_T  = Cjgt0  * (1 + Mjg   * ( 400e-6 * (T - T1) + (1 - Pbg_T / Pbg )));
+     Cjgb_T  = Cjgb0  * (1 + Mjgb  * ( 400e-6 * (T - T1) + (1 - Pbgb_T / Pbgb )));
+     Cjgbn_T = Cjgbn0 * (1 + Mjgbn * ( 400e-6 * (T - T1) + (1 - Pbgbn_T / Pbgbn ))); 
+
+     Cgs_T  = (Cjgt_T  * areagceff) * (1.0 - fpartgt);
+     Cgd_T  = (Cjgt_T  * areagceff)  * fpartgt;
+
+     Cgbs_T = Cjgb_T * areagb * (1.0 - fpartgb);
+     Cgbd_T = Cjgb_T * areagb * fpartgb;
+
+     Cgbsn_T = (Cjgbn_T * areagbn + Coffnf1*weffc) * (1.0 - fpartgb);  
+     Cgbdn_T = (Cjgbn_T * areagbn + Coffnf1*weffc) * fpartgb;  
+
+// wire cap
+     Cmgbd_T = (Cmgbdend0 * nfd);
+     Cmgbs_T = (Cmgbsend0 * nfs);
+     if (nf == 1) begin
+        Cmgbd_T = Cmgbd_T + Cmgbd0 * weffc;
+     end
+     Cmgbs_T = Cmgbs_T + Cmgbs0 * weffc;
+
+     Cmgd_T = Cmgds0 * (weffc * nf)     + Cmgbd_T;
+     Cmgs_T = Cmgds0 * (weffc * (nf+1)) + Cmgbs_T;
+     
+
+     F1g   = Pbg * (1 - pow(1 - Fcg, 1 - Mjg)) / (1 - Mjg) ;
+     F1g_T = F1g * Pbg_T / Pbg; 
+     F2g   = pow(1 - Fcg, 1 + Mjg);
+     F3g   = 1 - Fcg * (1 + Mjg);
+
+     F1gb   = Pbgb * (1 - pow(1 - Fcgb, 1 - Mjgb)) / (1 - Mjgb) ;
+     F1gb_T = F1gb * Pbgb_T / Pbgb; 
+     F2gb   = pow(1 - Fcgb, 1 + Mjgb);
+     F3gb   = 1 - Fcgb * (1 + Mjgb);
+
+     F1gbn   = Pbgbn * (1 - pow(1 - Fcgbn, 1 - Mjgbn)) / (1 - Mjgbn) ;
+     F1gbn_T = F1gbn * Pbgbn_T / Pbgbn; 
+     F2gbn   = pow(1 - Fcgbn, 1 + Mjgbn);
+     F3gbn   = 1 - Fcgbn * (1 + Mjgbn);
+
+     if (Vgs < Fcg * Pbg_T)                                    
+         Qcgs = 2 * Pbg_T * Cgs_T * (1 - sqrt (1 - Vgs / Pbg_T)) ;
+     else
+         Qcgs = Cgs_T * F1g_T * Cgs_T / F2g * 
+                 (F3g * (Vgs - Fcg * Pbg_T) + Vgs * Vgs - 
+                  Fcg * Fcg * Pbg_T * Pbg_T / (4 * Pbg_T));
+   
+     if (Vgd < Fcg * Pbg_T)                                  
+          Qcgd = 2 * Pbg_T * Cgd_T * (1 - sqrt (1 - Vgd / Pbg_T));
+     else
+          Qcgd = Cgd_T * F1g_T * Cgd_T / F2g * 
+                 (F3g * (Vgd - Fcg * Pbg_T) + Vgd * Vgd - 
+                  Fcg * Fcg * Pbg_T * Pbg_T / (4 * Pbg_T));
+
+     if (Vgbs < Fcgb * Pbgb_T)                                 
+          Qcgbs = 2 * Pbgb_T * Cgbs_T * (1 - sqrt (1 - Vgbs / Pbgb_T));
+     else
+          Qcgbs = Cgbs_T * F1gb_T * Cgbs_T / F2gb * 
+                  (F3gb * (Vgbs - Fcgb * Pbgb_T) + Vgbs * Vgbs - 
+                   Fcgb * Fcgb * Pbgb_T * Pbgb_T / (4 * Pbgb_T));
+   
+     if (Vgbd < Fcgb * Pbgb_T)
+          Qcgbd = 2 * Pbgb_T * Cgbd_T * (1 - sqrt (1 - Vgbd / Pbgb_T));
+     else
+          Qcgbd = Cgbd_T * F1gb_T * Cgbd_T / F2gb * 
+                  (F3gb * (Vgbd - Fcgb * Pbgb_T) + Vgbd * Vgbd - 
+                   Fcgb * Fcgb * Pbgb_T * Pbgb_T / (4 * Pbgb_T));
+
+     if (Vgbsn < Fcgbn * Pbgbn_T)                              
+          Qcgbsn = 2 * Pbgbn_T * Cgbsn_T * (1 - sqrt (1 - Vgbsn / Pbgbn_T));
+     else
+          Qcgbsn = Cgbsn_T * F1gbn_T * Cgbsn_T / F2gbn * 
+                  (F3gbn * (Vgbsn - Fcgbn * Pbgbn_T) + Vgbsn * Vgbsn - 
+                   Fcgbn * Fcgbn * Pbgbn_T * Pbgbn_T / (4 * Pbgbn_T));
+
+     if (Vgbdn < Fcgbn * Pbgbn_T)
+          Qcgbdn = 2 * Pbgbn_T * Cgbdn_T * (1 - sqrt (1 - Vgbdn / Pbgbn_T));
+     else
+          Qcgbdn = Cgbdn_T * F1gbn_T * Cgbdn_T / F2gbn * 
+                 (F3gbn * (Vgbdn - Fcgbn * Pbgbn_T) + Vgbdn * Vgbdn - 
+                   Fcgbn * Fcgbn * Pbgbn_T * Pbgbn_T / (4 * Pbgbn_T));
+
+    Qcmgd = Cmgd_T * Vgd;
+    Qcmgs = Cmgs_T * Vgs;
+
+    vpo_l = vpo * (1 - vil  * (l*1e6 - 0.4));
+    pvd_l = pvd * (1 - vil2 * 10 * (l*1e6 - 0.4));
+
+    vpo_T = vpo_l * (1 + pvd_l * Vds + pvd2 * pow(Vds,2));  
+    vpo_T = vpo_T + kt1 * (T / T1 - 1);                 
+    avgs = Vgs / vpo_T ; 
+
+    TV0 = P1 * (avgs - P1a);
+    TV1 = P2 * (avgs - P2a) * (avgs - P2a);
+    TV3 = P3 * (avgs - P3a) * (avgs - P3a) * (avgs - P3a);
+    TV4 = P4 * (avgs - P4a) * (avgs - P4a) * (avgs - P4a) * (avgs - P4a);
+    TV5 = P5 * (avgs - P5a) * (avgs - P5a) * (avgs - P5a) * (avgs - P5a) * (avgs - P5a);
+    TV6 = P6 * (avgs - P6a) * (avgs - P6a) * (avgs - P6a) * (avgs-P6a) * (avgs - P6a) * (avgs-P6a);
+
+    avgs_t = TV0 + TV1 + TV3 + TV4 + TV5 + TV6;
+
+    I0_l = I0 * (1 - ril*(l*1e6-0.4));               
+    I0t = I0_l * weff * nf;                          
+    I0t = I0t * (1+0.003*(w*1e6-10));                
+
+    uneff = (1.0 + ua * Vds + ub * Vds * Vds);       
+    uneff = uneff * (1.0 + ug * Vgs);                
+
+    I0t = I0t * uneff;
+    I0t_T = I0t * pow((T/T1),ute);                   
+
+    lamda = lamda0 * (1.0 - heff * Vgs);
+
+    vdse = Vds*vdsat/(Vds+vdsat);
+    avd   = (avd1 * vdse + avd2 * vdse * vdse ) * (1.0 - heffa * Vgs);
+    avd = avd * (1-0.003*nf*(w/10e-6)) ;   
+    pavd = tanh(avd) * (1.0 + lamda * Vds);
+
+    Ids = (I0t_T / limexp (avgs_t)) * pavd;
+
+    etmp = limexp(avgs_t);
+    pii = aiibg * (Vdg - viioff) / (Vdg + vii0);
+    if (Vdg > viioff) begin
+      Iiigd = (jii0 * weff * nf / etmp) * pow(pii,eii0);
+    end
+    else
+      Iiigd = 0;
+
+
+   if (signVds > 0) begin
+     I(di,si)  <+ Ids;
+     I(di,si)  <+ flicker_noise(sfl*pow(abs(Ids),af), sflexp);  
+   end else begin
+     I(si,di)  <+ Ids;
+     I(si,di)  <+ flicker_noise(sfl*pow(abs(Ids),af), sflexp);  
+   end
+
+   I(gi,si)  <+ Igs  + ddt(Qcgs);
+   I(gi,di)  <+ Igd  + ddt(Qcgd);
+
+   I(gbsi,si) <+ Igbs + ddt(Qcgbs);
+   I(gbdi,di) <+ Igbd + ddt(Qcgbd);
+
+   I(gbsi,nsi) <+ Igbsn;
+   I(gbdi,ndi) <+ Igbdn;
+
+   if (Iiigd > 0.0 ) begin  
+       if (signVds > 0) begin
+          I(di,gi) <+ Iiigd;
+       end else begin
+          I(si,gi) <+ Iiigd;
+       end
+   end
+
+   if (Cjgbn0 > 0.0) begin               
+        I(gbsi,nsi) <+ ddt(Qcgbsn);
+        I(gbdi,ndi) <+ ddt(Qcgbdn);
+   end
+
+   if (Cmgds0 > 0.0 || Cmgbdend0 > 0.0 || Cmgbd0 > 0.0) begin
+       I(gi,di) <+ ddt(Qcmgd);
+   end
+
+   if (Cmgds0 > 0.0 || Cmgbsend0 > 0.0 || Cmgbs0 > 0.0) begin
+       I(gi,si) <+ ddt(Qcmgs);
+   end
+
+   if (Rd > 0.0) begin
+       I(di,d) <+ V(di,d) / Rd;
+   end
+   else
+       V(di,d)  <+ 0.0;
+
+   if (Rs > 0.0) begin
+       I(si,s) <+ V(si,s) / Rs;
+   end
+   else
+       V(si,s)  <+ 0.0;
+
+   if (Rg0 > 0.0) begin
+       I(g,gi) <+ V(g,gi) / Rg;
+   end
+   else
+       V(g,gi)  <+ 0.0;
+
+   if (Rgbd0 > 0.0) begin
+       I(g,gbdi) <+ V(g,gbdi) / Rgbd;
+   end
+   else
+       V(g,gbdi)  <+ 0.0;
+
+   if (Rgbs0 > 0.0) begin
+       I(g,gbsi) <+ V(g,gbsi) / Rgbs;
+   end
+   else
+       V(g,gbsi)  <+ 0.0;
+
+   if (Rng > 0.0) begin
+       I(ndi,nsi) <+ V(ndi,nsi) / Rng;
+   end
+
+   if (Rnd0 > 0.0) begin
+       I(n,ndi) <+ V(n,ndi) / Rnd;
+   end
+   else
+       V(n,ndi)  <+ 0.0;
+
+  if (Rns0 > 0.0) begin
+       I(n,nsi) <+ V(n,nsi) / Rns;
+   end
+   else
+       V(n,nsi)  <+ 0.0;
+
+  end // end of analog
+
+endmodule
+

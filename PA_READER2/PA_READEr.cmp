@@ -1,0 +1,94 @@
+Cmp-Mod V01 Created by CvPcb (2013-mar-13)-testing date = Wed 12 Feb 2014 04:22:30 PM CET
+
+BeginCmp
+TimeStamp = /52F21852;
+Reference = C1;
+ValeurCmp = 10u;
+IdModule  = SM1206;
+EndCmp
+
+BeginCmp
+TimeStamp = /52F2184C;
+Reference = C2;
+ValeurCmp = 0.1;
+IdModule  = SM0603_Capa;
+EndCmp
+
+BeginCmp
+TimeStamp = /52F217D9;
+Reference = C3;
+ValeurCmp = 5.3n;
+IdModule  = SM0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /52F21CED;
+Reference = C4;
+ValeurCmp = 8-40p;
+IdModule  = SM2010;
+EndCmp
+
+BeginCmp
+TimeStamp = /52F217CA;
+Reference = C5;
+ValeurCmp = 73p;
+IdModule  = SM0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /52FB8138;
+Reference = C6;
+ValeurCmp = 47p;
+IdModule  = SM0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /52FB8132;
+Reference = C7;
+ValeurCmp = 470p;
+IdModule  = SM0805;
+EndCmp
+
+BeginCmp
+TimeStamp = /52F21846;
+Reference = L1;
+ValeurCmp = 47u;
+IdModule  = SM1812E;
+EndCmp
+
+BeginCmp
+TimeStamp = /52F21831;
+Reference = L2;
+ValeurCmp = 1.8u;
+IdModule  = pin_strip_2;
+EndCmp
+
+BeginCmp
+TimeStamp = /52F2324A;
+Reference = P1;
+ValeurCmp = CONN_2;
+IdModule  = pin_strip_2-90;
+EndCmp
+
+BeginCmp
+TimeStamp = /52F2325C;
+Reference = P2;
+ValeurCmp = CONN_2;
+IdModule  = pin_strip_2-90;
+EndCmp
+
+BeginCmp
+TimeStamp = /52FB8A28;
+Reference = P3;
+ValeurCmp = CONN_2;
+IdModule  = pin_strip_2-90;
+EndCmp
+
+BeginCmp
+TimeStamp = /52F231B4;
+Reference = U1;
+ValeurCmp = 2N7002;
+IdModule  = sot23;
+EndCmp
+
+EndListe

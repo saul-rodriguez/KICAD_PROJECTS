@@ -1,0 +1,58 @@
+
+.model nch nmos
++level   = 49             version = 3.24
++tnom    = 25             tox     = tox_n          mobmod  = 1
++xj      = 2.5e-7         nch     = 4e17           vth0    = 'vth0_n+mmvth0'
++k1      = 0.4113668      k2      = -4.193665e-3   k3      = 71.7016064
++k3b     = 4.1195251      w0      = 6.894474e-6    nlx     = 2.544e-7
++dvt0w   = -9.47588       dvt1w   = 7.18e6         dvt2w   = -0.122689
++dvt0    = 0.91732        dvt1    = 0.3417608      dvt2    = -0.025578
++wuc     = -4.229e-11     u0      = 'u0_n+mmbeta'  ua      = 2.655969e-13
++ub      = 2.010666e-18   uc      = 8.583045e-11   vsat    = 'vsat_n'
++a0      = 1.7822307      ags     = 0.458          b0      = -1e-5
++b1      = 1.858424e-5    keta    = 0.0367807      a1      = 1.163811e-4
++a2      = 0.4094019      rdsw    = rdsw_n         prwg    = 0.0364393
++prwb    = 0.3070473      wr      = 1              wint    = wint_n
++lint    = lint_n         lketa   = -8.146047e-3   wvsat   = -1.16e4
++dwg     = -1.349276e-8   dwb     = -1.962061e-8   voff    = -0.1196149
++nfactor = 1.2627444      cit     = 0              cdsc    = 6.112059e-4
++cdscd   = 4.866317e-4    cdscb   = 6.588718e-6    eta0    = 0.791184
++etab    = -0.482545      dsub    = 1.20           pclm    = '2.21-stipclm'
++pdiblc1 = stipdiblc1     pdiblc2 = stipdiblc2     pdiblcb = -0.1340178
++drout   = 0.01           pscbe1  = 6.80419e+9     pscbe2  = 1.51129e-4
++pvag    = -0.1734725     delta   = 5.387e-3       ngate   = 1.07e20
++alpha0  = 3e-6           beta0   = 20             paramchk= 0
++alpha1  = 30             wk3     = -48.3014794    binunit = 1
++lua     = -3.38571e-13   lub     = -5.69110e-20   luc     = 1e-11
++lrdsw   = -8.6425836     lu0     = '2-stilu0'     lk1     = 1.600877e-3
++lags    = 0.1553066      wu0     = -54.7975915    wb0     = 3.56386e-7
++wl      = 0              wln     = 0.172078       ww      = -1e-14
++ll      = 0              lw      = 0              lwn     = 2.4e-3
++ wrdsw  = 6.98681        ww0     = -6.027438e-7   wk3b    = 15
+*
+*
+***************************************************************************
+* Capacitance-Voltage (CV) Parameters
+***************************************************************************
+*+capmod  = 2              xpart   = 0              dlc     = 'lint_n+2.2E-8'
+*+dwc     = wint_n         cgdo    = cgdo_n         cgso    = cgso_n
+*+cgsl    = cgsl_n         cgdl    = cgdl_n         ckappa  = 6.7867
+*+cf      = 0              cgbo    = 1.706e-11      acde    = 1.2
+*+llc     = 0              lwc     = 0              lwlc    = 0
+*+wlc     = 0              wwc     = 0              wwlc    = 0
+*
++capmod  = 2              xpart   = 0              dlc     = 0
++dwc     = wint_n         cgdo    = cgdo_n         cgso    = cgso_n
++cgsl    = cgsl_n         cgdl    = cgdl_n         ckappa  = 6.7867
++cf      = 0              cgbo    = 1.706e-11      acde    = 1.2
++llc     = 0              lwc     = 0              lwlc    = 0
++wlc     = 0              wwc     = 0              wwlc    = 0
+*
+***************************************************************************
+* Flicker Noise Parameters
+***************************************************************************
++noimod  = 2              noia = '0.9e21*noi_mul'  noib    = '0.5e5*noi_mul'
++noic = '-0.4e-12*noi_mul'  em    = 7.0e6          af      = 1
++ef      = 0.95             kf    = 0   )
+*
+

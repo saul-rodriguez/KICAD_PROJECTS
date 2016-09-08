@@ -1,0 +1,17 @@
+Cmp-Mod V01 Created by Cvpcb (2014-jul-16 BZR unknown)-product   date = fre 22 aug 2014 15:49:23
+
+BeginCmp
+TimeStamp = /53F74338;
+Reference = P1;
+ValeurCmp = CONN_01X04;
+IdModule  = Saul_footprints_new:elec_gold;
+EndCmp
+
+BeginCmp
+TimeStamp = /53F74310;
+Reference = P2;
+ValeurCmp = CONN_01X04;
+IdModule  = Saul_footprints_new:elec_gold_conn;
+EndCmp
+
+EndListe

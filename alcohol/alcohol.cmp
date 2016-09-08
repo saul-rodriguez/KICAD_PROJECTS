@@ -1,0 +1,143 @@
+Cmp-Mod V01 Created by CvPcb (2012-01-19 BZR 3256)-stable date = Thu 08 Mar 2012 09:41:27 PM CET
+
+BeginCmp
+TimeStamp = /4F32DD39;
+Reference = C1;
+ValeurCmp = 220n;
+IdModule  = SM1206;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F32D86E;
+Reference = C2;
+ValeurCmp = 1u;
+IdModule  = SM1206;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F36E4EE;
+Reference = C3;
+ValeurCmp = 100n;
+IdModule  = SM1206;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F32A714;
+Reference = C4;
+ValeurCmp = 15p;
+IdModule  = SM0603_Capa;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F32A749;
+Reference = C5;
+ValeurCmp = 15p;
+IdModule  = SM0603_Capa;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F36E47C;
+Reference = C6;
+ValeurCmp = 100n;
+IdModule  = SM1206;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F36E198;
+Reference = D1;
+ValeurCmp = LED;
+IdModule  = LED-1206;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F32A337;
+Reference = P1;
+ValeurCmp = MicroUSB_B;
+IdModule  = MicroUSB_B;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F32A36C;
+Reference = P2;
+ValeurCmp = CONN_6;
+IdModule  = pin_strip_6-90;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F35497E;
+Reference = P3;
+ValeurCmp = CONN_1;
+IdModule  = Mhole;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F35497B;
+Reference = P4;
+ValeurCmp = CONN_1;
+IdModule  = Mhole;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F354975;
+Reference = P5;
+ValeurCmp = CONN_1;
+IdModule  = Mhole;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F35467C;
+Reference = P6;
+ValeurCmp = CONN_1;
+IdModule  = Mhole;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F33AF23;
+Reference = R1;
+ValeurCmp = 2k;
+IdModule  = SM0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F329FC1;
+Reference = R2;
+ValeurCmp = 10k;
+IdModule  = SM0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F33C599;
+Reference = S1;
+ValeurCmp = PBUTTON;
+IdModule  = PCB_PUSH;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F3289AE;
+Reference = U1;
+ValeurCmp = PIC18F4553_QFN;
+IdModule  = qfn-44;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F339855;
+Reference = U2;
+ValeurCmp = MR513;
+IdModule  = MR513;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F33A185;
+Reference = U3;
+ValeurCmp = MCP1702;
+IdModule  = sot89;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F32A644;
+Reference = X1;
+ValeurCmp = 20M;
+IdModule  = Q_49U3HMS;
+EndCmp
+
+EndListe

@@ -1,0 +1,65 @@
+.lib cmostm
+* Case No. 1
+.param  fixcnr = 0
+.lib './LV_DEV/fixed_corner' tt
+.lib './LV_DEV/passive_corner.inc' dtt
+.lib './LV_DEV/skew.file' stats
+.inc './LV_DEV/skew_psp.file' 
+.inc './LV_DEV/models.inc' 
+.endl 
+
+.lib cmoswp
+* Case No. 2
+.lib './LV_DEV/fixed_corner' ff
+.lib './LV_DEV/passive_corner' dmax
+.lib './LV_DEV/skew.file' 
+.inc './LV_DEV/skew_psp.file' 
+.inc './LV_DEV/models.inc'
+.endl 
+
+.lib cmosws
+* Case No. 3
+.lib './LV_DEV/fixed_corner' ss
+.lib './LV_DEV/passive_corner' dmin
+.lib './LV_DEV/skew.file' 
+.inc './LV_DEV/skew_psp.file' 
+.inc './LV_DEV/models.inc'
+.endl 
+
+.lib cmoswo
+* Case No. 4
+.lib './LV_DEV/fixed_corner' fs
+.lib './LV_DEV/passive_corner' dmax
+.lib './LV_DEV/skew.file' 
+.inc './LV_DEV/skew_psp.file' 
+.inc './LV_DEV/models.inc'
+.endl 
+
+.lib cmoswz
+* Case No. 5
+.lib './LV_DEV/fixed_corner' sf
+.lib './LV_DEV/passive_corner' dmin
+.lib './LV_DEV/skew.file' 
+.inc './LV_DEV/skew_psp.file' 
+.inc './LV_DEV/models.inc'
+.endl 
+
+.lib cmosfff
+* Case No. 6
+.lib './LV_DEV/fixed_corner' fff
+.lib './LV_DEV/passive_corner' dmax
+.lib './LV_DEV/skew.file' 
+.inc './LV_DEV/skew_psp.file' 
+.inc './LV_DEV/models.inc'
+.endl 
+
+.lib cmosssf
+* Case No. 7
+.lib './LV_DEV/fixed_corner.inc' ssf
+.lib './LV_DEV/passive_corner.inc' dmin
+.lib './LV_DEV/skew.file' 
+.inc './LV_DEV/skew_psp.file' 
+.inc './LV_DEV/models.inc'
+.endl 
+
+* Owner: austriamicrosystems

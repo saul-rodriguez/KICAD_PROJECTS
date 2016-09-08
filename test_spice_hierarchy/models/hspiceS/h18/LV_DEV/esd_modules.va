@@ -1,0 +1,34 @@
+// Path, Component, Release: cmhv7sf/rel/HSPICE/models/esd_modules.va, 7hv_models, mod_cmhv7sf
+// CMVC Revision: 1.1 11/05/26 08:40:11
+//***********************************************************************
+// esd_modules.va
+//
+//Verilog-A model for failure detection of esd diodes and SCR
+
+`include "constants.vams"
+`include "disciplines.vams"
+module It2_monitor (v1, v2);
+inout v1, v2;
+electrical v1, v2;
+parameter real keyp      = 1;    //key dimension parameter for failure current scaling.
+                                 //For Diode, keyp is perimeter. For MOSFET, key is channel width.
+parameter real It2       = 1;    //ESD failure current density (mA/um).
+parameter integer esd_event  = 0      from [0:3]; // switch for esd_event
+parameter integer esd_exit   = 1      from [0:1]; // switch for esd_exit
+parameter real It_valid	 = 1000;
+real I1;
+analog begin
+  V(v1,v2) <+ 0;
+  I1=I(v1,v2);
+  if (I(v1,v2)>It_valid) begin
+     if (esd_exit==1) begin $strobe("[IBMESD_ERR_301] Device %m: ESD high current failure at %f A,model is not validated for higher currents, simulator exited.",I1); $finish(0); end
+     else             begin $strobe("[IBMESD_ERR_301] Device %m: ESD high current failure at %f A,model is not validated for higher currents.", I1); end
+  end
+  // ESD failure detection
+  if (I(v1,v2)>(It2*1e6*keyp)) begin
+     if (esd_exit==1) begin $strobe("[IBMESD_ERR_301] Device %m: ESD high current failure at %f A, simulator exited.", I1); $finish(0); end
+     else             begin $strobe("[IBMESD_ERR_301] Device %m: ESD high current failure at %f A.", I1); end
+  end
+end
+
+endmodule

@@ -1,0 +1,257 @@
+// Path, Component, Release: cmhv7sf/rel/HSPICE/models/esdnsh_base_va_dn.va, 7hv_models, mod_cmhv7sf
+// CMVC Revision: 1.2 12/03/20 10:34:13
+// ***********************************************************************
+// *
+// *   Licensed Materials - Property of IBM
+// *   Technology:                  : cmhv7sf
+// *   IBM Confidential
+// *   (C) 2012 IBM Corporation
+// *   US Government Users Restricted Rights - Use, duplication
+// *   or disclosure restricted by GSA ADP Schedule contract with
+// *   IBM Corporation.
+//************************************************************************"
+//
+// esdnsh_base_va.va
+//
+// Verilog-A model of ESD Shell for floating-body nMOSFETs (including all flavors of nfets).
+// Please note this release enables only esdnfet (1.8V gate silicided) and esdnfetm (5.0V gate-non-silicided) models.
+//  esdnfet  (esdoxide=1, gns=0)
+//  esdnfetm (esdoxide=4, gns=1)
+//
+// Model structure
+//                           O d
+//                           |
+//                           \
+//                           / rdummy
+//                           \
+//                           |
+//                 O---------O d1
+//                 |
+//                / \
+//               / | \ parasitic bipolar
+//               \ V /
+//                \ /
+//                 |
+//                 |
+//                 |
+//                 O b1            O--O g
+//                 |
+//                 |
+//                 |
+//                 \   series resistor
+//                 /
+//                 \
+//                 |
+//                 |
+//                 O---------O
+//                           |
+//                           O s
+//
+//
+// To use, place this esdnsh_base model in parallel with an nMOSFET.
+// example:
+//    m1 nfet   d  g  s  sx
+//    x1 esdnsh_base d g s
+//
+//                        | d
+//            esdnsh_base |   nfet
+//                        |__
+//                      /    ||
+//                    |/     ||   g
+//         sx-|   b1--|      ||-----
+//                    |\     ||
+//                      _| __||
+//                        |
+//                        |
+//                        | s
+//
+//
+
+`include "constants.vams"
+`include "disciplines.vams"
+
+module esdnsh_base_va_dn(d, g, s, b);
+inout d, g, s, b;
+electrical d, g, s, d1, b1, s1;
+
+// device swtich parameter
+parameter real esdoxide  = 1       from [1:4]; // oxide thickness switch
+                                                  // 1-> ug; 2->ig; 3->dg; 4->zg;
+parameter real gns       = 0       from [0:1]; // gate-non-silicided switch
+
+
+// global switch prameter
+parameter real esd_event = 0       from [0:3]; // switch for esd_event
+parameter real esd_exit  = 0       from [0:1]; // switch for esd_exit
+
+// layout parameters
+parameter real    wesd      = 1u      from (0:1e15); // total width
+parameter real    lesd      = 1u      from (0:1e15); // gate length
+parameter real    nf        = 1       from (0:1e15); // number of fingers
+parameter real    ldop      = 2u    from [0:1e15); // drain op length
+parameter real    lsop      = 0.48u    from [0:1e15); // source op length
+
+// derived layout parameters
+parameter real    wfinger   = wesd/nf from (0:1e15); // finger width
+
+parameter real 	vhold3 		= 1.0;
+parameter real 	resd_pos3 	= 100.0u;
+parameter real  resd_pos3a    	= 100.0u;
+
+// device parameters
+// esdoxide=1, i.e., 1.8V silicided nfet
+parameter real    vhold1_gs    = 100.0*(esd_event==0)+ 3.074*(esd_event==1)+ 3.4*(esd_event==2)+3.72*(esd_event==3) from (0:100];
+parameter real    resd_pos1_gs = 1000.0*(esd_event==0)+ 161.3u*(esd_event==1)+75u*(esd_event==2)+30.46u*(esd_event==3) from (0:1e15);
+parameter real    resd_pos1a_gs =1000.0*(esd_event==0)+ 1f*(esd_event==1)+1f*(esd_event==2)+20.0u*(esd_event==3) from (0:1e15);
+parameter real    resd_neg1_gs = 1000     from (0:1e15);
+parameter real    It2_pos1_gs  = 100*(esd_event==0)+ 11.1e-3*(esd_event==1)+12.5e-3*(esd_event==2)+38.0e-3*(esd_event==3) from (0:100];
+parameter real    It2_neg1_gs  = 100*(esd_event==0)+ 100*(esd_event==1)+100*(esd_event==2)+100*(esd_event==3) from (0:100];
+parameter real    vbd_ox1_gs   = 100*(esd_event==0)+5*(esd_event==1)+5*(esd_event==2)+5*(esd_event==3) from (0:100];
+// esdoxide=2, i.e., 2.5V  silicided nfet
+parameter real    vhold2_gs    = 100.0*(esd_event==0)+ 10.3*(esd_event==1)+10.0*(esd_event==2)+8.0*(esd_event==3) from (0:100];
+parameter real    resd_pos2_gs = 1000.0*(esd_event==0)+ 0.3*(esd_event==1)+0.5*(esd_event==2)+5.0*(esd_event==3) from (0:1e15);
+parameter real    resd_neg2_gs = 1000     from (0:1e15);
+parameter real    It2_pos2_gs  = 100*(esd_event==0)+ 0.1*(esd_event==1)+0.1*(esd_event==2)+5.0*(esd_event==3) from (0:100];
+parameter real    It2_neg2_gs  = 100*(esd_event==0)+ 100*(esd_event==1)+100*(esd_event==2)+100*(esd_event==3) from (0:100];
+parameter real    vbd_ox2_gs   = 100*(esd_event==0)+3.25*(esd_event==1)+3.8*(esd_event==2)+3.8*(esd_event==3) from (0:100];
+// esdoxide=3, i.e., 3.3V silicided nfet
+parameter real    vhold3_gs    = 100.0*(esd_event==0)+ 3.30*(esd_event==1)+3.261*(esd_event==2)+3.30*(esd_event==3) from (0:100];
+parameter real    resd_pos3_gs = 1000.0*(esd_event==0)+ wesd*538e-3*(esd_event==1)+wesd*20e-3*(esd_event==2)+wesd*538e-3*(esd_event==3) from (0:1e15);
+parameter real    resd_neg3_gs = 1000     from (0:1e15);
+parameter real    It2_pos3_gs  = 100*(esd_event==0)+ 3.5e-3*(esd_event==1)+7.0e-3*(esd_event==2)+10.5e-3*(esd_event==3) from (0:100];
+parameter real    It2_neg3_gs  = 100*(esd_event==0)+ 100*(esd_event==1)+100*(esd_event==2)+100*(esd_event==3) from (0:100];
+parameter real    vbd_ox3_gs   = 100*(esd_event==0)+ 8.0*(esd_event==1)+8.0*(esd_event==2)+8.0*(esd_event==3) from (0:100];
+// esdoxide=4, i.e., 5V silicided nfet
+parameter real    vhold4_gs    = 100.0*(esd_event==0)+ 0.3*(esd_event==1)+1.0*(esd_event==2)+3.0*(esd_event==3) from (0:100];
+parameter real    resd_pos4_gs = 1000.0*(esd_event==0)+ 0.3*(esd_event==1)+0.5*(esd_event==2)+5.0*(esd_event==3) from (0:1e15);
+parameter real    resd_neg4_gs = 1000     from (0:1e15);
+parameter real    It2_pos4_gs  = 100*(esd_event==0)+100*(esd_event==1)+100*(esd_event==2)+100*(esd_event==3) from (0:100];
+parameter real    It2_neg4_gs  = 100*(esd_event==0)+100*(esd_event==1)+100*(esd_event==2)+100*(esd_event==3) from (0:100];
+parameter real    vbd_ox4_gs   = 100*(esd_event==0)+100*(esd_event==1)+100*(esd_event==2)+100*(esd_event==3) from (0:100];
+// esdoxide=1, i.e.,  1.8V gate non-silicide nfet
+parameter real    vhold1_gns    = 100.0*(esd_event==0)+ 2.78*(esd_event==1)+2.6*(esd_event==2)+2.55*(esd_event==3) from (0:100];
+parameter real    resd_pos1_gns = 1000.0*(esd_event==0)+ 1.7e-4*(esd_event==1)+1.62e-4*(esd_event==2)+1.2e-4*(esd_event==3) from (0:1e15);
+parameter real    resd_neg1_gns = 1000        from (0:1e15);
+parameter real    It2_pos1_gns  = 100*(esd_event==0)+ 5.3e-3*(esd_event==1)+8.3e-3*(esd_event==2)+30e-3*(esd_event==3) from (0:100];
+parameter real    It2_neg1_gns  = 100*(esd_event==0)+ 100*(esd_event==1)+100*(esd_event==2)+100*(esd_event==3) from (0:100];
+parameter real    vbd_ox1_gns   = 100*(esd_event==0)+100*(esd_event==1)+100*(esd_event==2)+100*(esd_event==3) from (0:100];
+// esdoxide=2, i.e., 2.5V gate non-silicide nfet
+parameter real    vhold2_gns    = 100.0*(esd_event==0)+ 0.3*(esd_event==1)+1.0*(esd_event==2)+3.0*(esd_event==3) from (0:100];
+parameter real    resd_pos2_gns = 1000.0*(esd_event==0)+ 0.3*(esd_event==1)+0.5*(esd_event==2)+5.0*(esd_event==3) from (0:1e15);
+parameter real    resd_neg2_gns = 1000       from (0:1e15);
+parameter real    It2_pos2_gns  = 100*(esd_event==0)+ 3.3*(esd_event==1)+4.9*(esd_event==2)+9.1*(esd_event==3) from (0:100];
+parameter real    It2_neg2_gns  = 100*(esd_event==0)+ 100*(esd_event==1)+100*(esd_event==2)+100*(esd_event==3) from (0:100];
+parameter real    vbd_ox2_gns   = 100*(esd_event==0)+3.25*(esd_event==1)+3.8*(esd_event==2)+3.8*(esd_event==3) from (0:100];
+// esdoxide=3, i.e., 3.3V gate non-silicide nfet
+parameter real    vhold3_gns    = 100.0*(esd_event==0)+ 3.3*(esd_event==1)+3.10*(esd_event==2)+3.15*(esd_event==3) from (0:100];
+parameter real    resd_pos3_gns = 1000.0*(esd_event==0)+ 1.95e-4*(esd_event==1)+1.59e-4*(esd_event==2)+8.1e-5*(esd_event==3) from (0:1e15);
+parameter real    resd_neg3_gns = 1000     from (0:1e15);
+parameter real    It2_pos3_gns  = 100*(esd_event==0)+6e-3*(esd_event==1)+12e-3*(esd_event==2)+30e-3*(esd_event==3) from (0:100];
+parameter real    It2_neg3_gns  = 100*(esd_event==0)+100*(esd_event==1)+100*(esd_event==2)+ 100*(esd_event==3) from (0:100];
+parameter real    vbd_ox3_gns   = 100*(esd_event==0)+100*(esd_event==1)+100*(esd_event==2)+ 100*(esd_event==3) from (0:100];
+// esdoxide=4, i.e., 5.0V gate non-silicide nfet
+parameter real    vhold4_gns    = 100.0*(esd_event==0)+ 6.4*(esd_event==1)+6.1*(esd_event==2)+5.8*(esd_event==3) from (0:100];
+parameter real    resd_pos4_gns = 1000.0*(esd_event==0)+ 15u*(esd_event==1)+100n*(esd_event==2)+ 1u*(esd_event==3) from (0:1e15);
+parameter real    resd_neg4_gns = 1000       from (0:1e15);
+parameter real    It2_pos4_gns  = 100*(esd_event==0)+6.5e-3*(esd_event==1)+8.5e-3*(esd_event==2)+20e-3*(esd_event==3) from (0:100];
+parameter real    It2_neg4_gns  = 100*(esd_event==0)+100*(esd_event==1)+100*(esd_event==2)+100*(esd_event==3) from (0:100];
+parameter real    vbd_ox4_gns   = 100*(esd_event==0)+100*(esd_event==1)+100*(esd_event==2)+100*(esd_event==3) from (0:100];
+//
+
+// device reference parameters
+parameter real    lnom1     = 0.18u  from (0:100);
+parameter real    lnom2     = 10.00u  from (0:100);
+parameter real    lnom3     = 10.00u  from (0:100);
+parameter real    lnom4     = 0.7u  from (0:100);
+
+// internal parameters
+parameter real    is        = 1e-15   from (0:1e15);
+parameter real    n         = 1       from (0:3);
+parameter real    rdummy    = 1e-3    from (0:1e15);
+
+// variable defintion
+real vhold, resd_pos, resd_pos1, resd_neg, It2_pos, It2_neg, vbd_ox;
+
+// model description
+analog begin
+
+   // resistors
+   I(d,d1) <+ V(d,d1)/rdummy;
+   I(s,s1) <+ V(s,s1)/rdummy;
+   
+// Initializing the variables to avoid hidden states errors with PSS simulations
+
+vhold=vhold1_gns;
+resd_pos   = resd_pos1_gns;
+resd_pos1  = 0.0;
+resd_neg   = resd_neg1_gns;
+It2_pos    = It2_pos1_gns;
+It2_neg    = It2_neg1_gns;
+vbd_ox=vbd_ox1_gns;
+
+   // Device parameter assignment
+   if (esdoxide==1 && gns==0)      // ug oxide gate silicided
+     begin
+       vhold=vhold1_gs;
+       if (ldop>=2u && lsop>=0.48u) It2_pos=It2_pos1_gs; else It2_pos=0.001;
+       resd_pos=resd_pos1_gs;
+       resd_pos1=resd_pos1a_gs;  // added by Prabhu to model the conductivity modulation for 1ns TLP
+       resd_neg=resd_neg1_gs;
+       It2_neg=It2_neg1_gs;
+       vbd_ox=vbd_ox1_gs;
+     end
+   else if (esdoxide==2 && gns==0) // ig oxide gate silicided
+     begin
+       vhold=vhold2_gs;
+       if (ldop>=0.6u && lsop>=0.26u) It2_pos=It2_pos2_gs; else It2_pos=0.001;
+       resd_pos=resd_pos2_gs;
+       resd_neg=resd_neg2_gs;
+       It2_neg=It2_neg2_gs;
+       vbd_ox=vbd_ox2_gs;
+     end
+   else if (esdoxide==3 && gns==0) // dg oxide gate silicided
+     begin
+       vhold=vhold3_gs;
+       if (ldop>=0.6u && lsop>=0.26u) It2_pos=It2_pos3_gs; else It2_pos=0.001;
+       resd_pos=resd_pos3_gs;
+       resd_neg=resd_neg3_gs;
+       It2_neg=It2_neg3_gs;
+       vbd_ox=vbd_ox3_gs;
+     end
+   else if (esdoxide==4 && gns==1) // tg oxide gate silicided
+     begin
+       vhold=vhold4_gns;
+       if (ldop>=3.0u && lsop>=0.48u) It2_pos=It2_pos4_gns; else It2_pos=0.001;
+       resd_pos=resd_pos4_gns;
+       resd_neg=resd_neg4_gns;
+       It2_neg=It2_neg4_gns;
+       vbd_ox=vbd_ox4_gns;
+     end
+
+
+
+   // Drain to body junction breakdown and parasitic bipolar turn-on
+   I(d1,b1)   <+ wesd*is*(limexp((V(d1,b1)-vhold+1)/(n*$vt))-1);
+   I(b1,s)    <+ V(b1,s)/((resd_pos/wesd)+(resd_pos1/wesd)*V(b1,s)); // parasitic bipolar turn-on
+
+  // Positive ESD failure detection
+  if (V(d,d1)>(rdummy*It2_pos*1e6*wesd)) begin $strobe("[IBMESD_ERR_101] Device %m: Positive ESD high current failure at %f A.", I(d,d1)); end
+
+   // Negative ESD current conduction (source to drain):
+   // none for floating-body case
+
+   // gate oxide breakdown
+  //if (abs(V(d ,g))>vbd_ox) begin $strobe("[IBMESD_ERR_201] Device %m: ESD drain to gate failure at %f V.", V(d,g));	  end
+  //if (abs(V(s ,g))>vbd_ox) begin $strobe("[IBMESD_ERR_202] Device %m: ESD source to gate failure at %f V.", V(s,g));	  end
+  //if (abs(V(b1,g))>vbd_ox) begin $strobe("[IBMESD_ERR_203] Device %m: ESD substrate to gate failure at %f V.", V(b1,g));  end
+
+   // esd_exit==1
+   if (esd_exit==1 && ( V(d,d1)>rdummy*It2_pos*1e6*wesd) )
+   begin
+      $strobe("Simulator exited (esd_exit is set to 1).");
+      $finish(0);
+   end
+
+end
+
+endmodule

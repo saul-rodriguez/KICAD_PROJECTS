@@ -1,0 +1,73 @@
+Cmp-Mod V01 Created by CvPcb (2013-mar-13)-testing date = Tue 11 Feb 2014 03:36:06 PM CET
+
+BeginCmp
+TimeStamp = /52FA1DEE;
+Reference = C1;
+ValeurCmp = C;
+IdModule  = SM0603_Capa;
+EndCmp
+
+BeginCmp
+TimeStamp = /52FA1DFB;
+Reference = C2;
+ValeurCmp = C;
+IdModule  = SM0603_Capa;
+EndCmp
+
+BeginCmp
+TimeStamp = /52FA1E01;
+Reference = C3;
+ValeurCmp = C;
+IdModule  = SM0603_Capa;
+EndCmp
+
+BeginCmp
+TimeStamp = /52FA1F38;
+Reference = C5;
+ValeurCmp = C;
+IdModule  = SM0603_Capa;
+EndCmp
+
+BeginCmp
+TimeStamp = /52FA1EB0;
+Reference = D2;
+ValeurCmp = LED;
+IdModule  = SM1206;
+EndCmp
+
+BeginCmp
+TimeStamp = /52FA1EBD;
+Reference = D3;
+ValeurCmp = LED;
+IdModule  = SM1206;
+EndCmp
+
+BeginCmp
+TimeStamp = /52FA1DC9;
+Reference = L1;
+ValeurCmp = INDUCTOR;
+IdModule  = pin_strip_2;
+EndCmp
+
+BeginCmp
+TimeStamp = /52FA224C;
+Reference = P1;
+ValeurCmp = CONN_4;
+IdModule  = pin_strip_4-90;
+EndCmp
+
+BeginCmp
+TimeStamp = /52FA35B1;
+Reference = U1;
+ValeurCmp = NFET_FDV301N;
+IdModule  = sot23;
+EndCmp
+
+BeginCmp
+TimeStamp = /52FA3321;
+Reference = U2;
+ValeurCmp = BAV99W;
+IdModule  = sot23;
+EndCmp
+
+EndListe

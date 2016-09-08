@@ -1,0 +1,178 @@
+Cmp-Mod V01 Created by Cvpcb (2014-jan-25)-product   date = tor 24 apr 2014 21:01:41
+
+BeginCmp
+TimeStamp = /53595D6F;
+Reference = U1;
+ValeurCmp = ENCO_FG;
+IdModule  = fg_footprints:ENCO_FG;
+EndCmp
+
+BeginCmp
+TimeStamp = /53595D81;
+Reference = U2;
+ValeurCmp = ENCO_FG;
+IdModule  = fg_footprints:ENCO_FG;
+EndCmp
+
+BeginCmp
+TimeStamp = /53595D8C;
+Reference = U3;
+ValeurCmp = ENCO_FG;
+IdModule  = fg_footprints:ENCO_FG;
+EndCmp
+
+BeginCmp
+TimeStamp = /53595D97;
+Reference = U4;
+ValeurCmp = ENCO_FG;
+IdModule  = fg_footprints:ENCO_FG;
+EndCmp
+
+BeginCmp
+TimeStamp = /53595D2C;
+Reference = U5;
+ValeurCmp = DISP_3;
+IdModule  = fg_footprints:DISP_3;
+EndCmp
+
+BeginCmp
+TimeStamp = /53595D3E;
+Reference = U6;
+ValeurCmp = DISP_3;
+IdModule  = fg_footprints:DISP_3;
+EndCmp
+
+BeginCmp
+TimeStamp = /53595DA2;
+Reference = U7;
+ValeurCmp = ENCO_FG;
+IdModule  = fg_footprints:ENCO_FG;
+EndCmp
+
+BeginCmp
+TimeStamp = /53595D4C;
+Reference = U8;
+ValeurCmp = DISP_6;
+IdModule  = fg_footprints:DISP_6;
+EndCmp
+
+BeginCmp
+TimeStamp = /53595D5E;
+Reference = U9;
+ValeurCmp = DISP_6;
+IdModule  = fg_footprints:DISP_6;
+EndCmp
+
+BeginCmp
+TimeStamp = /53595DAD;
+Reference = U10;
+ValeurCmp = ENCO_FG;
+IdModule  = fg_footprints:ENCO_FG;
+EndCmp
+
+BeginCmp
+TimeStamp = /53595ED1;
+Reference = U11;
+ValeurCmp = FG_SWITCH;
+IdModule  = fg_footprints:FG_SWITCH';
+EndCmp
+
+BeginCmp
+TimeStamp = /53595E6D;
+Reference = U12;
+ValeurCmp = FG_PB;
+IdModule  = fg_footprints:FG_PB;
+EndCmp
+
+BeginCmp
+TimeStamp = /53595E7F;
+Reference = U13;
+ValeurCmp = FG_PB;
+IdModule  = fg_footprints:FG_PB;
+EndCmp
+
+BeginCmp
+TimeStamp = /53595E8A;
+Reference = U14;
+ValeurCmp = FG_PB;
+IdModule  = fg_footprints:FG_PB;
+EndCmp
+
+BeginCmp
+TimeStamp = /53595E95;
+Reference = U15;
+ValeurCmp = FG_PB;
+IdModule  = fg_footprints:FG_PB;
+EndCmp
+
+BeginCmp
+TimeStamp = /53595EE3;
+Reference = U16;
+ValeurCmp = FG_SWITCH;
+IdModule  = fg_footprints:FG_SWITCH';
+EndCmp
+
+BeginCmp
+TimeStamp = /53595EA0;
+Reference = U17;
+ValeurCmp = FG_PB;
+IdModule  = fg_footprints:FG_PB;
+EndCmp
+
+BeginCmp
+TimeStamp = /53595EA6;
+Reference = U18;
+ValeurCmp = FG_PB;
+IdModule  = fg_footprints:FG_PB;
+EndCmp
+
+BeginCmp
+TimeStamp = /53595EAC;
+Reference = U19;
+ValeurCmp = FG_PB;
+IdModule  = fg_footprints:FG_PB;
+EndCmp
+
+BeginCmp
+TimeStamp = /53595EB2;
+Reference = U20;
+ValeurCmp = FG_PB;
+IdModule  = fg_footprints:FG_PB;
+EndCmp
+
+BeginCmp
+TimeStamp = /53595F2F;
+Reference = U21;
+ValeurCmp = FG_SWITCH;
+IdModule  = fg_footprints:FG_SWITCH';
+EndCmp
+
+BeginCmp
+TimeStamp = /53595EB8;
+Reference = U22;
+ValeurCmp = FG_PB;
+IdModule  = fg_footprints:FG_PB;
+EndCmp
+
+BeginCmp
+TimeStamp = /53595EBE;
+Reference = U23;
+ValeurCmp = FG_PB;
+IdModule  = fg_footprints:FG_PB;
+EndCmp
+
+BeginCmp
+TimeStamp = /53595EC4;
+Reference = U24;
+ValeurCmp = FG_PB;
+IdModule  = fg_footprints:FG_PB;
+EndCmp
+
+BeginCmp
+TimeStamp = /53595F35;
+Reference = U25;
+ValeurCmp = FG_SWITCH;
+IdModule  = fg_footprints:FG_SWITCH';
+EndCmp
+
+EndListe

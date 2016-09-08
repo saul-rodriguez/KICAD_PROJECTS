@@ -1,0 +1,220 @@
+Cmp-Mod V01 Created by CvPcb (2012-01-19 BZR 3256)-stable date = Sat 10 Mar 2012 12:08:28 AM CET
+
+BeginCmp
+TimeStamp = /4F5A116E;
+Reference = C1;
+ValeurCmp = 1u;
+IdModule  = SM1206;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F5A2429;
+Reference = D1;
+ValeurCmp = LED;
+IdModule  = LED-1206;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F5A0777;
+Reference = P1;
+ValeurCmp = CONN_2;
+IdModule  = PIN_ARRAY_2X1;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F5A078D;
+Reference = P2;
+ValeurCmp = CONN_2;
+IdModule  = PIN_ARRAY_2X1;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F5A078A;
+Reference = P3;
+ValeurCmp = CONN_2;
+IdModule  = PIN_ARRAY_2X1;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F5A10ED;
+Reference = P4;
+ValeurCmp = CONN_2;
+IdModule  = PIN_ARRAY_2X1;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F5A1254;
+Reference = P5;
+ValeurCmp = CONN_6;
+IdModule  = pin_strip_6-90;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F5A2005;
+Reference = P6;
+ValeurCmp = CONN_2X2;
+IdModule  = PIN_ARRAY_2X2;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F5A0F5E;
+Reference = P7;
+ValeurCmp = CONN_2;
+IdModule  = PIN_ARRAY_2X1;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F5A07E6;
+Reference = P8;
+ValeurCmp = CONN_2;
+IdModule  = PIN_ARRAY_2X1;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F5A102E;
+Reference = P9;
+ValeurCmp = CONN_2;
+IdModule  = PIN_ARRAY_2X1;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F5A23B0;
+Reference = P10;
+ValeurCmp = CONN_5;
+IdModule  = pin_strip_5-90;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F5A11C3;
+Reference = P11;
+ValeurCmp = CONN_2;
+IdModule  = PIN_ARRAY_2X1;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F5A8C26;
+Reference = P12;
+ValeurCmp = CONN_1;
+IdModule  = Mhole;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F5A8C7C;
+Reference = P13;
+ValeurCmp = CONN_1;
+IdModule  = Mhole;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F5A8C89;
+Reference = P14;
+ValeurCmp = CONN_1;
+IdModule  = Mhole;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F5A8C90;
+Reference = P15;
+ValeurCmp = CONN_1;
+IdModule  = Mhole;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F5A244C;
+Reference = R1;
+ValeurCmp = 2k;
+IdModule  = SM0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F5A24BA;
+Reference = R2;
+ValeurCmp = 10k;
+IdModule  = SM0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F5A1E6E;
+Reference = R3;
+ValeurCmp = 50k;
+IdModule  = SM0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F5A20D1;
+Reference = R4;
+ValeurCmp = 50k;
+IdModule  = SM0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F5A061C;
+Reference = U1;
+ValeurCmp = BAT54CFILM;
+IdModule  = sot23;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F5A061A;
+Reference = U2;
+ValeurCmp = BAT54CFILM;
+IdModule  = sot23;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F5A02B3;
+Reference = U3;
+ValeurCmp = PIC16F1823;
+IdModule  = QFN16;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F5A02BF;
+Reference = U4;
+ValeurCmp = BAT54CFILM;
+IdModule  = sot23;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F5A05E8;
+Reference = U5;
+ValeurCmp = BAT54CFILM;
+IdModule  = sot23;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F5A1E62;
+Reference = U6;
+ValeurCmp = NFET;
+IdModule  = sot23;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F5A1E92;
+Reference = U7;
+ValeurCmp = PFET;
+IdModule  = sot23;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F5A1E35;
+Reference = U8;
+ValeurCmp = PFET;
+IdModule  = sot23;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F5A1E2D;
+Reference = U9;
+ValeurCmp = NFET;
+IdModule  = sot23;
+EndCmp
+
+BeginCmp
+TimeStamp = /4F5A05BF;
+Reference = U10;
+ValeurCmp = MCP1702_SOT23;
+IdModule  = sot23;
+EndCmp
+
+EndListe

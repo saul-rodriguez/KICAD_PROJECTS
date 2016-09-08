@@ -1,0 +1,53 @@
+(export (version D)
+  (design
+    (source /home/saul/Dropbox/Work/projects/kicad/test_new/a.sch)
+    (date "mån  3 feb 2014 22:49:17")
+    (tool "eeschema (2014-02-03 BZR 4656)-product"))
+  (components
+    (comp (ref C1)
+      (value C)
+      (libsource (lib device) (part C))
+      (sheetpath (names /) (tstamps /))
+      (tstamp 52F00EA9))
+    (comp (ref R1)
+      (value R)
+      (libsource (lib device) (part R))
+      (sheetpath (names /) (tstamps /))
+      (tstamp 52F00EBD)))
+  (libparts
+    (libpart (lib device) (part C)
+      (description "Condensateur non polarise")
+      (footprints
+        (fp SM*)
+        (fp C?)
+        (fp C1-1))
+      (fields
+        (field (name Reference) C)
+        (field (name Value) C))
+      (pins
+        (pin (num 1) (name ~) (type passive))
+        (pin (num 2) (name ~) (type passive))))
+    (libpart (lib device) (part R)
+      (description Resistance)
+      (footprints
+        (fp R?)
+        (fp SM0603)
+        (fp SM0805)
+        (fp R?-*)
+        (fp SM1206))
+      (fields
+        (field (name Reference) R)
+        (field (name Value) R))
+      (pins
+        (pin (num 1) (name ~) (type passive))
+        (pin (num 2) (name ~) (type passive)))))
+  (libraries
+    (library (logical device)
+      (uri /usr/local/share/kicad/library/device.lib)))
+  (nets
+    (net (code 1) (name "Net-(C1-Pad1)")
+      (node (ref C1) (pin 1))
+      (node (ref R1) (pin 1)))
+    (net (code 2) (name "Net-(C1-Pad2)")
+      (node (ref C1) (pin 2))
+      (node (ref R1) (pin 2)))))

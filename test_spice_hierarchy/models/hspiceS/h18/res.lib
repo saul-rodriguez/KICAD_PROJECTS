@@ -1,0 +1,19 @@
+.lib restm
+* Case No. 1
+.inc './LV_DEV/fixed_corner_hv.inc' hvrtt
+.inc './LV_DEV/passive_corner_lv.inc' lvrtt
+.endl 
+
+.lib reswp
+* Case No. 2
+.inc './LV_DEV/fixed_corner_hv.inc' hvrmin
+.inc './LV_DEV/passive_corner_lv.inc' lvrmin
+.endl 
+
+.lib resws
+* Case No. 3
+.inc './LV_DEV/fixed_corner_hv.inc' hvrmax
+.inc './LV_DEV/passive_corner_lv.inc' lvrmax
+.endl 
+
+* Owner: austriamicrosystems

@@ -1,0 +1,157 @@
+Cmp-Mod V01 Created by CvPcb (2011-nov-30)-testing date = Sat 11 Aug 2012 12:11:14 PM CEST
+
+BeginCmp
+TimeStamp = /50211153;
+Reference = C1;
+ValeurCmp = 1u;
+IdModule  = SM0603_Capa;
+EndCmp
+
+BeginCmp
+TimeStamp = /5021114A;
+Reference = C2;
+ValeurCmp = 1u;
+IdModule  = SM0603_Capa;
+EndCmp
+
+BeginCmp
+TimeStamp = /50202A96;
+Reference = C3;
+ValeurCmp = 10u;
+IdModule  = SM1206;
+EndCmp
+
+BeginCmp
+TimeStamp = /50210F5E;
+Reference = C4;
+ValeurCmp = 0.1u;
+IdModule  = SM0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /50202765;
+Reference = D1;
+ValeurCmp = LED;
+IdModule  = LED-1206;
+EndCmp
+
+BeginCmp
+TimeStamp = /50211A83;
+Reference = K1;
+ValeurCmp = CONN_3;
+IdModule  = pin_strip_3;
+EndCmp
+
+BeginCmp
+TimeStamp = /502030AB;
+Reference = P1;
+ValeurCmp = CONN_2;
+IdModule  = pin_strip_2;
+EndCmp
+
+BeginCmp
+TimeStamp = /502124D2;
+Reference = P2;
+ValeurCmp = CONN_1;
+IdModule  = Mhole;
+EndCmp
+
+BeginCmp
+TimeStamp = /5020352D;
+Reference = P3;
+ValeurCmp = CONN_6;
+IdModule  = pin_strip_6-90;
+EndCmp
+
+BeginCmp
+TimeStamp = /50211640;
+Reference = P4;
+ValeurCmp = CONN_2;
+IdModule  = pin_strip_2;
+EndCmp
+
+BeginCmp
+TimeStamp = /502124BF;
+Reference = P5;
+ValeurCmp = CONN_1;
+IdModule  = Mhole;
+EndCmp
+
+BeginCmp
+TimeStamp = /502124E0;
+Reference = P6;
+ValeurCmp = CONN_1;
+IdModule  = Mhole;
+EndCmp
+
+BeginCmp
+TimeStamp = /502124D9;
+Reference = P7;
+ValeurCmp = CONN_1;
+IdModule  = Mhole;
+EndCmp
+
+BeginCmp
+TimeStamp = /5020307C;
+Reference = R1;
+ValeurCmp = 1K;
+IdModule  = SM0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /50202786;
+Reference = R2;
+ValeurCmp = 1K;
+IdModule  = SM0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /50217262;
+Reference = R3;
+ValeurCmp = 2.5K;
+IdModule  = SM0603;
+EndCmp
+
+BeginCmp
+TimeStamp = /50211D5E;
+Reference = S1;
+ValeurCmp = PBUTTON;
+IdModule  = PCB_PUSH_bottom;
+EndCmp
+
+BeginCmp
+TimeStamp = /50202469;
+Reference = U1;
+ValeurCmp = RN42;
+IdModule  = RN42_LONG_PAD;
+EndCmp
+
+BeginCmp
+TimeStamp = /50202367;
+Reference = U2;
+ValeurCmp = PIC18F14K22_QFN;
+IdModule  = qfn-20;
+EndCmp
+
+BeginCmp
+TimeStamp = /502023C8;
+Reference = U3;
+ValeurCmp = MCP1702;
+IdModule  = sot89;
+EndCmp
+
+BeginCmp
+TimeStamp = /50210495;
+Reference = U4;
+ValeurCmp = EQ730L;
+IdModule  = EQ730L;
+EndCmp
+
+BeginCmp
+TimeStamp = /5021700D;
+Reference = U5;
+ValeurCmp = NFET;
+IdModule  = SOT23;
+EndCmp
+
+EndListe

@@ -1,0 +1,182 @@
+EESchema Schematic File Version 2
+LIBS:power
+LIBS:device
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:special
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:valves
+LIBS:SAUL
+LIBS:FIXTURE_QFN16-cache
+EELAYER 24 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L PIC16F1823 U1
+U 1 1 53E488A0
+P 5150 3300
+F 0 "U1" H 5200 3650 60  0000 C CNN
+F 1 "PIC16F1823" H 5200 3550 60  0000 C CNN
+F 2 "" H 5150 3300 60  0000 C CNN
+F 3 "" H 5150 3300 60  0000 C CNN
+	1    5150 3300
+	1    0    0    -1  
+$EndComp
+$Comp
+L PIC16LF1823DIP U2
+U 1 1 53E48E0D
+P 5350 5550
+F 0 "U2" H 5200 5850 60  0000 C CNN
+F 1 "PIC16LF1823DIP" H 5250 5750 60  0000 C CNN
+F 2 "" H 5350 5550 60  0000 C CNN
+F 3 "" H 5350 5550 60  0000 C CNN
+	1    5350 5550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4100 5250 4100 4800
+Wire Wire Line
+	4100 4800 8400 4800
+Wire Wire Line
+	8400 4800 8400 3000
+Wire Wire Line
+	8400 3000 7700 3000
+Wire Wire Line
+	6300 5250 8500 5250
+Wire Wire Line
+	8500 5250 8500 3300
+Wire Wire Line
+	8500 3300 7700 3300
+Wire Wire Line
+	4100 5350 2200 5350
+Wire Wire Line
+	2200 5350 2200 3000
+Wire Wire Line
+	2200 3000 2350 3000
+Wire Wire Line
+	4100 5450 2100 5450
+Wire Wire Line
+	2100 5450 2100 3100
+Wire Wire Line
+	2100 3100 2350 3100
+Wire Wire Line
+	4100 5550 2000 5550
+Wire Wire Line
+	2000 5550 2000 3200
+Wire Wire Line
+	2000 3200 2350 3200
+Wire Wire Line
+	4100 5650 1900 5650
+Wire Wire Line
+	1900 5650 1900 3300
+Wire Wire Line
+	1900 3300 2350 3300
+Wire Wire Line
+	4100 5750 1800 5750
+Wire Wire Line
+	1800 5750 1800 3400
+Wire Wire Line
+	1800 3400 2350 3400
+Wire Wire Line
+	4100 5850 1700 5850
+Wire Wire Line
+	1700 5850 1700 3500
+Wire Wire Line
+	1700 3500 2350 3500
+Wire Wire Line
+	6300 5850 6300 6150
+Wire Wire Line
+	6300 6150 1550 6150
+Wire Wire Line
+	1550 6150 1550 3600
+Wire Wire Line
+	1550 3600 2350 3600
+Wire Wire Line
+	6300 5750 6400 5750
+Wire Wire Line
+	6400 5750 6400 6250
+Wire Wire Line
+	6400 6250 1450 6250
+Wire Wire Line
+	1450 6250 1450 3700
+Wire Wire Line
+	1450 3700 2350 3700
+Wire Wire Line
+	7700 5650 6300 5650
+Wire Wire Line
+	7700 3700 7700 5650
+Wire Wire Line
+	6300 5550 7850 5550
+Wire Wire Line
+	7850 5550 7850 3600
+Wire Wire Line
+	7850 3600 7700 3600
+Wire Wire Line
+	6300 5450 8000 5450
+Wire Wire Line
+	8000 5450 8000 3500
+Wire Wire Line
+	8000 3500 7700 3500
+Wire Wire Line
+	7700 3400 8150 3400
+Wire Wire Line
+	8150 3400 8150 5350
+Wire Wire Line
+	8150 5350 6300 5350
+$Comp
+L CONN_1 P1
+U 1 1 53E49940
+P 5350 1600
+F 0 "P1" H 5430 1600 40  0000 L CNN
+F 1 "CONN_1" H 5350 1655 30  0001 C CNN
+F 2 "" H 5350 1600 60  0000 C CNN
+F 3 "" H 5350 1600 60  0000 C CNN
+	1    5350 1600
+	1    0    0    -1  
+$EndComp
+$Comp
+L CONN_1 P2
+U 1 1 53E499F6
+P 5350 1700
+F 0 "P2" H 5430 1700 40  0000 L CNN
+F 1 "CONN_1" H 5350 1755 30  0001 C CNN
+F 2 "" H 5350 1700 60  0000 C CNN
+F 3 "" H 5350 1700 60  0000 C CNN
+	1    5350 1700
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC

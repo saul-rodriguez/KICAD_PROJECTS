@@ -1,0 +1,31 @@
+Cmp-Mod V01 Created by Cvpcb (2014-jul-16 BZR unknown)-product   date = fre  8 aug 2014 11:34:15
+
+BeginCmp
+TimeStamp = /53E49940;
+Reference = P1;
+ValeurCmp = CONN_1;
+IdModule  = Saul_footprints:Mhole;
+EndCmp
+
+BeginCmp
+TimeStamp = /53E499F6;
+Reference = P2;
+ValeurCmp = CONN_1;
+IdModule  = Saul_footprints:Mhole;
+EndCmp
+
+BeginCmp
+TimeStamp = /53E488A0;
+Reference = U1;
+ValeurCmp = PIC16F1823;
+IdModule  = Saul_footprints:QFN16_MCP;
+EndCmp
+
+BeginCmp
+TimeStamp = /53E48E0D;
+Reference = U2;
+ValeurCmp = PIC16LF1823DIP;
+IdModule  = Sockets_DIP:DIP-14__300_ELL;
+EndCmp
+
+EndListe

@@ -1,0 +1,387 @@
+// Path, Component, Release: cmrf7sf/rel/HSPICE/models/esdnsh_spe.va, rf7sf_models, mod_cmrf7sf
+// CMVC Revision: 2.0
+// Verilog-A model of ESD Shell for nMOSFETs (including all flavors of thin/thick oxide)
+
+`include "constants.vams"
+`include "disciplines.vams"
+
+module esdnsh_spe(d, g, s, b);
+inout d, g, s, b;
+electrical de0, de1, d, g, s, b, b1, n1, n2;
+
+// device swtich parameter
+parameter integer esdoxide  = 1       from [1:4]; // oxide thickness switch
+parameter integer gns       = 1       from [0:1]; // gate-non-silicided switch
+
+// global switch prameter
+parameter integer esd_event  = 0      from [0:3]; // switch for esd_event
+parameter integer esd_exit   = 0      from [0:1]; // switch for esd_exit
+
+// layout parameters
+parameter real    wtesd      = 400u      from (0:1e15); // Total width of the instantiated ESDnFET
+parameter real    wesd      = 25u      from (0:1e15); // width per finger
+parameter real    lesd      = 1u      from (0:1e15); // gate length
+parameter real    nf        = 1       from (0:1e15); // number of fingers
+parameter real    ldop      = 1.00u   from [0:1e15); // drain op length
+parameter real    lsop      = 0.48u   from [0:1e15); // source op length
+
+// derived layout parameters
+parameter real    wfinger   = wtesd/nf from (0:1e15); // finger width
+parameter real    fingers_tot = wtesd/wesd  from (0:1e15); // number of fingers
+
+// device parameters 
+parameter real resd_pos1ax = 1f from (0:1e15); //extra resistance 
+
+// esdoxide=1, i.e., thin oxide
+parameter real    resd_pos1 	=  1m*(esd_event==0)+138.6u*(esd_event==1)+101.1u*(esd_event==2)+36.98u*(esd_event==3) from (0:1e15);
+parameter real    resd_neg1 	=  0.58m      from (0:1e15);
+parameter real    It2_pos1  	=  100*(esd_event==0)+8.00*(esd_event==1)+11.25*(esd_event==2)+25.00*(esd_event==3) from (0:100];
+parameter real    It2_neg1  	=  100*(esd_event==0)+8.00*(esd_event==1)+11.25*(esd_event==2)+25.00*(esd_event==3) from (0:100];
+parameter real    vhold1    	=  100*(esd_event==0)+3.11*(esd_event==1)+3.162*(esd_event==2)+3.196*(esd_event==3) from (0: 100];
+parameter real    Vt1_pos1  	=  10*(esd_event==0)+5.0*(esd_event==1)+5.0*(esd_event==2)+5.0*(esd_event==3) from (0: 20];
+parameter real    vgd_ox_pos1   =  100*(esd_event==0)+8.0*(esd_event==1)+8.0*(esd_event==2)+8.0*(esd_event==3) from (0:100];
+parameter real    vgd_ox_neg1   =  100*(esd_event==0)+8.0*(esd_event==1)+8.0*(esd_event==2)+8.0*(esd_event==3) from (0:100];
+parameter real    vgb_ox_pos1   =  100*(esd_event==0)+8.0*(esd_event==1)+8.0*(esd_event==2)+8.0*(esd_event==3) from (0:100];
+parameter real    vgb_ox_neg1   =  100*(esd_event==0)+8.0*(esd_event==1)+8.0*(esd_event==2)+8.0*(esd_event==3) from (0:100];
+// esdoxide=2, i.e., medium oxide
+parameter real    resd_pos2 	=  1m*(esd_event==0)+70u*(esd_event==1)+25u*(esd_event==2)+30u*(esd_event==3) from (0:1e15);
+parameter real    resd_neg2 	=  0.58m      from (0:1e15);
+parameter real    It2_pos2  	=  100*(esd_event==0)+7.50*(esd_event==1)+10.00*(esd_event==2)+22.50*(esd_event==3) from (0:100];
+parameter real    It2_neg2  	=  100*(esd_event==0)+7.50*(esd_event==1)+10.00*(esd_event==2)+22.50*(esd_event==3) from (0:100];
+parameter real    vhold2    	=  100*(esd_event==0)+4.88*(esd_event==1)+4.98*(esd_event==2)+4.38*(esd_event==3) from (0: 100];
+parameter real    Vt1_pos2  	=  10*(esd_event==0)+5.0*(esd_event==1)+5.0*(esd_event==2)+5.0*(esd_event==3) from (0: 20];
+parameter real    vgd_ox_pos2   =  100*(esd_event==0)+15.0*(esd_event==1)+15.0*(esd_event==2)+15.0*(esd_event==3) from (0:100];
+parameter real    vgd_ox_neg2   =  100*(esd_event==0)+15.0*(esd_event==1)+15.0*(esd_event==2)+15.0*(esd_event==3) from (0:100];
+parameter real    vgb_ox_pos2   =  100*(esd_event==0)+15.0*(esd_event==1)+15.0*(esd_event==2)+15.0*(esd_event==3) from (0:100];
+parameter real    vgb_ox_neg2   =  100*(esd_event==0)+15.0*(esd_event==1)+15.0*(esd_event==2)+15.0*(esd_event==3) from (0:100];
+// esdoxide=3, i.e., thick oxide
+parameter real    resd_pos3 	=  1m*(esd_event==0)+130u*(esd_event==1)+80u*(esd_event==2)+40u*(esd_event==3) from (0:1e15);
+parameter real    resd_neg3 	=  0.58m      from (0:1e15);
+parameter real    It2_pos3  	=  100*(esd_event==0)+7.50*(esd_event==1)+10.00*(esd_event==2)+21.50*(esd_event==3) from (0:100];
+parameter real    It2_neg3  	=  100*(esd_event==0)+7.50*(esd_event==1)+10.00*(esd_event==2)+21.50*(esd_event==3) from (0:100];
+parameter real    vhold3    	=  100*(esd_event==0)+4.7*(esd_event==1)+4.7*(esd_event==2)+4.3*(esd_event==3) from (0: 100];
+parameter real    Vt1_pos3  	=  10*(esd_event==0)+5.0*(esd_event==1)+5.0*(esd_event==2)+5.0*(esd_event==3) from (0: 20];
+parameter real    vgd_ox_pos3   =  100*(esd_event==0)+15.0*(esd_event==1)+15.0*(esd_event==2)+15.0*(esd_event==3) from (0:100];
+parameter real    vgd_ox_neg3   =  100*(esd_event==0)+15.0*(esd_event==1)+15.0*(esd_event==2)+15.0*(esd_event==3) from (0:100];
+parameter real    vgb_ox_pos3   =  100*(esd_event==0)+15.0*(esd_event==1)+15.0*(esd_event==2)+15.0*(esd_event==3) from (0:100];
+parameter real    vgb_ox_neg3   =  100*(esd_event==0)+15.0*(esd_event==1)+15.0*(esd_event==2)+15.0*(esd_event==3) from (0:100];
+// esdoxide=4, i.e., thicker oxide
+parameter real    resd_pos4 	=  1m*(esd_event==0)+42.4u*(esd_event==1)+88.14u*(esd_event==2)+1u*(esd_event==3)   from (0:1e15);
+parameter real    resd_neg4 	=  0.58m      from (0:1e15);
+parameter real    It2_pos4  	=  100*(esd_event==0)+9.50*(esd_event==1)+10.50*(esd_event==2)+22.50*(esd_event==3) from (0:100];
+parameter real    It2_neg4  	=  100*(esd_event==0)+9.50*(esd_event==1)+10.50*(esd_event==2)+22.50*(esd_event==3) from (0:100];
+parameter real    vhold4    	=  100*(esd_event==0)+6.168*(esd_event==1)+5.370*(esd_event==2)+4.967*(esd_event==3) from (0: 100];
+parameter real    Vt1_pos4  	=  10*(esd_event==0)+5.0*(esd_event==1)+5.0*(esd_event==2)+5.0*(esd_event==3) from (0: 20];
+parameter real    vgd_ox_pos4   =  100*(esd_event==0)+19.0*(esd_event==1)+19.0*(esd_event==2)+19.0*(esd_event==3) from (0:100];
+parameter real    vgd_ox_neg4   =  100*(esd_event==0)+19.0*(esd_event==1)+19.0*(esd_event==2)+19.0*(esd_event==3) from (0:100];
+parameter real    vgb_ox_pos4   =  100*(esd_event==0)+19.0*(esd_event==1)+19.0*(esd_event==2)+19.0*(esd_event==3) from (0:100];
+parameter real    vgb_ox_neg4   =  100*(esd_event==0)+19.0*(esd_event==1)+19.0*(esd_event==2)+19.0*(esd_event==3) from (0:100];
+//-------------------------------------------
+// gate non silicided. esdoxide=1, i.e., thin oxide
+parameter real    resd_pos1_gns	   =  1m*(esd_event==0)+150u*(esd_event==1)+70u*(esd_event==2)+50u*(esd_event==3) from (0:1e15);
+parameter real    resd_pos1a_gns   =  1m*(esd_event==0)+25u*(esd_event==1)+25u*(esd_event==2)+ 15u*(esd_event==3) from (0:1e15);
+parameter real    resd_neg1_gns    =  0.58m      from (0:1e15);
+parameter real    It2_pos1_gns     =  100*(esd_event==0)+8.54*(esd_event==1)+10.86*(esd_event==2)+32.03*(esd_event==3) from (0:100];
+parameter real    It2_neg1_gns     =  100*(esd_event==0)+8.54*(esd_event==1)+10.86*(esd_event==2)+32.03*(esd_event==3) from (0:100];
+parameter real    vhold1_gns       =  100*(esd_event==0)+3.1*(esd_event==1)+3.2*(esd_event==2)+3.2*(esd_event==3) from (0: 100];
+parameter real    Vt1_pos1_gns     =  10*(esd_event==0)+5.0*(esd_event==1)+5.0*(esd_event==2)+5.0*(esd_event==3) from (0: 20];
+parameter real    vgd_ox_pos1_gns  =  100*(esd_event==0)+8.0*(esd_event==1)+8.0*(esd_event==2)+8.0*(esd_event==3) from (0:100];
+parameter real    vgd_ox_neg1_gns  =  100*(esd_event==0)+8.0*(esd_event==1)+8.0*(esd_event==2)+8.0*(esd_event==3) from (0:100];
+parameter real    vgb_ox_pos1_gns  =  100*(esd_event==0)+8.0*(esd_event==1)+8.0*(esd_event==2)+8.0*(esd_event==3) from (0:100];
+parameter real    vgb_ox_neg1_gns  =  100*(esd_event==0)+8.0*(esd_event==1)+8.0*(esd_event==2)+8.0*(esd_event==3) from (0:100];
+// gate non silicided. esdoxide=2, i.e., medium oxide
+parameter real    resd_pos2_gns    =  1m*(esd_event==0)+100u*(esd_event==1)+25u*(esd_event==2)+30u*(esd_event==3) from (0:1e15);
+parameter real    resd_pos2a_gns   =  1m*(esd_event==0)+30u*(esd_event==1)+45u*(esd_event==2)+ 18u*(esd_event==3) from (0:1e15);
+parameter real    resd_neg2_gns    =  0.58m      from (0:1e15);
+parameter real    It2_pos2_gns     =  100*(esd_event==0)+7.5*(esd_event==1)+8.92*(esd_event==2)+30.16*(esd_event==3) from (0:100];
+parameter real    It2_neg2_gns     =  100*(esd_event==0)+7.5*(esd_event==1)+8.92*(esd_event==2)+30.16*(esd_event==3) from (0:100];
+parameter real    vhold2_gns       =  100*(esd_event==0)+4.5*(esd_event==1)+4.4*(esd_event==2)+4.38*(esd_event==3) from (0: 100];
+parameter real    Vt1_pos2_gns     =  10*(esd_event==0)+5.0*(esd_event==1)+5.0*(esd_event==2)+5.0*(esd_event==3) from (0: 20];
+parameter real    vgd_ox_pos2_gns  =  100*(esd_event==0)+15.0*(esd_event==1)+15.0*(esd_event==2)+15.0*(esd_event==3) from (0:100];
+parameter real    vgd_ox_neg2_gns  =  100*(esd_event==0)+15.0*(esd_event==1)+15.0*(esd_event==2)+15.0*(esd_event==3) from (0:100];
+parameter real    vgb_ox_pos2_gns  =  100*(esd_event==0)+15.0*(esd_event==1)+15.0*(esd_event==2)+15.0*(esd_event==3) from (0:100];
+parameter real    vgb_ox_neg2_gns  =  100*(esd_event==0)+15.0*(esd_event==1)+15.0*(esd_event==2)+15.0*(esd_event==3) from (0:100];
+// gate non silicided. esdoxide=3, i.e., thick oxide
+parameter real    resd_pos3_gns	   =  1m*(esd_event==0)+145u*(esd_event==1)+45u*(esd_event==2)+40u*(esd_event==3) from (0:1e15);
+parameter real    resd_pos3a_gns   =  1m*(esd_event==0)+1f*(esd_event==1)+1f*(esd_event==2)+ 15u*(esd_event==3) from (0:1e15);
+parameter real    resd_neg3_gns    =  0.58m      from (0:1e15);
+parameter real    It2_pos3_gns     =  100*(esd_event==0)+6.34*(esd_event==1)+8.82*(esd_event==2)+29.30*(esd_event==3) from (0:100];
+parameter real    It2_neg3_gns     =  100*(esd_event==0)+6.34*(esd_event==1)+8.82*(esd_event==2)+29.30*(esd_event==3) from (0:100];
+parameter real    vhold3_gns       =  100*(esd_event==0)+4.7*(esd_event==1)+4.6*(esd_event==2)+4.3*(esd_event==3) from (0: 100];
+parameter real    Vt1_pos3_gns     =  10*(esd_event==0)+5.0*(esd_event==1)+5.0*(esd_event==2)+5.0*(esd_event==3) from (0: 20];
+parameter real    vgd_ox_pos3_gns  =  100*(esd_event==0)+15.0*(esd_event==1)+15.0*(esd_event==2)+15.0*(esd_event==3) from (0:100];
+parameter real    vgd_ox_neg3_gns  =  100*(esd_event==0)+15.0*(esd_event==1)+15.0*(esd_event==2)+15.0*(esd_event==3) from (0:100];
+parameter real    vgb_ox_pos3_gns  =  100*(esd_event==0)+15.0*(esd_event==1)+15.0*(esd_event==2)+15.0*(esd_event==3) from (0:100];
+parameter real    vgb_ox_neg3_gns  =  100*(esd_event==0)+15.0*(esd_event==1)+15.0*(esd_event==2)+15.0*(esd_event==3) from (0:100];
+// gate non silicided. esdoxide=4, i.e., thicker oxide
+parameter real    resd_pos4_gns 	=  1m*(esd_event==0)+100n*(esd_event==1)+5u*(esd_event==2)+1u*(esd_event==3)   from (0:1e15);
+parameter real    resd_neg4_gns 	=  0.58m      from (0:1e15);
+parameter real    It2_pos4_gns  	=  100*(esd_event==0)+7.08*(esd_event==1)+9.029*(esd_event==2)+31.0*(esd_event==3) from (0:100];
+parameter real    It2_neg4_gns  	=  100*(esd_event==0)+7.08*(esd_event==1)+9.029*(esd_event==2)+31.0*(esd_event==3) from (0:100];
+parameter real    vhold4_gns    	=  10*(esd_event==0)+6.7*(esd_event==1)+6.3*(esd_event==2)+3.5*(esd_event==3) from (0: 100];
+parameter real    Vt1_pos4_gns  	=  10*(esd_event==0)+5.0*(esd_event==1)+5.0*(esd_event==2)+5.0*(esd_event==3) from (0: 20];
+parameter real    vgd_ox_pos4_gns   	=  100*(esd_event==0)+19.0*(esd_event==1)+19.0*(esd_event==2)+19.0*(esd_event==3) from (0:100];
+parameter real    vgd_ox_neg4_gns  	=  100*(esd_event==0)+19.0*(esd_event==1)+19.0*(esd_event==2)+19.0*(esd_event==3) from (0:100];
+parameter real    vgb_ox_pos4_gns   	=  100*(esd_event==0)+19.0*(esd_event==1)+19.0*(esd_event==2)+19.0*(esd_event==3) from (0:100];
+parameter real    vgb_ox_neg4_gns   	=  100*(esd_event==0)+19.0*(esd_event==1)+19.0*(esd_event==2)+19.0*(esd_event==3) from (0:100];
+//-------------------------------------------
+
+parameter real    rsub      = 1e-5    from (0:1e15);
+parameter real    rwire     = 1e-5    from (0:1e15);
+
+// device reference parameters
+parameter real    lnom1     = 0.18u    from (0:100);
+parameter real    lnom2     = 0.32u    from (0:100);
+parameter real    lnom3     = 0.40u    from (0:100);
+parameter real    lnom4     = 0.70u    from (0:100);
+
+
+// internal parameters
+parameter real    is        = 1e-15   from (0:1e15);
+parameter real    n         = 1       from (0:3);
+parameter real    rdummy    = 1e-3    from (0:1e15);
+
+// variable defintion
+real vhold, resd_pos, resd_posa, resd_neg, It2_pos, Vt1_pos, It2_neg, vgd_ox_pos, vgd_ox_neg, vgb_ox_pos, vgb_ox_neg;
+integer silicide;
+
+// external model instances
+resistor      #(.r(rwire))          r1  (d, de0);
+resistor      #(.r(rdummy))         r4  (de0, de1);
+
+// model description
+analog begin
+
+// Device parameter assignment
+if (esdoxide==1 && gns==0)   // thin oxide gate silicided  
+	begin
+		vhold=vhold1+3.5*(lesd-lnom1)*1e6;
+		if (ldop>=0.5u && lsop>=0.47u && lsop<=0.49u)
+			begin
+				silicide=0;
+				It2_pos=It2_pos1;
+			end
+		else
+			begin
+				silicide=1;
+				Vt1_pos=Vt1_pos1;
+				It2_pos=It2_pos1;
+			end
+		resd_pos=resd_pos1;
+		resd_neg=resd_neg1;
+		It2_neg=It2_neg1;
+		vgd_ox_pos=vgd_ox_pos1;
+		vgd_ox_neg=vgd_ox_neg1;
+		vgb_ox_pos=vgb_ox_pos1;
+		vgb_ox_neg=vgb_ox_neg1;
+	end
+else if (esdoxide==2 && gns==0) // medium oxide gate silicided
+	begin
+		vhold=vhold2+3.5*(lesd-lnom2)*1e6;
+		if (ldop>=0.5u && lsop>=0.47u && lsop<=0.49u)
+			begin
+				silicide=0;
+				It2_pos=It2_pos2;
+			end
+		else                                                                
+        		begin
+        			silicide=1;
+				Vt1_pos=Vt1_pos2+12*(lesd-lnom2)*1e6;
+        			It2_pos=It2_pos2; 
+        		end
+		resd_pos=resd_pos2;
+		resd_neg=resd_neg2;
+		It2_neg=It2_neg2;
+		vgd_ox_pos=vgd_ox_pos2;
+		vgd_ox_neg=vgd_ox_neg2;
+		vgb_ox_pos=vgb_ox_pos2;
+		vgb_ox_neg=vgb_ox_neg2;
+	end
+else if (esdoxide==3 && gns==0) // thick oxide gate silicided
+	begin
+		vhold=vhold3+3.5*(lesd-lnom3)*1e6;
+		if (ldop>=0.5u && lsop>=0.47u && lsop<=0.49u)
+        		begin
+        			silicide=0;
+        			It2_pos=It2_pos3;
+        		end
+		else                                                                
+        		begin
+        			silicide=1;
+        			Vt1_pos=Vt1_pos3;
+        			It2_pos=It2_pos3;
+        		end
+		resd_pos=resd_pos3;
+		resd_neg=resd_neg3;
+		It2_neg=It2_neg3;
+		vgd_ox_pos=vgd_ox_pos3;
+		vgd_ox_neg=vgd_ox_neg3;
+		vgb_ox_pos=vgb_ox_pos3;
+		vgb_ox_neg=vgb_ox_neg3;
+	end
+else if (esdoxide==4 && gns==0) // thick oxide gate silicided
+	begin
+		vhold=vhold4+3.5*(lesd-lnom4)*1e6;
+		if (ldop>=0.5u && lsop>=0.47u && lsop<=0.49u)
+        		begin
+        			silicide=0;
+        			It2_pos=It2_pos4;
+        		end
+		else                                                                
+        		begin
+        			silicide=1;
+        			Vt1_pos=Vt1_pos4;
+        			It2_pos=It2_pos4;
+        		end
+		resd_pos=resd_pos4;
+		resd_neg=resd_neg4;
+		It2_neg=It2_neg4;
+		vgd_ox_pos=vgd_ox_pos4;
+		vgd_ox_neg=vgd_ox_neg4;
+		vgb_ox_pos=vgb_ox_pos4;
+		vgb_ox_neg=vgb_ox_neg4;
+end
+
+if (esdoxide==1 && gns==1)   // thin oxide gate non silicided
+	begin
+		vhold=vhold1_gns+3.5*(lesd-lnom1)*1e6;
+		if (ldop>=0.5u && lsop>=0.47u && lsop<=0.49u)
+        		begin
+        			silicide=0;
+        			It2_pos=It2_pos1_gns;
+        		end
+		else                                                                    
+		        begin      
+		        	silicide=1;   
+		        	Vt1_pos=Vt1_pos1_gns;   
+		        	vhold=Vt1_pos;   
+		        end
+		resd_pos=resd_pos1_gns;
+		resd_posa=resd_pos1a_gns;
+		resd_neg=resd_neg1_gns;
+		It2_neg=It2_neg1_gns;
+		vgd_ox_pos=vgd_ox_pos1_gns;
+		vgd_ox_neg=vgd_ox_neg1_gns;
+		vgb_ox_pos=vgb_ox_pos1_gns;
+		vgb_ox_neg=vgb_ox_neg1_gns;
+	end
+else if (esdoxide==2 && gns==1) // medium oxide gate non silicided
+	begin
+		vhold=vhold2_gns+3.5*(lesd-lnom2)*1e6;
+		if (ldop>=0.5u && lsop>=0.47u && lsop<=0.49u)
+        		begin      
+        			silicide=0;   
+        			It2_pos=It2_pos2_gns;    
+        		end
+		else                                                                    
+        		begin      
+        			silicide=1;
+        			Vt1_pos=Vt1_pos2_gns;
+       				vhold=Vt1_pos; 
+       			end
+		resd_pos=resd_pos2_gns;
+		resd_posa=resd_pos2a_gns;
+		resd_neg=resd_neg2_gns;
+		It2_neg=It2_neg2_gns;
+		vgd_ox_pos=vgd_ox_pos2_gns;
+		vgd_ox_neg=vgd_ox_neg2_gns;
+		vgb_ox_pos=vgb_ox_pos2_gns;
+		vgb_ox_neg=vgb_ox_neg2_gns;
+	end
+else if (esdoxide==3 && gns==1) // thick oxide gate non silicided
+	begin
+		vhold=vhold3_gns+3.5*(lesd-lnom3)*1e6;
+		if (ldop>=0.5u && lsop>=0.47u && lsop<=0.49u)
+        		begin      
+        			silicide=0;   
+        			It2_pos=It2_pos3_gns;       
+        		end
+		else                                                                    
+        		begin      
+        			silicide=1;
+        			Vt1_pos=Vt1_pos3_gns;
+        			vhold=Vt1_pos;   
+        		end
+		resd_pos=resd_pos3_gns;
+		resd_posa=resd_pos3a_gns;
+		resd_neg=resd_neg3_gns;
+		It2_neg=It2_neg3_gns;
+		vgd_ox_pos=vgd_ox_pos3_gns;
+		vgd_ox_neg=vgd_ox_neg3_gns;
+		vgb_ox_pos=vgb_ox_pos3_gns;
+		vgb_ox_neg=vgb_ox_neg3_gns;
+	end
+else if (esdoxide==4 && gns==1) // thick oxide gate non silicided
+	begin
+		vhold=vhold4_gns+3.5*(lesd-lnom4)*1e6;
+		if (ldop>=0.5u && lsop>=0.47u && lsop<=0.49u)
+        		begin      
+        			silicide=0;   
+        			It2_pos=It2_pos4_gns;       
+        		end
+		else                                                                    
+        		begin      
+        			silicide=1;
+        			Vt1_pos=Vt1_pos4_gns;
+        			vhold=Vt1_pos;   
+        		end
+		resd_pos=resd_pos4_gns;
+		resd_neg=resd_neg4_gns;
+		It2_neg=It2_neg4_gns;
+		vgd_ox_pos=vgd_ox_pos4_gns;
+		vgd_ox_neg=vgd_ox_neg4_gns;
+		vgb_ox_pos=vgb_ox_pos4_gns;
+		vgb_ox_neg=vgb_ox_neg4_gns;
+end
+
+// Positive ESD current conduction (drain to source/substrate): 
+// Drain to body junction breakdown and parasitic bipolar turn-on
+I(de1,b1)    <+ wtesd*is*(limexp((V(de1,b1)-vhold+0.9)/(n*$vt))-1);
+I(b1,s)    <+ (1/fingers_tot)*(V(b1,s)/((resd_pos/wtesd) + (resd_posa/wtesd)*V(b1,s))); // parasitic bipolar turn-on
+
+// Positive ESD failure detection
+if ((silicide==1) && (V(d,s )>Vt1_pos))                    
+	begin
+		$strobe("[IBMESD_ERR_103] Device %m: Positive ESD snapback failure at %f V.", V(d,s)); 
+	end
+if ((silicide==0) && (V(de0,de1)>((rdummy*It2_pos*1000*wtesd/fingers_tot)))) 
+	begin 
+		$strobe("[IBMESD_ERR_101] Device %m: Positive ESD high current failure at %f A.", I(b1,s));//replace it with V(d,s)later 
+	end
+
+// Negative ESD current conduction (source/substrate to drain):
+// Parasitic diode turn-on 
+I(b,n1)     <+ V(b,n1)/(resd_neg/wesd); // parasitic diode turn-on
+I(n1,de1)   <+ wesd*is*(limexp(V(n1,de1)/(n*$vt))-1);
+I(b,n2)     <+ V(b,n2)/(resd_neg/wesd); // parasitic diode turn-on
+I(n2,s)    <+ wesd*is*(limexp(V(n2,s)/(n*$vt))-1);
+
+// Negative ESD failure detection
+if (V(de0,de1)<(-rdummy*It2_neg*1e3*wesd)) 
+	begin
+		$strobe("IBMESD_ERR_102] Device %m: Negative ESD high current failure at %f A.", I(b,n1));//replace it with V(d,s)later
+	end
+
+// gate oxide breakdown
+if (V(g ,d)>vgd_ox_neg || V(g, d)<-vgd_ox_pos)
+	begin 
+		$strobe("[IBMESD_ERR_201] Device %m: ESD drain to gate failure at %f V.", V(d,g));       
+	end
+if (V(g ,s)>vgd_ox_neg || V(g, s)<-vgd_ox_pos) 
+	begin 
+		$strobe("[IBMESD_ERR_202] Device %m: ESD source to gate failure at %f V.", V(s,g));      
+	end
+if (V(g,b)>vgb_ox_neg || V(g,b)<-vgb_ox_pos)
+	begin 
+		$strobe("[IBMESD_ERR_203] Device %m: ESD substrate to gate failure at %f V.", V(b,g)); 
+	end
+   
+// esd_exit==1
+if (esd_exit==1 &&   (  ((silicide==1)&&(V(d ,s )>Vt1_pos)) || ((silicide==0)&&(V(de0,de1)>(rdummy*It2_pos*1e3*wtesd/fingers_tot))) || V(de0,de1)<(-rdummy*It2_neg*1e3*wesd) || V(g,d)>vgd_ox_neg || V(g,d)<-vgd_ox_pos || V(g,s)>vgd_ox_neg || V(g,s)<-vgd_ox_pos || V(g,b)>vgb_ox_neg || V(g,b)<-vgb_ox_pos) )
+	begin 
+		$finish(0); 
+	end
+  
+end
+
+endmodule

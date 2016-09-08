@@ -1,0 +1,160 @@
+EESchema Schematic File Version 2
+LIBS:power
+LIBS:device
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:special
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:valves
+LIBS:raspberry_common
+LIBS:FG_SWITCH-cache
+EELAYER 24 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L CONN_3 K1
+U 1 1 53133B42
+P 3700 1900
+F 0 "K1" V 3650 1900 50  0000 C CNN
+F 1 "CONN_3" V 3750 1900 40  0000 C CNN
+F 2 "" H 3700 1900 60  0000 C CNN
+F 3 "" H 3700 1900 60  0000 C CNN
+	1    3700 1900
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R1
+U 1 1 53133B56
+P 3000 2300
+F 0 "R1" V 3080 2300 40  0000 C CNN
+F 1 "R" V 3007 2301 40  0000 C CNN
+F 2 "" V 2930 2300 30  0000 C CNN
+F 3 "" H 3000 2300 30  0000 C CNN
+	1    3000 2300
+	1    0    0    -1  
+$EndComp
+$Comp
+L LED D1
+U 1 1 53133B72
+P 3000 2850
+F 0 "D1" H 3000 2950 50  0000 C CNN
+F 1 "LED" H 3000 2750 50  0000 C CNN
+F 2 "" H 3000 2850 60  0000 C CNN
+F 3 "" H 3000 2850 60  0000 C CNN
+	1    3000 2850
+	0    1    1    0   
+$EndComp
+$Comp
+L GND #PWR2
+U 1 1 53133BA1
+P 3000 3250
+F 0 "#PWR2" H 3000 3250 30  0001 C CNN
+F 1 "GND" H 3000 3180 30  0001 C CNN
+F 2 "" H 3000 3250 60  0000 C CNN
+F 3 "" H 3000 3250 60  0000 C CNN
+	1    3000 3250
+	1    0    0    -1  
+$EndComp
+Text Label 3200 1800 0    60   ~ 0
+A
+$Comp
+L CONN_2X2 P1
+U 1 1 534AC6CA
+P 2600 1900
+F 0 "P1" H 2600 2050 50  0000 C CNN
+F 1 "CONN_2X2" H 2610 1770 40  0000 C CNN
+F 2 "" H 2600 1900 60  0000 C CNN
+F 3 "" H 2600 1900 60  0000 C CNN
+	1    2600 1900
+	-1   0    0    -1  
+$EndComp
+$Comp
+L GND #PWR1
+U 1 1 534AC74E
+P 2100 2100
+F 0 "#PWR1" H 2100 2100 30  0001 C CNN
+F 1 "GND" H 2100 2030 30  0001 C CNN
+F 2 "" H 2100 2100 60  0000 C CNN
+F 3 "" H 2100 2100 60  0000 C CNN
+	1    2100 2100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3000 2550 3000 2650
+Wire Wire Line
+	3000 3050 3000 3250
+Wire Wire Line
+	3350 1900 3150 1900
+Wire Wire Line
+	3000 1800 3350 1800
+Wire Wire Line
+	2200 1850 2100 1850
+Wire Wire Line
+	2100 1850 2100 2100
+Wire Wire Line
+	2200 1950 2100 1950
+Connection ~ 2100 1950
+$Comp
+L GND #PWR3
+U 1 1 534AC77E
+P 3150 2200
+F 0 "#PWR3" H 3150 2200 30  0001 C CNN
+F 1 "GND" H 3150 2130 30  0001 C CNN
+F 2 "" H 3150 2200 60  0000 C CNN
+F 3 "" H 3150 2200 60  0000 C CNN
+	1    3150 2200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3000 1800 3000 1850
+Wire Wire Line
+	3150 1900 3150 2200
+NoConn ~ 3350 2000
+Wire Wire Line
+	3000 1950 3000 2050
+$Comp
+L CONN_1 P2
+U 1 1 534ACC8E
+P 3700 2350
+F 0 "P2" H 3780 2350 40  0000 L CNN
+F 1 "CONN_1" H 3700 2405 30  0001 C CNN
+F 2 "" H 3700 2350 60  0000 C CNN
+F 3 "" H 3700 2350 60  0000 C CNN
+	1    3700 2350
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC
